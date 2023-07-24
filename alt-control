@@ -1,0 +1,86 @@
+--[[ COMMANDS
+;drop     — drops cash until player has 0 left
+;stopdrop — makes the player stop dropping
+;wallet   — shows the players wallet
+;unwallet — hides the players wallet
+;admin    — makes all players teleport to admin base
+;kill     — kills the alts
+;summon   — brings alts to the main player
+
+[wip] ;test     — tests if alts are connected and script is working properly
+[wip] ;float    — levitates alts in the air and locks them there
+[wip] ;say      — makes all players say the specified message
+]]--
+
+local p = game.Players.LocalPlayer
+local b = p.Backpack
+local c = p.Character
+local r = c.HumanoidRootPart
+
+local Main = _G.Main
+local MainPlayer = game.Players[Main]
+
+local dropping = false
+
+function startDropping(amount)
+    dropping = true
+
+    while dropping == true do wait(.01)
+        if amount>10000 then 
+            warn('Please input an amount below 10000') 
+            dropping = false 
+        end
+
+        if game:GetService("Players").LocalPlayer.DataFolder.Currency.Value < amount then
+            warn('Dropping complete.')
+            dropping = false
+        else
+            game.ReplicatedStorage.MainEvent:FireServer("DropMoney",amount)
+        end
+    end
+end
+
+function stopDropping() dropping = false end
+
+game.Players[Main].Chatted:Connect(function(txt)
+    -- brings players
+    if txt == ';summon' then
+        r.CFrame = CFrame.new(MainPlayer.Character.HumanoidRootPart.Position)
+    end
+
+    -- shows players wallets
+    if txt == ';wallet' then
+        if b:FindFirstChild('Wallet') then 
+            local wallet = b['Wallet']
+            wallet.Parent = c
+        end
+    end
+
+    -- shows players wallets
+    if txt == ';unwallet' then
+        if c:FindFirstChild('Wallet') then
+            local wallet = c['Wallet']
+            wallet.Parent = b
+        end
+    end
+    
+    if txt == ';admin' then
+        r.CFrame = CFrame.new(Vector3.new(-873, -38, -584))
+    end
+    
+
+    -- resets alts
+    if txt == ';kill' then
+        c.Humanoid:TakeDamage(999)
+    end
+    
+    -- resets alts
+    if txt == ';drop' then
+        startDropping(10000)
+    end
+    
+    -- resets alts
+    if txt == ';stopdrop' then
+        stopDropping()
+    end
+end)
