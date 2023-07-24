@@ -1,0 +1,219 @@
+-- DOOMS AUTOFARM
+
+-- doom#1000
+-- discord.gg/doomdhc
+
+loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
+settings().Rendering.QualityLevel = 1
+UserSettings().GameSettings.MasterVolume = 0
+
+if game.Players.LocalPlayer.Backpack:FindFirstChild('Combat') then else
+	game.StarterGui:SetCore("SendNotification", {
+		Title = 'Notice',
+		Text = 'Please wait for the game to load before executing.',
+		Icon = 'http://www.roblox.com/asset/?id=14173970804',
+		Duration = 10,
+	})
+	return
+end
+
+if _G.farmloaded then
+	game.StarterGui:SetCore("SendNotification", {
+		Title = 'Already loaded',
+		Text = 'Autofarm is already loaded on this client!',
+		Icon = 'http://www.roblox.com/asset/?id=14173970804',
+		Duration = 10,
+	})
+	return
+end
+
+game.StarterGui:SetCore("SendNotification", {
+	Title = 'dooms autofarm',
+	Text = 'autofarm will start in 5 seconds',
+	Icon = 'rbxassetid://14067565428',
+	Duration = 5,
+})
+
+
+wait(5)
+
+_G.farmloaded = true
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local onground = Instance.new("TextLabel")
+local UIListLayout = Instance.new("UIListLayout")
+local amountfarmed = Instance.new("TextLabel")
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Frame.Parent = ScreenGui
+Frame.AnchorPoint = Vector2.new(0, 1)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 1.000
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0, 0, 1, 0)
+Frame.Size = UDim2.new(0, 494, 0, 56)
+onground.Name = "onground"
+onground.Parent = Frame
+onground.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+onground.BackgroundTransparency = 0
+onground.BorderColor3 = Color3.fromRGB(0, 0, 0)
+onground.BorderSizePixel = 0
+onground.Size = UDim2.new(1, 0, 0.5, 0)
+onground.Font = Enum.Font.RobotoMono
+onground.Text = " doom#1000"
+onground.TextColor3 = Color3.fromRGB(0, 255, 0)
+onground.TextSize = 20.000
+onground.TextStrokeTransparency = 1
+onground.TextTransparency = 0
+onground.TextWrapped = true
+onground.TextXAlignment = Enum.TextXAlignment.Left
+UIListLayout.Parent = Frame
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+amountfarmed.Name = "amountfarmed"
+amountfarmed.Parent = Frame
+amountfarmed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+amountfarmed.BackgroundTransparency = 0
+amountfarmed.BorderColor3 = Color3.fromRGB(0, 0, 0)
+amountfarmed.BorderSizePixel = 0
+amountfarmed.Size = UDim2.new(1, 0, 0.5, 0)
+amountfarmed.Font = Enum.Font.RobotoMono
+amountfarmed.Text = " derp :p "
+amountfarmed.TextColor3 = Color3.fromRGB(0, 255, 0)
+amountfarmed.TextSize = 20.000
+amountfarmed.TextStrokeTransparency = 1
+amountfarmed.TextWrapped = true
+amountfarmed.TextXAlignment = Enum.TextXAlignment.Left
+
+
+local plr = game.Players.LocalPlayer
+local char = plr.Character
+local root = char:WaitForChild('HumanoidRootPart')
+
+local combat = plr.Backpack['Combat']
+local run = game:GetService('RunService')
+
+_G.farming = true
+
+amtfarmed = 0
+_G.amtfarmed = 0
+
+for _,seat in ipairs(workspace:GetDescendants()) do
+	if seat:IsA('Seat') then seat.Disabled = true end
+	if seat:IsA('VehicleSeat') then seat.Disabled = true end
+end
+
+function spin()
+	for i,v in pairs(game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+		if v.Name == "Spinning" then
+			v:Destroy()
+		end
+	end
+	
+	local Spin = Instance.new("BodyAngularVelocity")
+	Spin.Name = "Spinning"
+	Spin.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+	Spin.MaxTorque = Vector3.new(0, math.huge, 0)
+	Spin.AngularVelocity = Vector3.new(0,50,0)
+end
+
+function stopspin()
+	for i,v in pairs(game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+		if v.Name == "Spinning" then
+			v:Destroy()
+		end
+	end
+end
+
+function cashaura()
+	_G.noclip = false
+	stopspin()
+	for _,cashdrop in ipairs(workspace.Ignored.Drop:GetChildren()) do
+		if cashdrop.Name == 'MoneyDrop' then
+			dist = (cashdrop.Position - root.Position).Magnitude
+			
+			if dist < 15 then
+				root.CFrame = CFrame.new(cashdrop.Position)
+				wait(.15)
+				amtfarmed = amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
+				_G.amtfarmed = _G.amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
+				fireclickdetector(cashdrop.ClickDetector)
+				wait(.45)
+			end
+		end
+	end
+	_G.noclip = true
+end
+
+-- noclip
+_G.noclip = true
+run.Stepped:Connect(function()
+    for _,part in ipairs(char:GetDescendants()) do
+        if part:IsA('BasePart') and part.CanCollide and _G.farming and _G.noclip then part.CanCollide = false end
+        if part:IsA('MeshPart') and part.CanCollide and _G.farming and _G.noclip  then part.CanCollide = false end
+        if part:IsA('Part') and part.CanCollide and _G.farming and _G.noclip  then part.CanCollide = false end
+    end
+end)
+
+lastatm = nil
+count = 0
+
+coroutine.wrap(function()
+	while wait() do
+		onground.Text = " count: "..tostring(count)
+		amountfarmed.Text = " amount farmed: "..tostring(_G.amtfarmed)
+	end
+end)()
+
+coroutine.wrap(function()
+	while wait() do
+		if root.Position.Y < -20 then
+			root.Anchored = false
+			root.CFrame = CFrame.new(lastatm.Head.Position)
+			--root.CFrame = CFrame.new(-404, 21, 88)
+			wait(.1)
+			root.Anchored = true
+		end
+		
+		if count > 7 then
+			root.Anchored = false
+			root.CFrame = CFrame.new(lastatm.Head.Position)
+			_G.noclip = true
+			wait(.1)
+			root.Anchored = true
+			count = 0
+		end
+	end
+end)()
+
+-- autofarm
+while _G.farming == true do
+	wait()
+	combat.Parent = char
+	
+    for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
+        if atm.Humanoid.Health == 100 and _G.farming == true then
+        	lastatm = atm
+        	count=0
+           root.CFrame = CFrame.new(Vector3.new(
+            atm.Head.Position.X,
+            atm.Head.Position.Y-2,
+            atm.Head.Position.Z
+           ))
+           wait(.25) 
+           root.Anchored = true wait() 
+           root.Anchored = false 
+           spin()
+           
+           repeat 
+           char.Combat:Activate()
+           count=count+.55
+           wait(.55) 
+           until
+       	   atm.Humanoid.Health<1
+           wait(.5) root.Anchored = false
+           cashaura()
+        end
+    end
+end
