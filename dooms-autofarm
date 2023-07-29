@@ -7,6 +7,16 @@ loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
 
+if _G.farmloaded then
+	game.StarterGui:SetCore("SendNotification", {
+		Title = 'Already loaded',
+		Text = 'Autofarm is already loaded on this client!',
+		Icon = 'http://www.roblox.com/asset/?id=14173970804',
+		Duration = 10,
+	})
+	return
+end
+
 if game.Players.LocalPlayer.Backpack:FindFirstChild('Combat') then else
 	game.StarterGui:SetCore("SendNotification", {
 		Title = 'Notice',
@@ -17,15 +27,6 @@ if game.Players.LocalPlayer.Backpack:FindFirstChild('Combat') then else
 	return
 end
 
-if _G.farmloaded then
-	game.StarterGui:SetCore("SendNotification", {
-		Title = 'Already loaded',
-		Text = 'Autofarm is already loaded on this client!',
-		Icon = 'http://www.roblox.com/asset/?id=14173970804',
-		Duration = 10,
-	})
-	return
-end
 
 game.StarterGui:SetCore("SendNotification", {
 	Title = 'dooms autofarm',
@@ -161,7 +162,7 @@ count = 0
 
 coroutine.wrap(function()
 	while wait() do
-		onground.Text = " count: "..tostring(count)
+		onground.Text = " wallet: "..tostring(game.Players.LocalPlayer.DataFolder.Currency.Value)
 		amountfarmed.Text = " amount farmed: "..tostring(_G.amtfarmed)
 	end
 end)()
