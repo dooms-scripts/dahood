@@ -12,5 +12,6 @@ end
 
 for _,code in pairs(getgenv().codes) do
 	redeemCode(code)
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Redeemed Code: "..tostring(code),"All")
 	wait(1)
 end
