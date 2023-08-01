@@ -10,5 +10,5 @@ end
 
 for _,code in pairs(getgenv().codes) do
 	redeemCode(code)
-	wait(3)
+	wait(1)
 end
