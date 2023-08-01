@@ -1,4 +1,6 @@
 -- doom#1000
+warn('Auto Redeemer Made By doom#1000')
+
 function redeemCode(code)
 	local args = {
     	[1] = "EnterPromoCode",
