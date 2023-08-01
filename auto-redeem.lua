@@ -1,5 +1,8 @@
 -- doom#1000
 warn('Auto Redeemer Made By doom#1000')
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Auto Redeemer Made By doom#1000","All")
+
+game.Players.LocalPlayer:WaitForChild('DataFolder')
 
 function redeemCode(code)
 	local args = {
