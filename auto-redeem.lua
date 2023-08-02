@@ -1,5 +1,5 @@
 -- doom#1000
-warn('Auto Redeemer Made By doom#1000')
+warn('Auto Redeemer Made By doom#IOOO')
 game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Auto Redeemer Made By doom#1000","All")
 
 game.Players.LocalPlayer:WaitForChild('DataFolder')
