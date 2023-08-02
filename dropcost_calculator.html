@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Divide by 2</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .dark-theme {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .dark-theme label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .dark-theme input[type="text"] {
+            max-width: 150%; /* Increased width by 50% */
+            margin-bottom: 10px;
+            background-color: #444;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .dark-theme input[type="button"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dark-theme">
+        <h1>  Drop Cost Calculator  </h1>
+        <br>
+        <input type="text" id="inputNumber" placeholder="Enter a number with commas">
+        <br>
+        <input type="button" value="Calculate" onclick="calculate()">
+        <br>
+        <br>
+        <input type="text" id="result" readonly>
+    </div>
+
+    <script>
+                /* ... JavaScript function (same as before) ... */
+                function formatNumberWithCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    
+        function removeCommasFromNumber(number) {
+            return number.replace(/,/g, '');
+        }
+    
+        function calculate() {
+            var inputElement = document.getElementById('inputNumber');
+            var resultElement = document.getElementById('result');
+
+            var taxRate = .15
+    
+            // Get the input value with commas and remove them before dividing
+            var inputValue = removeCommasFromNumber(inputElement.value);
+            var targetValue = inputValue
+            var dividedValue = parseFloat(targetValue/ (1-taxRate));
+            
+            // Format the result with commas
+            var formattedResult = formatNumberWithCommas(Math.round(dividedValue));
+    
+            // Display the result in the result textbox
+            resultElement.value = formattedResult;
+        }
+    </script>
+</body>
+</html>
