@@ -8,6 +8,16 @@
 
 ]]--
 
+warn([[
+
+     DOOMS PRIVATE LMG AUTOFARM
+        > discord.gg/doomdhc <
+
+         @doomxx / doom#1000
+          DM me bug reports
+
+]])
+
 -- resources
 settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
@@ -163,12 +173,7 @@ else
 end
 
 -- Anti Recoil
-local CurrentFocus = game:GetService('Workspace').CurrentCamera.CFrame
-game:GetService('Workspace').CurrentCamera:Destroy()
-local Instance = Instance.new('Camera', game:GetService('Workspace'))
-Instance.CameraSubject = game:GetService('Players').LocalPlayer.Character.Humanoid
-Instance.CameraType = Enum.CameraType.Custom
-Instance.CFrame = CurrentFocus
+
 
 notify('anti recoil enabled', 10)
 notify('anti afk enabled', 10)
@@ -331,6 +336,15 @@ coroutine.wrap(function()
 		if open == true then open = false end
 	end
 end)
+
+coroutine.wrap(function()
+	local CurrentFocus = game:GetService('Workspace').CurrentCamera.CFrame
+	game:GetService('Workspace').CurrentCamera:Destroy()
+	local Instance = Instance.new('Camera', game:GetService('Workspace'))
+	Instance.CameraSubject = game:GetService('Players').LocalPlayer.Character.Humanoid
+	Instance.CameraType = Enum.CameraType.Custom
+	Instance.CFrame = CurrentFocus
+end)()
 
 --> FARM
 while wait() do
