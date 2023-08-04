@@ -362,17 +362,23 @@ end)()
 
 --> FARM <-----------------------------------------------------------------
 while wait() do
+	notisenabled=false;
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 	    if atm.Name == 'CA$HIER' and atm.Humanoid.Health == 100 then
+		notisenabled=false;
 	        atmsFarmed = atmsFarmed + 1
 	    
 	        uRoot()
 	        root.CFrame = CFrame.new(atm.Head.Position)
 	        aRoot()
-	        wait(.01)
+	        wait(.15)
 	        lockOn(atm)
 	
 	        if tac then else return warn ('You need a gun to farm.') end
+
+		char['[LMG]'].Parent = backpack
+		wait(.1)
+		backpack['[LMG]'].Parent = char
 	
 	        repeat 
 	            if ammo.Value == 0 then 
@@ -390,7 +396,18 @@ while wait() do
 	    end
 	end
 
-	notify('Waiting for an ATM to open.', 1)
+	notisenabled=true;
+	notisent = false;
+	coroutine.wrap(function()
+		while notisenabled == true do
+			if not notisent then
+				notify('Waiting for an ATM to open.', 5)
+				notify('Failsafes are enabled;', 5)
+				notisent = true;
+			end
+			wait(15)
+		end
+	end)()
 	wait(1)
 end
 
