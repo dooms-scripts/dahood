@@ -389,6 +389,9 @@ while wait() do
 	        wait(.55)
 	    end
 	end
+
+	notify('Waiting for an ATM to open.', 1)
+	wait(1)
 end
 
 ---------------------------------------------------------------------------
