@@ -361,10 +361,13 @@ end)()
 ---------------------------------------------------------------------------
 
 --> FARM <-----------------------------------------------------------------
+count=0;
+notisenabled=false;
 while wait() do
-	notisenabled=false;
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 	    if atm.Name == 'CA$HIER' and atm.Humanoid.Health == 100 then
+		count=0
+
 		notisenabled=false;
 	        atmsFarmed = atmsFarmed + 1
 	    
@@ -385,6 +388,16 @@ while wait() do
 	                reload() wait(.1)
 	            else
 	                tac:Activate() wait(.1)
+
+			count=count+.1
+
+			if count>5 then
+	                    uRoot() wait(.15)
+	       		    root.CFrame = CFrame.new(atm.Head.Position)
+			    wait(.1)
+			    lockOn(atm)
+	        	    uRoot() wait(.15)
+			end
 	            end
 	        until 
 	        atm.Humanoid.Health <= 0
