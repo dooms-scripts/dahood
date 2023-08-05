@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.0.9
+	    patch: 1.1.0
 
 ]])
 
@@ -17,7 +17,21 @@ _G.farmloaded=true;
 pservermode=false;
 
 
+-- create safe spot
+local safe    = Instance.new('Part')
+safe.Parent   = workspace
 
+safe.Position = Vector3.new(1000,1000,1000)
+safe.Size     = Vector3.new(10,1,10)
+safe.Color    = Color3.fromRGB(175,175,175)
+safe.Anchored = true
+
+safe.TopSurface    = Enum.SurfaceType.Studs;
+safe.BottomSurface = Enum.SurfaceType.Studs;
+safe.LeftSurface   = Enum.SurfaceType.Studs;
+safe.RightSurface  = Enum.SurfaceType.Studs;
+safe.BackSurface   = Enum.SurfaceType.Studs;
+safe.FrontSurface  = Enum.SurfaceType.Studs;
 
 -- resources
 --settings().Rendering.QualityLevel = 1
@@ -427,6 +441,7 @@ while wait() do
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))()
 	end
 
+	tp(safe.Position)
 	notisenabled=true;
 	notisent = false;
 	coroutine.wrap(function()
