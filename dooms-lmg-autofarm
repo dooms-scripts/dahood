@@ -5,13 +5,17 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.0.2
+	    patch: 1.0.3
 
 ]])
 
+if _G.farmloaded==true then
+	return('FARM ALREADY LOADED')
+end
 
-setfpscap(getgenv().settings.FPS)
+_G.farmloaded = true
 
+setfpscap(getgenv().settings.fps)
 
 -- resources
 --settings().Rendering.QualityLevel = 1
