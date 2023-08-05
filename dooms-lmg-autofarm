@@ -8,17 +8,15 @@ warn([[
 
 ]])
 
-_settings=getgenv().settings
-
-if _settings.publicServerMode==true then
+if getgenv().settings.publicServerMode==true then
     loadstring(game:HttpGet('https://pastebin.com/raw/ZAxDsszh'))()	
 end
 
-if _settings.disableRendering==true then
+if getgenv().settings.disableRendering==true then
     loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 end
 
-setfpscap(settings.FPS)
+setfpscap(getgenv().settings.FPS)
 
 -- resources
 settings().Rendering.QualityLevel = 1
