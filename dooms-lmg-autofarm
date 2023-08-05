@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.0.5
+	    patch: 1.0.7
 
 ]])
 
@@ -21,6 +21,9 @@ local settings=getgenv().settings
 setfpscap(settings.fps)
 	if settings['publicServerMode'] == true then
 		pservermode=true;
+		while wait(5) do 
+			loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))() 
+		end
 	end
 end
 
