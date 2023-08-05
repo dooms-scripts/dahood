@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.0.1
+	    patch: 1.0.2
 
 ]])
 
@@ -35,12 +35,6 @@ for _,seat in ipairs(workspace:GetDescendants()) do
         seat.Disabled = true
     end
 end
-
--- DELETE LMG
-local s,e=pcall(function()
-backpack['[LMG]']:Destroy()
-char['[LMG]']:Destroy()
-end)
 
 --> FUNCTIONS <------------------------------------------------------------
 function notify(text, dur)
@@ -146,7 +140,11 @@ end
 
 notify('ur whitelisted! 😎')
 
+if backpack:FindFirstChild('[LMG]') then
+else
 buy_lmg()
+end
+
 buy_ammo()
 
 -- AUTO REFILL AMMO --------------------------------------------------------
