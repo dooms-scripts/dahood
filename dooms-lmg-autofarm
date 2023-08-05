@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.1
+	    patch: 1.1.2
 
 ]])
 
@@ -14,14 +14,15 @@ if _G.farmloaded==true then
 end
 
 _G.farmloaded=true;
-pservermode=false;
+pservermode=nil;
 
 if _G.FPS then
 	setfpscap(_G.FPS)
 end
 
-if _G.PulicServerMode then
+if _G.PulicServerMode == true then
 	pservermode=true;
+	warn('PUBLIC SERVER MODE ENABLED')
 end
 
 if _G.CPUSaver then
@@ -451,7 +452,8 @@ while wait() do
 	    end
 	end
 
-	if pservermode == true then
+	if _G.PublicServerMode and _G.PublicServerMode == true then
+		warn('Teleporting to a new server.')
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))()
 	end
 
