@@ -19,7 +19,7 @@ end
 setfpscap(getgenv().settings.FPS)
 
 -- resources
-settings().Rendering.QualityLevel = 1
+--settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
 
 -- variables
