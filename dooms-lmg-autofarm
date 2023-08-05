@@ -22,7 +22,7 @@ setfpscap(settings.fps)
 	if settings['publicServerMode'] == true then
 		pservermode=true;
 		while wait(5) do 
-			loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))() 
+			--loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))() 
 		end
 	end
 end
