@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.0.4
+	    patch: 1.0.5
 
 ]])
 
@@ -15,7 +15,10 @@ end
 
 _G.farmloaded = true
 
+if getgenv().settings then
 setfpscap(getgenv().settings.fps)
+end
+
 
 -- resources
 --settings().Rendering.QualityLevel = 1
