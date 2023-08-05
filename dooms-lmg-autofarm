@@ -11,6 +11,7 @@ warn([[
 
 setfpscap(getgenv().settings.FPS)
 
+
 -- resources
 --settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
@@ -33,6 +34,12 @@ for _,seat in ipairs(workspace:GetDescendants()) do
         seat.Disabled = true
     end
 end
+
+-- DELETE LMG
+local s,e=pcall(function()
+backpack['[LMG]']:Destroy()
+char['[LMG]']:Destroy()
+end)
 
 --> FUNCTIONS <------------------------------------------------------------
 function notify(text, dur)
