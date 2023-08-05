@@ -13,10 +13,15 @@ if _G.farmloaded==true then
 	return('FARM ALREADY LOADED')
 end
 
-_G.farmloaded = true
+_G.farmloaded=true;
+pservermode=false;
 
 if getgenv().settings then
-setfpscap(getgenv().settings.fps)
+local settings=getgenv().settings
+setfpscap(settings.fps)
+	if settings['publicServerMode'] == true then
+		pservermode=true;
+	end
 end
 
 
@@ -422,6 +427,10 @@ while wait() do
 	        
 	        wait(.55)
 	    end
+	end
+
+	if pservermode == true then
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))()
 	end
 
 	notisenabled=true;
