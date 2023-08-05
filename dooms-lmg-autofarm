@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.3
+	    patch: 1.1.3 test vers
 
 ]])
 
@@ -49,7 +49,7 @@ coroutine.wrap(function()
 					loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
 				end)
 				if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
-				deb_2==true
+				deb_2=true
 			end
 		end
 	end
