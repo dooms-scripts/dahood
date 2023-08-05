@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.0.3
+	    patch: 1.0.4
 
 ]])
 
@@ -80,6 +80,7 @@ function uRoot()
 end
 
 function buy_lmg()
+	wait(2)
 	if backpack:FindFirstChild('[LMG]') then return warn('already bought') end
 	if char:FindFirstChild('[LMG]') then return warn('already bought') end
 
@@ -144,10 +145,8 @@ end
 
 notify('ur whitelisted! 😎')
 
-if backpack:FindFirstChild('[LMG]') then
-else
 buy_lmg()
-end
+
 
 buy_ammo()
 
