@@ -5,7 +5,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.2
+	    patch: 1.1.3
 
 ]])
 
@@ -13,24 +13,47 @@ if _G.farmloaded==true then
 	return('FARM ALREADY LOADED')
 end
 
-_G.farmloaded=true;
 pservermode=nil;
 
-if _G.FPS then
-	setfpscap(_G.FPS)
-end
+coroutine.wrap(function()
+	_G.farmloaded=true;
 
-if _G.PulicServerMode == true then
-	pservermode=true;
-	warn('PUBLIC SERVER MODE ENABLED')
-end
+	local deb=false
+	local deb_2=false
+	while wait(1) do
+		if _G.FPS then
+			setfpscap(_G.FPS)
+		end
+		
+		if _G.PulicServerMode == true then
+			pservermode=true;
 
-if _G.CPUSaver then
-	local ranSuccessfully, error = pcall(function()
-		loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
-	end)
-	if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
-end
+			if deb==false then
+			warn('PUBLIC SERVER MODE ENABLED')
+			deb=true
+			end
+		end
+		
+		if _G.PulicServerMode == false then
+			pservermode=true;
+
+			if deb==false then
+			warn('PUBLIC SERVER MODE ENABLED')
+			deb=true
+			end
+		end
+		
+		if _G.CPUSaver then
+			if deb_2 == false then
+				local ranSuccessfully, error = pcall(function()
+					loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
+				end)
+				if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
+				deb_2==true
+			end
+		end
+	end
+end)()
 
 -- create safe spot
 local safe    = Instance.new('Part')
