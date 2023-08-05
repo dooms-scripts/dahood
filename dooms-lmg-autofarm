@@ -8,13 +8,6 @@ warn([[
 
 ]])
 
-if getgenv().settings.publicServerMode==true then
-    loadstring(game:HttpGet('https://pastebin.com/raw/ZAxDsszh'))()	
-end
-
-if getgenv().settings.disableRendering==true then
-    loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
-end
 
 setfpscap(getgenv().settings.FPS)
 
