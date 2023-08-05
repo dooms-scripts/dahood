@@ -16,6 +16,20 @@ end
 _G.farmloaded=true;
 pservermode=false;
 
+if _G.FPS then
+	setfpscap(_G.FPS)
+end
+
+if _G.PulicServerMode then
+	pservermode=true;
+end
+
+if _G.CPUSaver then
+	local ranSuccessfully, error = pcall(function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
+	end)
+	if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
+end
 
 -- create safe spot
 local safe    = Instance.new('Part')
