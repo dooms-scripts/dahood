@@ -31,6 +31,7 @@ end
 
 if _G.Webhook then
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/disconnect-hook.lua'))()
+	https://raw.githubusercontent.com/dooms-scripts/dahood/main/stats-hook.lua
 end
 
 if _G.CPUSaver then
