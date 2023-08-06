@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.6debug'
+patch='1.1.6.1debug'
 
 warn([[
 
@@ -144,7 +144,7 @@ function buy_lmg()
 	if backpack:FindFirstChild('[LMG]') then return warn('already bought') end
 	if char:FindFirstChild('[LMG]') then return warn('already bought') end
 
-	shop=nil
+	local shop=nil
 
 	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
 	if s.Name:sub(1,5) == '[LMG]' then
@@ -167,7 +167,7 @@ function buy_lmg()
 		end
 	end)
 
-	repeat click(s.ClickDetector) 
+	repeat click(shop.ClickDetector) 
 		wait(.1)
 	until bought == true
 
@@ -179,6 +179,15 @@ end
 function buy_ammo()
 	if char:FindFirstChild('[LMG]') then
 		char:FindFirstChild('[LMG]').Parent = backpack
+	end
+
+	local shop=nil
+
+	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
+	if s.Name:sub(1,5) == '[LMG Ammo]' then
+		print(s.Name)
+		shop=s
+	end
 	end
 
 	oldpos = root.Position
@@ -196,7 +205,7 @@ function buy_ammo()
 		end
 	end)
 
-	repeat click(workspace.Ignored.Shop["200 [LMG Ammo] - $309"].ClickDetector) 
+	repeat click(shop.ClickDetector) 
 		wait(.1)
 	until bought == true
 
