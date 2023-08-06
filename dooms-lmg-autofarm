@@ -10,51 +10,43 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.3 test vers
+	    patch: 1.1.4 test vers
 
 ]])
 
-pservermode=nil;
+pservermode=false;
 
-coroutine.wrap(function()
-	_G.farmloaded=true;
-
-	local deb=false
-	local deb_2=false
-	while wait(1) do
-		if _G.FPS then
-			setfpscap(_G.FPS)
-		end
+if _G.FPS then
+	setfpscap(_G.FPS)
+end
 		
-		if _G.PulicServerMode == true then
-			pservermode=true;
+if _G.PulicServerMode == true then
+	pservermode=true;
 
-			if deb==false then
-			warn('PUBLIC SERVER MODE ENABLED')
-			deb=true
-			end
-		end
-		
-		if _G.PulicServerMode == false then
-			pservermode=true;
-
-			if deb==false then
-			warn('PUBLIC SERVER MODE ENABLED')
-			deb=true
-			end
-		end
-		
-		if _G.CPUSaver then
-			if deb_2 == false then
-				local ranSuccessfully, error = pcall(function()
-					loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
-				end)
-				if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
-				deb_2=true
-			end
-		end
+	if deb==false then
+	warn('PUBLIC SERVER MODE ENABLED')
+	deb=true
 	end
-end)()
+end
+
+if _G.PulicServerMode == false then
+	pservermode=true;
+
+	if deb==false then
+	warn('PUBLIC SERVER MODE ENABLED')
+	deb=true
+	end
+end
+
+if _G.CPUSaver then
+	if deb_2 == false then
+		local ranSuccessfully, error = pcall(function()
+			loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
+		end)
+		if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
+		deb_2=true
+	end
+end
 
 -- create safe spot
 local safe    = Instance.new('Part')
@@ -460,7 +452,18 @@ while wait() do
 
 			if count>5 then
 	                    uRoot() wait(.15)
-	       		    root.CFrame = CFrame.new(atm.Head.Position)
+
+			    if publicservermode then
+			    	atmhead = atm.Head
+			        root.CFrame = CFrame.new(Vector3.new(
+			        atmhead.Position.X,
+			        atmhead.Position.Y+7.4,
+			        atmhead.Position.Z
+			        ))
+			    else
+	       		    	root.CFrame = CFrame.new(atm.Head.Position)
+			    end
+
 			    wait(.1)
 			    lockOn(atm)
 	        	    uRoot() wait(.15)
@@ -501,6 +504,7 @@ end
 
 --[[
 
-		hai
+		hai:3
+		if this source somehow leaked or got deobfuscated, hello skids!! ur jelus cuz doom made a better aufarm XD
 
 ]]--
