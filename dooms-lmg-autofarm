@@ -11,7 +11,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5.3debug version
+	    patch: 1.1.5.4debug version
 
 ]])
 
@@ -447,10 +447,15 @@ while wait() do
 	
 	        if tac then else return warn ('You need a gun to farm.') end
 
-		char['[LMG]'].Parent = backpack
-		wait(.1)
+		local s,e=pcall(function()
 		backpack['[LMG]'].Parent = char
-	
+		end)	
+
+		if s then
+			notify('Fatal error occured, check logs for more info.', 30)
+			warn('FATAL ERROR (SEND TO DOOM): '..e)
+		end
+
 	        repeat 
 	            if ammo.Value == 0 then 
 	                reload() wait(.1)
@@ -469,6 +474,8 @@ while wait() do
 			        atmhead.Position.Y+9,
 			        atmhead.Position.Z
 			        ))
+				wait()
+				root.Anchored = true
 			    else
 	       		    	root.CFrame = CFrame.new(atm.Head.Position)
 			    end
