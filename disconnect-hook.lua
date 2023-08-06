@@ -47,7 +47,7 @@ coroutine.wrap(function()
 		                    icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137717097879834685/info.png"
 		                },
 		                title = string.format("%s (%s) Disconnected.", Player.Name, Player.UserId),
-		                description = string.format("Disconnect message: `%s` \n\nMoney: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", tostring(_G.errMsg), formattedMoney, Elapsed, ATMCount),
+		                description = string.format("Disconnect message: `%s` \n\nMoney: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", tostring(_G.errMsg), formattedMoney, tostring(Elapsed), tostring(ATMCount)),
 		                thumbnail = {
 		                    url = tostring(userThumbnail),
 		                },
