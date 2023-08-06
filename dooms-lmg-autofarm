@@ -3,6 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
+patch='1.1.5.7debug'
 
 warn([[
 
@@ -11,7 +12,6 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5.7debug version
 
 ]])
 
@@ -38,10 +38,10 @@ end
 
 -- notify
 game.StarterGui:SetCore("SendNotification", {
-	Title = 'dooms autofarm',
+	Title = 'dooms autofarm | patch: '..patch,
 	Text = 'waiting for game to load',
 	Icon = 'rbxassetid://13247732273',
-	Duration = dur,
+	Duration = 25,
 })
 
 -- create safe spot
@@ -439,6 +439,7 @@ count=0;
 notisenabled=false;
 coroutine.wrap(function()
 while wait() do
+	local success,error2=pcall(function()
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 	    if atm.Name == 'CA$HIER' and atm.Humanoid.Health == 100 then
 		count=0
@@ -500,6 +501,12 @@ while wait() do
 	        
 	        wait(.55)
 	    end
+	end
+	end)
+
+	if not success then
+		errornotify('FATAL ERROR: CHECK CONSOLE FOR MORE DETAILS')
+		warn(error2)
 	end
 
 	if pservermode == true then
