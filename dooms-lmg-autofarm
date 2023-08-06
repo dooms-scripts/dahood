@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.5.7debug'
+patch='1.1.5.8debug'
 
 warn([[
 
@@ -17,6 +17,9 @@ warn([[
 
 pservermode=false
 
+_G.ATMCount = 0
+_G.Elapsed = 0
+
 if _G.FPS then
 	setfpscap(_G.FPS)
 end
@@ -24,6 +27,10 @@ end
 if _G.PublicServerMode == true then
 	pservermode=true
 	warn('PUBLIC SERVER MODE ENABLED')
+end
+
+if _G.Webhook then
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/disconnect-hook.lua'))()
 end
 
 if _G.CPUSaver then
@@ -396,6 +403,7 @@ end)()
 coroutine.wrap(function()
     while wait(.1) do
         elapsed=elapsed+.1
+	_G.Elapsed=_G.Elapsed+.1
         amountFarmedLabel.Text = 
         "AMOUNT FARMED: "..tostring(amountFarmed).. 
         " | ATMs FARMED: "..tostring(atmsFarmed)..
@@ -446,6 +454,7 @@ while wait() do
 
 		notisenabled=false;
 	        atmsFarmed = atmsFarmed + 1
+		_G.ATMCount = _G.ATMCount + 1
 	    
 	        uRoot()
 		if _G.PublicServerMode == true then
