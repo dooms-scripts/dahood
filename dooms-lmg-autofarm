@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.6.3debug'
+patch='1.1.6-3d'
 
 warn([[
 
@@ -52,7 +52,7 @@ game.StarterGui:SetCore("SendNotification", {
 })
 
 game.StarterGui:SetCore("SendNotification", {
-	Title = 'patch',
+	Title = 'script version',
 	Text = patch,
 	Icon = 'rbxassetid://14173825435',
 	Duration = 3,
