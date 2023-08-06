@@ -51,6 +51,13 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
+game.StarterGui:SetCore("SendNotification", {
+	Title = 'patch',
+	Text = patch,
+	Icon = 'rbxassetid://14173825435',
+	Duration = 3,
+})
+
 -- create safe spot
 local safe    = Instance.new('Part')
 safe.Parent   = workspace
