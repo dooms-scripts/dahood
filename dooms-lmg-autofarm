@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.7-3d'
+patch='1.1.7-4d'
 
 warn([[
 
@@ -31,7 +31,7 @@ end
 
 if _G.Webhook then
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/disconnect-hook.lua'))()
-	https://raw.githubusercontent.com/dooms-scripts/dahood/main/stats-hook.lua
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/stats-hook.lua'))()
 end
 
 if _G.CPUSaver then
@@ -577,6 +577,24 @@ end)()
 
 _G.farmloaded = true
 warn('FARM FINISHED LOADING')
+
+coroutine.wrap(function()
+	while true do
+		local plr = game.Players.LocalPlayer
+		local char = plr.Character
+		local root = char.HumanoidRootPart
+		
+		rootOldPos = root.Position
+		
+		wait(30)
+		
+		if root.Position == rootOldPos then
+			print('youve been standing still too long; reloading script')
+			_G.farmloaded = false
+			loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-lmg-autofarm'))()
+		end
+	end
+end)()
 
 --[[
 
