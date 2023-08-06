@@ -3,7 +3,6 @@ if _G.farmloaded==true then
 	return
 end
 
-_G.farmloaded = true
 
 warn([[
 
@@ -12,7 +11,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5.2 debug version
+	    patch: 1.1.5.3debug version
 
 ]])
 
@@ -36,6 +35,14 @@ if _G.CPUSaver then
 		deb_2=true
 	end
 end
+
+-- notify
+game.StarterGui:SetCore("SendNotification", {
+	Title = 'dooms autofarm',
+	Text = 'waiting for game to load',
+	Icon = 'rbxassetid://14173970804',
+	Duration = dur,
+})
 
 -- create safe spot
 local safe    = Instance.new('Part')
@@ -423,6 +430,7 @@ end)()
 --> FARM <-----------------------------------------------------------------
 count=0;
 notisenabled=false;
+coroutine.wrap(function()
 while wait() do
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 	    if atm.Name == 'CA$HIER' and atm.Humanoid.Health == 100 then
@@ -500,8 +508,12 @@ while wait() do
 	end)()
 	wait(1)
 end
+end)()
 
 ---------------------------------------------------------------------------
+
+_G.farmloaded = true
+warn('FARM FINISHED LOADING')
 
 --[[
 
