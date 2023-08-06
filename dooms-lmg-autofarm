@@ -12,7 +12,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5 debug version
+	    patch: 1.1.6 debug version
 
 ]])
 
@@ -22,7 +22,7 @@ if _G.FPS then
 	setfpscap(_G.FPS)
 end
 		
-if _G.PulicServerMode == true then
+if _G.PublicServerMode == true then
 	pservermode=true
 	warn('PUBLIC SERVER MODE ENABLED')
 end
