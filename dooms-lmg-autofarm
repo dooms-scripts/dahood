@@ -430,13 +430,18 @@ end)()
 
 -- debug menu
 coroutine.wrap(function()
+    while wait(1) do
+        elapsed=elapsed+1
+	_G.Elapsed=_G.Elapsed+1
+    end
+end)()
+
+coroutine.wrap(function()
     while wait(.1) do
-        elapsed=elapsed+.1
-	_G.Elapsed=_G.Elapsed+.1
         amountFarmedLabel.Text = 
         "AMOUNT FARMED: "..tostring(amountFarmed).. 
         " | ATMs FARMED: "..tostring(atmsFarmed)..
-        " | ELAPSED: "..tostring(math.round(elapsed))
+        " | ELAPSED: "..tostring(elapsed)
     end
 end)()
 
