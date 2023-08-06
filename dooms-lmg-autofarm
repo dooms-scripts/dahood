@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.5.9debug'
+patch='1.1.6debug'
 
 warn([[
 
@@ -45,7 +45,7 @@ end
 
 -- notify
 game.StarterGui:SetCore("SendNotification", {
-	Title = 'dooms autofarm | patch: '..patch,
+	Title = 'dooms autofarm \npatch: '..patch,
 	Text = 'waiting for game to load',
 	Icon = 'rbxassetid://13247732273',
 	Duration = 25,
@@ -144,6 +144,15 @@ function buy_lmg()
 	if backpack:FindFirstChild('[LMG]') then return warn('already bought') end
 	if char:FindFirstChild('[LMG]') then return warn('already bought') end
 
+	shop=nil
+
+	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
+	if s.Name:sub(1,5) == '[LMG]' then
+		print(s.Name)
+		shop=s
+	end
+	end
+
 	oldpos = root.Position
 	uRoot()
 	tp(Vector3.new(-620.8822631835938, 20.29998779296875, -305.3392639160156)) 
@@ -158,7 +167,7 @@ function buy_lmg()
 		end
 	end)
 
-	repeat click(workspace.Ignored.Shop["[LMG] - $3863"].ClickDetector) 
+	repeat click(s.ClickDetector) 
 		wait(.1)
 	until bought == true
 
