@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.6-3d'
+patch='1.1.7-3d'
 
 warn([[
 
@@ -522,6 +522,10 @@ while wait() do
 
 			if count>5 then
 	                    uRoot() wait(.15)
+	
+			    local s,e=pcall(function()
+			    	backpack['[LMG]'].Parent = char
+			    end)	
 
 	       		    root.CFrame = CFrame.new(atm.Head.Position)
 
