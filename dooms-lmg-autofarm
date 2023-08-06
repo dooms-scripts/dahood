@@ -11,7 +11,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5.6debug version
+	    patch: 1.1.5.7debug version
 
 ]])
 
@@ -447,7 +447,18 @@ while wait() do
 	        atmsFarmed = atmsFarmed + 1
 	    
 	        uRoot()
-	        root.CFrame = CFrame.new(atm.Head.Position)
+		if _G.PublicServerMode == true then
+			warn('yes')
+			atmhead = atm.Head
+			root.CFrame = CFrame.new(Vector3.new(
+			atmhead.Position.X,
+			atmhead.Position.Y+9,
+			atmhead.Position.Z
+			))
+			wait()
+		else
+	        	root.CFrame = CFrame.new(atm.Head.Position)
+		end
 	        aRoot()
 	        wait(.15)
 	        lockOn(atm)
@@ -474,19 +485,7 @@ while wait() do
 			if count>5 then
 	                    uRoot() wait(.15)
 
-			    if _G.PublicServerMode == true then
-				warn('yes')
-			    	atmhead = atm.Head
-			        root.CFrame = CFrame.new(Vector3.new(
-			        atmhead.Position.X,
-			        atmhead.Position.Y+9,
-			        atmhead.Position.Z
-			        ))
-				wait()
-				root.Anchored = true
-			    else
-	       		    	root.CFrame = CFrame.new(atm.Head.Position)
-			    end
+	       		    root.CFrame = CFrame.new(atm.Head.Position)
 
 			    wait(.1)
 			    lockOn(atm)
