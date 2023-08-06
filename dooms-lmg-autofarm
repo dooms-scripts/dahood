@@ -74,6 +74,7 @@ safe.RightSurface  = Enum.SurfaceType.Studs;
 safe.BackSurface   = Enum.SurfaceType.Studs;
 safe.FrontSurface  = Enum.SurfaceType.Studs;
 
+
 -- resources
 --settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
@@ -84,6 +85,8 @@ local plr = players.LocalPlayer
 local char = plr.Character
 local root = char:WaitForChild('HumanoidRootPart')
 local backpack = plr.Backpack
+
+root.CFrame = CFrame.new(safe.Position)
 
 local ammo = plr.PlayerGui.MainScreenGui.AmmoFrame.AmmoText
 
