@@ -454,7 +454,7 @@ while wait() do
 			if count>5 then
 	                    uRoot() wait(.15)
 
-			    if publicservermode == true then
+			    if pservermode == true then
 			    	atmhead = atm.Head
 			        root.CFrame = CFrame.new(Vector3.new(
 			        atmhead.Position.X,
