@@ -3,7 +3,7 @@ if _G.farmloaded==true then
 	return
 end
 
-patch='1.1.6.1debug'
+patch='1.1.6.2debug'
 
 warn([[
 
@@ -191,10 +191,10 @@ function buy_ammo()
 	local shop=nil
 
 	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
-	if s.Name:sub(1,5) == '[LMG Ammo]' then
-		print(s.Name)
-		shop=s
-	end
+		if s.Name:sub(1,14) == '200 [LMG Ammo]' then
+			print(s.Name)
+			shop=s
+		end
 	end
 
 	oldpos = root.Position
