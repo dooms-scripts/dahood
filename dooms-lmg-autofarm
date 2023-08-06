@@ -40,7 +40,7 @@ end
 game.StarterGui:SetCore("SendNotification", {
 	Title = 'dooms autofarm',
 	Text = 'waiting for game to load',
-	Icon = 'rbxassetid://14173970804',
+	Icon = 'rbxassetid://13247732273',
 	Duration = dur,
 })
 
