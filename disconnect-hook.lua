@@ -4,7 +4,8 @@ local https = game:GetService("HttpService")
 local WebhookURL = _G.Webhook -- The Discord Webhook URL it'll use to send the embed through.
 local userThumbnail = loadstring(game:HttpGet('https://pastebin.com/raw/AC35HBac'))()
 
-local Elapsed=_G.Elapsed
+local Elapsed = _G.Elapsed
+local ATMCount = _G.ATMCount
 
 local debounce = false
 _G.errMsg = 'Couldnt fetch'
@@ -46,7 +47,7 @@ coroutine.wrap(function()
 		                    icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137717097879834685/info.png"
 		                },
 		                title = string.format("%s (%s) Disconnected.", Player.Name, Player.UserId),
-		                description = string.format("Reason for kick: `%s` \n\nMoney: `%s` \nElapsed: `%s seconds`", tostring(_G.errMsg), formattedMoney, Elapsed),
+		                description = string.format("Disconnect message: `%s` \n\nMoney: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", tostring(_G.errMsg), formattedMoney, Elapsed, ATMCount),
 		                thumbnail = {
 		                    url = tostring(userThumbnail),
 		                },
