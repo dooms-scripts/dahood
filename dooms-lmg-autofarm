@@ -46,8 +46,8 @@ end
 -- notify
 game.StarterGui:SetCore("SendNotification", {
 	Title = 'dooms autofarm \npatch: '..patch,
-	Text = 'waiting for game to load',
-	Icon = 'rbxassetid://13247732273',
+	Text = '\nwaiting for game to load',
+	Icon = 'rbxassetid://9340766849',
 	Duration = 25,
 })
 
