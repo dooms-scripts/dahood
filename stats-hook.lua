@@ -41,7 +41,7 @@ coroutine.wrap(function()
                         name = "dooms autofarm",
                         icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137763658332651520/blueinfo.png"
                     },
-                    title = string.format("%s (%s) - Stats.", Player.Name, Player.UserId),
+                    title = string.format("%s (%s) - STATS", Player.Name, Player.UserId),
                     description = string.format("Money: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", formattedMoney, tostring(_G.Elapsed), tostring(_G.ATMCount)),
                     thumbnail = {
                         url = tostring(userThumbnail),
