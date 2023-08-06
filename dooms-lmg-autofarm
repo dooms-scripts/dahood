@@ -12,7 +12,7 @@ warn([[
 
          @doomxx / doom#1000
           DM me bug reports
-	    patch: 1.1.5.1 debug version
+	    patch: 1.1.5.2 debug version
 
 ]])
 
@@ -480,7 +480,7 @@ while wait() do
 	    end
 	end
 
-	if _G.PublicServerMode and _G.PublicServerMode == true then
+	if pservermode == true then
 		warn('Teleporting to a new server.')
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/join-small-server'))()
 	end
