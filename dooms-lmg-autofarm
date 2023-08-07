@@ -12,11 +12,12 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.0.2')
+warn('1.0.3')
 
 game.Players.LocalPlayer:WaitForChild('DataFolder')
 
 coroutine.wrap(function()
+	_G.Elapsed = 0
 	while wait(1) do
 		_G.Elapsed = _G.Elapsed + 1
 	end
