@@ -7,10 +7,15 @@
 
 game.StarterGui:SetCore("SendNotification", {
 	Title = 'dooms autofarm rewritten',
-	Text = 'hi tester :p!! waiting for game to load',
+	Text = 'hi tester :p!! waiting for game to load..',
 	Icon = 'rbxassetid://14173825435',
 	Duration = 25,
 })
+
+if _G.Webhook then
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/disconnect-hook.lua'))()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/stats-hook.lua'))()
+end
 
 -- This file was generated using Luraph Obfuscator v13.6.7
 
