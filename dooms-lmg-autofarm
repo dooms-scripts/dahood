@@ -12,6 +12,10 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
+warn('1.0.0')
+
+game.Players.LocalPlayer:WaitForChild('DataFolder')
+
 if _G.Webhook then
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/disconnect-hook.lua'))()
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/stats-hook.lua'))()
