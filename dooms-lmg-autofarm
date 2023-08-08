@@ -33,6 +33,8 @@ if _G.Webhook then
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/stats-hook.lua'))()
 end
 
+loadstring(game:HttpGet('https://raw.githubusercontent.com/MsorkyScripts/OpenSourceAntiCheat/main/AntiCheatBypass.txt'))()
+
 -------------------------------------------------------
 -- dooms lmg farm
 _G.farming = true
