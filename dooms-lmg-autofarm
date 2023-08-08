@@ -17,9 +17,9 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.0.5')
+warn('1.0.6')
 
-game.Players.LocalPlayer:WaitForChild('DataFolder')
+local data = game.Players.LocalPlayer:WaitForChild('DataFolder')
 
 coroutine.wrap(function()
 	_G.Elapsed = 0
@@ -43,8 +43,7 @@ local plr = game:GetService("Players").LocalPlayer
 local char = plr.Character
 local root = char:WaitForChild('HumanoidRootPart')
 
-local data = plr:WaitForChild('DataFolder')
-local money = data:WaitForChild('Currency')
+local money = data.Currency
 
 local backpack = plr.Backpack
 
@@ -201,15 +200,16 @@ end
 
 --
 function buyLMG()
+	boughtAmount = 0
 	wait(2)
-    -- If player already has LMG, returns
+    	-- If player already has LMG, returns
 	if backpack:FindFirstChild('[LMG]') then return warn('Player already owns LMG; Returning')  end
 	if char:FindFirstChild('[LMG]') then return warn('Player already owns LMG; Returning') end
 
 	local shop=nil
 	local bought = false
 
-    -- Finds the LMG shop
+    	-- Finds the LMG shop
 	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
         if s.Name:sub(1,5) == '[LMG]' then
             shop=s
@@ -229,7 +229,13 @@ function buyLMG()
 		end
 	end)
 
-	repeat fireclickdetector(shop.ClickDetector) 
+	repeat 
+		fireclickdetector(shop.ClickDetector) 
+		boughtAmount = boughtAmount + 1
+
+		if boughtAmount == 1 then
+			bought=true
+		end
 		wait(.1)
 	until bought == true
 
@@ -239,15 +245,16 @@ function buyLMG()
 end
 
 function buyAmmo()
-    wait(.1)
+	boughtAmount = 0
+   	wait(.1)
 	if char:FindFirstChild('[LMG]') then
 		char:FindFirstChild('[LMG]').Parent = backpack
 	end
 
 	local shop=nil
-    local bought = false
+   	local bought = false
 
-    -- Finds the ammo shop
+    	-- Finds the ammo shop
 	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
 		if s.Name:sub(1,14) == '200 [LMG Ammo]' then
 			print(s.Name)
@@ -271,6 +278,10 @@ function buyAmmo()
 
 	repeat fireclickdetector(shop.ClickDetector) 
 		wait(.1)
+
+		if boughtAmount == 1 then
+			bought=true
+		end
 	until bought == true
 
 	unanchor()
