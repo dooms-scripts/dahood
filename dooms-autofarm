@@ -7,7 +7,7 @@ loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
 
-warn('1.2')
+warn('1.2.0')
 
 if _G.farmloaded then
 	game.StarterGui:SetCore("SendNotification", {
