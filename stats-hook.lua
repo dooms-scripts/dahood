@@ -42,7 +42,7 @@ coroutine.wrap(function()
                         icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137763658332651520/blueinfo.png"
                     },
                     title = string.format("%s `(%s)`", Player.Name, Player.UserId),
-                    description = string.format("Money: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", formattedMoney, tostring(_G.Elapsed), tostring(_G.ATMCount)),
+                    description = string.format("Money: `%s` \nAmount Earned: `%s` \nAmount Spent: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", formattedMoney, tostring(_G.AmountEarned), tostring(_G.AmountSpent), tostring(_G.Elapsed), tostring(_G.ATMCount)),
                     thumbnail = {
                         url = tostring(userThumbnail),
                     },
