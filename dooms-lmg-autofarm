@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.1.4')
+warn('1.1.5')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -404,7 +404,7 @@ buyLMG()
 buyAmmo()
 
 -- AUTO REFILL AMMO --------------------------------------------------------
-local refill = task.spawn(function()
+coroutine.wrap(function()
 	waitTime = 0
 	ammo = plr.PlayerGui.MainScreenGui.AmmoFrame.AmmoText
 	
@@ -525,7 +525,7 @@ end)()
 
 _G.loaded = true
 
-local farm = task.spawn(function()
+coroutine.wrap(function()
 	while true do
 		for _, atm in ipairs(workspace.Cashiers:GetChildren()) do
 		    if atm.Humanoid.Health == 100 and _G.farming == true then
