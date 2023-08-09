@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.1.5')
+warn('1.1.6')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
