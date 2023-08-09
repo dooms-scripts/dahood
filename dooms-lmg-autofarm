@@ -19,6 +19,24 @@ game.StarterGui:SetCore("SendNotification", {
 
 warn('1.0.9')
 
+_G.WebhookInterval = 600
+
+if getgenv().settings then
+	settings = getgenv().settings
+
+	if settings['WEBHOOK'] then
+		_G.Webhook = settings['WEBHOOK']
+	end
+
+	if settings['FPS'] then
+		setfpscap(settings['FPS'])
+	end
+
+	if settings['HOOK_INTERVAL'] then
+		_G.WebhookInterval = settings['HOOK_INTERVAL']
+	end
+end
+
 local data = game.Players.LocalPlayer:WaitForChild('DataFolder')
 
 coroutine.wrap(function()
