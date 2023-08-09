@@ -17,7 +17,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.0.9')
+warn('1.1.0')
 
 _G.WebhookInterval = 600
 _G.AmountEarned = 0
@@ -538,7 +538,7 @@ while true do
 	        reload()
 	        end)()
 	        cashAura()
-	        wait(0.65)
+	        wait(0.8)
 	    end
 	end
 	
