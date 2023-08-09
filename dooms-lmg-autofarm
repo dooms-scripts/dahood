@@ -306,7 +306,7 @@ function buyAmmo()
 	money.Changed:Connect(function(e)
 		newMoney = money.Value
 		if newMoney == oldMoney - 309 then 
-			amountSpent = amountSpend + 309
+			amountSpent = amountSpent + 309
 			bought = true
 		end
 	end)
