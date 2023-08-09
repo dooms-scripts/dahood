@@ -10,6 +10,12 @@ if _G.loaded == true then
 	return
 end
 
+coroutine.wrap(function()
+	game_settings = settings()
+	game_settings.Rendering.QualityLevel = 1
+	UserSettings().GameSettings.MasterVolume = 0
+end)()
+
 game.StarterGui:SetCore("SendNotification", {
 	Title = 'dooms autofarm rewritten',
 	Text = 'hi tester :p!! waiting for game to load..',
@@ -17,7 +23,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.1.1')
+warn('1.1.2')
 
 _G.WebhookInterval = 600
 _G.AmountEarned = 0
