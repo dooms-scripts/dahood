@@ -17,7 +17,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.1.0')
+warn('1.1.1')
 
 _G.WebhookInterval = 600
 _G.AmountEarned = 0
@@ -36,6 +36,13 @@ if getgenv().settings then
 
 	if settings['HOOK_INTERVAL'] then
 		_G.WebhookInterval = settings['HOOK_INTERVAL']
+	end
+
+	if settings['CPU_SAVER'] then
+		local ranSuccessfully, error = pcall(function()
+			loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()	
+		end)
+		if ranSuccessfully == false then warn('ERROR LOADING CPU SAVER: '..error) end
 	end
 end
 
@@ -260,7 +267,7 @@ function buyLMG()
 	money.Changed:Connect(function(e)
 		newMoney = money.Value
 		if newMoney == oldMoney - 3863 then 
-			amountSpent = amountSpent + 3863
+			-- amountSpent = amountSpent + 3863
 			bought = true
 		end
 	end)
@@ -390,34 +397,45 @@ buyLMG()
 buyAmmo()
 
 -- AUTO REFILL AMMO --------------------------------------------------------
-coroutine.wrap(function()
-    local ammo = plr.PlayerGui.MainScreenGui.AmmoFrame.AmmoText
+local refill = task.spawn(function()
+	waitTime = 0
+	ammo = plr.PlayerGui.MainScreenGui.AmmoFrame.AmmoText
+	
+	local s,err = pcall(function()
+		boughtAmount = 0
+		while wait() do
+			if ammo.Text == '0' then
+		             	_G.farming = false
+				buyAmmo()
+				_G.farming = true
+				-- wait(.1)
+				-- repeat
+				-- buyAmmo()
+				-- boughtAmount = boughtAmount + 1
+				-- waitTime = waitTime + 1
+	
+				-- if waitTime > 10 then
+				-- 	warn("You've been buying ammo too long; Cancelling")
+				-- 	coroutine.yield()
+				-- 	_G.farming = true
+				-- end
+				
+				-- print('bought amount:' .. boughtAmount)
+				-- if boughtAmount > 10 then
+				-- 	break
+				-- end
 
-    local s,err = pcall(function()
-	boughtAmount = 0
-        while wait() do
-            if ammo.Text == '0' then
-            	_G.farming = false
-            	wait(.1)
-                repeat 
-		buyAmmo() 
-		boughtAmount = boughtAmount + 1
-		
-		print('bought amount:' .. boughtAmount)
-		if boughtAmount > 10 then
-			break
+				-- until ammo.Text == '2000'
+		  --           	wait(.1)
+	   --          		_G.farming = true
+			end
 		end
-		until ammo.Text == '2000'
-            	wait(.1)
-            	_G.farming = true
-            end
-        end
-    end)
-
-    if not s then
-        warn('ERROR: '..err)
-        warn('An error has occured, check console log for more details.', 15)
-    end
+	end)
+	
+	if not s then
+		warn('ERROR: '..err)
+		warn('An error has occured, check console log for more details.', 15)
+	end
 end)()
 ---------------------------------------------------------------------------
 
@@ -491,6 +509,7 @@ coroutine.wrap(function()
 		earnedlabel.Text = ' Amount Earned: '..amountFarmed
 		spentlabel.Text = " Amount Spent: "..amountSpent
 		ticklabel.Text = ' Tick: '..tick
+
 		_G.ATMCount = atmsRobbed
 		_G.AmountSpent = amountSpent
 		_G.AmountEarned = amountFarmed
@@ -499,49 +518,52 @@ end)()
 
 _G.loaded = true
 
-while true do
-	for _, atm in ipairs(workspace.Cashiers:GetChildren()) do
-	    if atm.Humanoid.Health == 100 and _G.farming == true then
-	    	tick=0
-	        root.CFrame = CFrame.new(atm.Head.Position)
-	        anchor(.2)
-	        lockOn(atm)
-	        
-	        if backpack:FindFirstChild('[LMG]') then
-	            backpack:FindFirstChild('[LMG]').Parent = char
-	        end
-	
-	        LMG = char['[LMG]']
-	
-	        repeat
-	        LMG:Activate()
-	        wait(.1)
-	        tick=tick+.1
-	        if tick>3 then
-			reload()
+local farm = task.spawn(function()
+	while true do
+		for _, atm in ipairs(workspace.Cashiers:GetChildren()) do
+		    if atm.Humanoid.Health == 100 and _G.farming == true then
+		    	tick=0
+		        root.CFrame = CFrame.new(atm.Head.Position)
+		        anchor(.2)
+		        lockOn(atm)
+		        
 		        if backpack:FindFirstChild('[LMG]') then
 		            backpack:FindFirstChild('[LMG]').Parent = char
 		        end
-	        	unanchor(0.2)
-		        root.CFrame = CFrame.new(atm.Head.Position)
-		        anchor(0.2)
-		        lockOn(atm)
-		        tick=0
-	        end
-	        until
-	        atm.Humanoid.Health < 0
-	        LMG:Deactivate()
-	        atmsRobbed = atmsRobbed + 1
-	        unanchor(0.2)
-	        
-	        coroutine.wrap(function()
-	        reload()
-	        end)()
-	        cashAura()
-	        wait(0.8)
-	    end
-	end
+		
+		        LMG = char['[LMG]']
+		
+		        repeat
+		        LMG:Activate()
+		        wait(.1)
+		        tick=tick+.1
+		        if tick>3 then
+				reload()
+			        if backpack:FindFirstChild('[LMG]') then
+			            backpack:FindFirstChild('[LMG]').Parent = char
+			        end
+		        	unanchor(0.2)
+			        root.CFrame = CFrame.new(atm.Head.Position)
+			        anchor(0.2)
+			        lockOn(atm)
+			        tick=0
+		        end
+		        until
+		        atm.Humanoid.Health < 0
+		        LMG:Deactivate()
+		        atmsRobbed = atmsRobbed + 1
+		        unanchor(0.2)
+		        
+		        coroutine.wrap(function()
+		        reload()
+		        end)()
+		        cashAura()
+		        wait(0.8)
+		    end
+		end
 	
-	--warn('waiting for an atm to open.')
-	wait(1)
-end
+		--warn('waiting for an atm to open.')
+		wait(1)
+	end	
+end)()
+
