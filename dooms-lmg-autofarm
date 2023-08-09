@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.1.6')
+warn('1.1.7')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -324,8 +324,10 @@ function buyAmmo()
 		if newMoney == oldMoney - 309 then 
 			if bought == false then
 				amountSpent = amountSpent + 309
+			else	
+				wait(.1)
+				bought = true
 			end
-			bought = true
 		end
 	end)
 
