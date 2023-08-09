@@ -11,8 +11,8 @@ if _G.loaded == true then
 end
 
 coroutine.wrap(function()
-	game_settings = settings()
-	game_settings.Rendering.QualityLevel = 1
+	-- game_settings = settings()
+	-- game_settings.Rendering.QualityLevel = 1
 	UserSettings().GameSettings.MasterVolume = 0
 end)()
 
@@ -23,7 +23,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.1.2')
+warn('1.1.3')
 
 _G.WebhookInterval = 600
 _G.AmountEarned = 0
