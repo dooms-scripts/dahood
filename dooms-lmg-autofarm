@@ -17,7 +17,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.0.8')
+warn('1.0.9')
 
 local data = game.Players.LocalPlayer:WaitForChild('DataFolder')
 
@@ -48,6 +48,7 @@ local money = data.Currency
 local backpack = plr.Backpack
 
 local amountFarmed = 0
+local amountSpent = 0
 local timeElapsed = 0
 local atmsRobbed = 0
 
@@ -68,7 +69,7 @@ window.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 window.BorderColor3 = Color3.fromRGB(0, 0, 0)
 window.BorderSizePixel = 0
 window.Position = UDim2.new(0, 0, 1, 0)
-window.Size = UDim2.new(0, 294, 0, 109)
+window.Size = UDim2.new(0, 294, 0, 139)
 
 title.Name = "123"
 title.Parent = window
@@ -88,6 +89,20 @@ local elapsedlabel = Instance.new("TextLabel")
 local robbedlabel = Instance.new("TextLabel")
 local spacer = Instance.new("Frame")
 local ticklabel = Instance.new("TextLabel")
+local spentlabel = Instance.new("TextLabel")
+
+spentlabel.Name = "earnedlabel"
+spentlabel.Parent = window
+spentlabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+spentlabel.BackgroundTransparency = 1.000
+spentlabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+spentlabel.BorderSizePixel = 0
+spentlabel.Size = UDim2.new(0, 294, 0, 20)
+spentlabel.Font = Enum.Font.Gotham
+spentlabel.Text = " Amount Spent: "
+spentlabel.TextColor3 = Color3.fromRGB(16, 172, 21)
+spentlabel.TextSize = 14.000
+spentlabel.TextXAlignment = Enum.TextXAlignment.Left
 
 earnedlabel.Name = "earnedlabel"
 earnedlabel.Parent = window
@@ -225,6 +240,7 @@ function buyLMG()
 	money.Changed:Connect(function(e)
 		newMoney = money.Value
 		if newMoney == oldMoney - 3863 then 
+			amountSpent = amountSpent + 3863
 			bought = true
 		end
 	end)
@@ -272,6 +288,7 @@ function buyAmmo()
 	money.Changed:Connect(function(e)
 		newMoney = money.Value
 		if newMoney == oldMoney - 309 then 
+			amountSpent = amountSpend + 309
 			bought = true
 		end
 	end)
@@ -305,7 +322,7 @@ function cashAura()
                 dist = (money.Position - root.Position).Magnitude
 
                 if dist < 24 then
-                    --root.CFrame=CFrame.new(money.Position) wait()
+                    root.CFrame=CFrame.new(money.Position) wait()
                     amountFarmed = amountFarmed+tonumber(money.BillboardGui.TextLabel.Text:sub(2,99))
                     fireclickdetector(money.ClickDetector)
                     wait(.55)
@@ -327,7 +344,7 @@ coroutine.wrap(function()
     while wait() do
         for _,cash in ipairs(workspace.Ignored.Drop:GetChildren()) do
             if cash.Name=='MoneyDrop' then
-                cash.Anchored = true
+                -- cash.Anchored = true
             end
         end
     end 
@@ -365,6 +382,7 @@ coroutine.wrap(function()
                 repeat 
 		buyAmmo() 
 		boughtAmount = boughtAmount + 1
+		
 		print('bought amount:' .. boughtAmount)
 		if boughtAmount > 10 then
 			break
@@ -451,6 +469,7 @@ coroutine.wrap(function()
 		elapsedlabel.Text = ' Time Elapsed: '.._G.Elapsed
 		robbedlabel.Text = ' ATMS Robbed: '..atmsRobbed
 		earnedlabel.Text = ' Amount Earned: '..amountFarmed
+		spentlabel.Text = " Amount Spent: "..amountSpent
 		ticklabel.Text = ' Tick: '..tick
 		_G.ATMCount = atmsRobbed
 	end
