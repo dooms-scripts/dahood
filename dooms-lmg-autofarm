@@ -20,6 +20,8 @@ game.StarterGui:SetCore("SendNotification", {
 warn('1.0.9')
 
 _G.WebhookInterval = 600
+_G.AmountEarned = 0
+_G.AmountSpent = 0
 
 if getgenv().settings then
 	settings = getgenv().settings
@@ -490,6 +492,8 @@ coroutine.wrap(function()
 		spentlabel.Text = " Amount Spent: "..amountSpent
 		ticklabel.Text = ' Tick: '..tick
 		_G.ATMCount = atmsRobbed
+		_G.AmountSpent = amountSpent
+		_G.AmountEarned = amountFarmed
 	end
 end)()
 
