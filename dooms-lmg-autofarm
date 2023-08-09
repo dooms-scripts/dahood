@@ -17,7 +17,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 25,
 })
 
-warn('1.0.7')
+warn('1.0.8')
 
 local data = game.Players.LocalPlayer:WaitForChild('DataFolder')
 
@@ -232,7 +232,7 @@ function buyLMG()
 	repeat 
 		fireclickdetector(shop.ClickDetector) 
 		boughtAmount = boughtAmount + 1
-
+		print('bought amount:' .. boughtAmount)
 		if boughtAmount == 1 then
 			bought=true
 		end
@@ -278,7 +278,8 @@ function buyAmmo()
 
 	repeat fireclickdetector(shop.ClickDetector) 
 		wait(.1)
-
+		boughtAmount = boughtAmount + 1
+		print('bought amount:' .. boughtAmount)
 		if boughtAmount == 1 then
 			bought=true
 		end
@@ -334,12 +335,18 @@ end)()
 
 -- reload lmg
 function reload()
-    local args = {
-        [1] = "Reload",
-        [2] = game:GetService("Players").LocalPlayer.Character:WaitForChild("[LMG]")
-    }
+	local s,e = pcall(function()
+		local args = {
+			[1] = "Reload",
+			[2] = game:GetService("Players").LocalPlayer.Character:WaitForChild("[LMG]")
+		}
+	
+		game:GetService("ReplicatedStorage"):WaitForChild("MainEvent"):FireServer(unpack(args))
+	end)
 
-    game:GetService("ReplicatedStorage"):WaitForChild("MainEvent"):FireServer(unpack(args))
+	if not s and e then
+		warn('RECOIL ERR: '..e)
+	end
 end
 
 buyLMG()
@@ -358,6 +365,7 @@ coroutine.wrap(function()
                 repeat 
 		buyAmmo() 
 		boughtAmount = boughtAmount + 1
+		print('bought amount:' .. boughtAmount)
 		if boughtAmount > 10 then
 			break
 		end
