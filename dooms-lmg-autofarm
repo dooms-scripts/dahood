@@ -205,6 +205,27 @@ ticklabel.TextXAlignment = Enum.TextXAlignment.Left
 
 ------------------------------------------
 
+-- [ FUNCTIONS ] --
+function notify(text, dur)
+    if dur == nil then dur = 5 end
+	game.StarterGui:SetCore("SendNotification", {
+		Title = 'dooms autofarm',
+		Text = text,
+		Icon = 'rbxassetid://14067565428',
+		Duration = dur,
+	})
+end
+
+function errornotify(text, dur)
+    if dur == nil then dur = 5 end
+    game.StarterGui:SetCore("SendNotification", {
+    	Title = 'dooms autofarm',
+    	Text = text,
+    	Icon = 'rbxassetid://14173970804',
+    	Duration = dur,
+    })
+end
+
 -- teleport
 function teleport(pos)
     local s,e=pcall(function()
