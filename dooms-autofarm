@@ -142,7 +142,7 @@ function cashaura()
 				amtfarmed = amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
 				_G.amtfarmed = _G.amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
 				fireclickdetector(cashdrop.ClickDetector)
-				wait(.45)
+				wait(.75)
 			end
 		end
 	end
