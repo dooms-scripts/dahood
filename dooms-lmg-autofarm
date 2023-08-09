@@ -325,7 +325,7 @@ function buyAmmo()
 			if bought == false then
 				amountSpent = amountSpent + 309
 			else	
-				wait(.1)
+				wait(.35)
 				bought = true
 			end
 		end
