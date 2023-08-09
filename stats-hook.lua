@@ -57,7 +57,7 @@ coroutine.wrap(function()
     -- Sends the webhook every 10 minutes
     while true do
         sendWebhook()
-        wait(600)
+        wait(_G.WebhookInterval)
     end
 end)()
 ----------------------------------------------------------------------------
