@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.1.9')
+warn('1.2.0')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -384,7 +384,7 @@ function cashAura()
                     --root.CFrame=CFrame.new(money.Position) wait()
                     amountFarmed = amountFarmed+tonumber(money.BillboardGui.TextLabel.Text:sub(2,99))
                     fireclickdetector(money.ClickDetector)
-                    wait(.95)
+                    wait(1.55)
                 end
             end
         end
