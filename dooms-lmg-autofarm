@@ -398,8 +398,6 @@ function cashAura()
     end
 end
 
-end)()
-
 -- anchor cash
 coroutine.wrap(function()
     while wait() do
