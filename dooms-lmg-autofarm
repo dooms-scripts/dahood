@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.1.8')
+warn('1.1.9')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -398,10 +398,6 @@ function cashAura()
     end
 end
 
-coroutine.wrap(function()
-	while wait() do
-		cashAura()
-	end
 end)()
 
 -- anchor cash
