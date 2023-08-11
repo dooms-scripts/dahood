@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.2.0')
+warn('1.2.1')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -380,11 +380,11 @@ function cashAura()
             if money.Name == 'MoneyDrop' then
                 dist = (money.Position - root.Position).Magnitude
 
-                if dist < 24 then
-                    --root.CFrame=CFrame.new(money.Position) wait()
+                if dist < 50 then
+                    root.CFrame=CFrame.new(money.Position) wait()
                     amountFarmed = amountFarmed+tonumber(money.BillboardGui.TextLabel.Text:sub(2,99))
                     fireclickdetector(money.ClickDetector)
-                    wait(1.55)
+                    wait(.95)
                 end
             end
         end
