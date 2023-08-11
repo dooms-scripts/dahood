@@ -11,7 +11,7 @@ warn('--> Loaded Stats Hook')
 coroutine.wrap(function()
 
     -- Wait for player to load before running
-	game.Players.LocalPlayer:WaitForChild('DataFolder')
+    game.Players.LocalPlayer:WaitForChild('DataFolder')
 
     -- Loops until the player is kicked
     local function sendWebhook()
@@ -96,9 +96,8 @@ coroutine.wrap(function()
         local response = http.request(data)
     end
 
-	sendWebhook2()
+    sendWebhook2()
 
-    
     -- Sends the webhook every 10 minutes
     while true do
         wait(_G.WebhookInterval)
