@@ -43,7 +43,7 @@ coroutine.wrap(function()
 		            embeds = {{
 		                author = {
 		                    name = "dooms autofarm",
-		                    icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137717097879834685/info.png"
+		                    icon_url = "https://ibb.co/gFS7Pf4"
 		                },
 		                title = string.format("%s (%s) Disconnected.", Player.Name, Player.UserId),
 		                description = string.format("Disconnect message: `%s` \n\nMoney: `%s` \nAmount Earned: `%s` \nAmount Spent: `%s`  \nElapsed: `%s seconds` \nATMs Farmed: `%s`", tostring(_G.errMsg), formattedMoney, tostring(_G.AmountEarned), tostring(_G.AmountSpent), tostring(_G.Elapsed), tostring(_G.ATMCount)),
