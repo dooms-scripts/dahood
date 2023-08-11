@@ -57,6 +57,13 @@ coroutine.wrap(function()
 			   
 		    local response = http.request(data)
 		end
+
+		game.Players.PlayerRemoving:Connect(function(plr)
+			if plr.Name == game.Players.LocalPlayer.Name then
+				_G.errMsg = 'Player has left the game.'
+				sendWebhook()
+			end
+		end)
 		
 		-- Check for kick message
 		for _,v in ipairs(game.CoreGui.RobloxPromptGui.promptOverlay:GetDescendants()) do
