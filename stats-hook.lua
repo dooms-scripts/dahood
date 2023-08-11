@@ -81,7 +81,7 @@ coroutine.wrap(function()
                 embeds = {{
                     author = {
                         name = "dooms autofarm",
-                        icon_url = "https://cdn.discordapp.com/attachments/1138634478504390797/1138657939121504276/checkmark.png"
+                        icon_url = "https://ibb.co/YWyJZrw"
                     },
                     title = string.format("%s `(%s)` - Connected!", Player.Name, Player.UserId),
                     description = string.format("Starting Amount: `%s`", formattedMoney),
