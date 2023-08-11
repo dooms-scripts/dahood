@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.2.2')
+warn('1.2.3')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -317,6 +317,7 @@ end
 
 function buyAmmo()
 	boughtAmount = 0
+	waitTime = 0
    	wait(.1)
 	if game.Players.LocalPlayer.Backpack:FindFirstChild('[LMG]') then
 	else
@@ -360,8 +361,14 @@ function buyAmmo()
 
 	repeat fireclickdetector(shop.ClickDetector) 
 		wait(.1)
+		waitTime = waitTime + .1
 		boughtAmount = boughtAmount + 1
 		print('bought amount:' .. boughtAmount)
+		if waitTime > 2 then
+			warn('Error buying ammo; Resetting')
+			return
+		end
+	
 		if boughtAmount == 1 then
 			bought=true
 		end
