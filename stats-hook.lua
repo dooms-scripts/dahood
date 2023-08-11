@@ -5,7 +5,7 @@ local WebhookURL = _G.Webhook -- The Discord Webhook URL it'll use to send the e
 local userThumbnail = loadstring(game:HttpGet('https://pastebin.com/raw/AC35HBac'))()
 ----------------------------------------------------------------------------
 
-warn('yeahyeah23')
+warn('--> Loaded Stats Hook')
 
 --> Functions <-------------------------------------------------------------
 coroutine.wrap(function()
