@@ -10,7 +10,7 @@ if _G.loaded == true then
 	return
 end
 
-warn('1.2.1')
+warn('1.2.2')
 
 coroutine.wrap(function()
 	-- game_settings = settings()
@@ -318,6 +318,12 @@ end
 function buyAmmo()
 	boughtAmount = 0
    	wait(.1)
+	if game.Players.LocalPlayer.Backpack:FindFirstChild('[LMG]') then
+	else
+		repeat buyLMG()
+		until game.Players.LocalPlayer.Backpack:FindFirstChild('[LMG]')
+	end
+
 	if char:FindFirstChild('[LMG]') then
 		char:FindFirstChild('[LMG]').Parent = backpack
 	end
