@@ -27,8 +27,11 @@ coroutine.wrap(function()
     
         formattedMoney = formatNumberWithCommas(formattedMoney)
     
-        local embColor = 0x1CA6E4
-    
+        -- local embColor = 0x1CA6E4 [ old embed color ]
+	local embColor = 0x5AB7E2 -- [ new embed color ]
+
+	--icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137763658332651520/blueinfo.png"
+			
         local data = {
             Url = WebhookURL,
             Method = "POST",
@@ -38,11 +41,10 @@ coroutine.wrap(function()
             Body = game:GetService("HttpService"):JSONEncode({
                 embeds = {{
                     author = {
-                        name = "dooms autofarm - STATS",
-                        icon_url = "https://cdn.discordapp.com/attachments/1136792419057283082/1137763658332651520/blueinfo.png"
+                        name = "dooms autofarm - STATS"
                     },
                     title = string.format("%s `(%s)`", Player.Name, Player.UserId),
-                    description = string.format("Money: `%s` \nAmount Earned: `%s` \nAmount Spent: `%s` \nElapsed: `%s seconds` \nATMs Farmed: `%s`", formattedMoney, tostring(_G.AmountEarned), tostring(_G.AmountSpent), tostring(_G.Elapsed), tostring(_G.ATMCount)),
+                    description = string.format("Money: `%s` \n\nAmount Earned: `%s` \nAmount Spent: `%s` \n\nElapsed: `%s seconds` \nATMs Farmed: `%s`", formattedMoney, tostring(_G.AmountEarned), tostring(_G.AmountSpent), tostring(_G.Elapsed), tostring(_G.ATMCount)),
                     thumbnail = {
                         url = tostring(userThumbnail),
                     },
