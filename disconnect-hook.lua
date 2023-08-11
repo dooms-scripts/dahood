@@ -8,7 +8,7 @@ local debounce = false
 _G.errMsg = 'Couldnt fetch'
 ----------------------------------------------------------------------------
 
-warn('yeahyeah5')
+warn('--> Loaded Disconnect Hook')
 
 --> Functions <-------------------------------------------------------------
 coroutine.wrap(function()
@@ -58,10 +58,12 @@ coroutine.wrap(function()
 		    local response = http.request(data)
 		end
 
+		local debounce = false
 		game.Players.PlayerRemoving:Connect(function(plr)
-			if plr.Name == game.Players.LocalPlayer.Name then
+			if plr.Name == game.Players.LocalPlayer.Name and debounce == false then
 				_G.errMsg = 'Player has left the game.'
 				sendWebhook()
+				debounce = true
 			end
 		end)
 		
