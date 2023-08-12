@@ -61,9 +61,10 @@ coroutine.wrap(function()
 		local debounce2 = false
 		game.Players.PlayerRemoving:Connect(function(plr)
 			if plr.Name == game.Players.LocalPlayer.Name and debounce2 == false then
+				debounce2 = true
 				_G.errMsg = 'Player has left the game.'
 				sendWebhook()
-				debounce2 = true
+				wait(5)
 			end
 		end)
 		
