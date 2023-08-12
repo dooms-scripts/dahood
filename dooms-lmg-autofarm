@@ -583,6 +583,8 @@ coroutine.wrap(function()
 		        wait(.1)
 		        tick=tick+.1
 		        if tick>3 then
+				buyAmmo()
+				wait(.1)
 				reload()
 			        if backpack:FindFirstChild('[LMG]') then
 			            backpack:FindFirstChild('[LMG]').Parent = char
