@@ -30,6 +30,7 @@ for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('Shirt') then x:Destro
 for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('Pants') then x:Destroy() end end
 for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('Seat') then x:Destroy() end end
 for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('VehicleSeat') then x:Destroy() end end
+for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('SpecialMesh') then x:Destroy() end end
 
 local Terrain = workspace:FindFirstChildOfClass('Terrain')
 Terrain.WaterWaveSize = 0
