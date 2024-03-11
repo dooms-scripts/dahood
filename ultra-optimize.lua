@@ -75,4 +75,4 @@ workspace.DescendantAdded:Connect(function(child)
     end)
 end)
 
-warn('sucessfully optimized')
+warn('> sucessfully optimized')
