@@ -19,6 +19,8 @@ workspace.MAP.EVIL_SPECIALx:Destroy()
 workspace.MAP.SPECIAL_BRIDGE:Destroy()
 workspace.MAP.BullCarnival:Destroy()
 
+for _,x in ipairs(game:GetDescendants()) do if x.Name == 'Meshes/mountain' then x:Destroy() end end
+for _,x in ipairs(game:GetDescendants()) do if x.ClassName == 'Part' and x.Color = '175, 148, 131' then x:Destroy() end end
 for _,x in ipairs(workspace.Ignored:GetChildren()) do if x.Name == 'HouseOwn' or x.Name == 'Folder' or x.Name == 'HouseItemSale'or x.Name == 'ItemsDrop' then x:Destroy() end end
 for _,x in ipairs(workspace.MAP.Map:GetChildren()) do if x.ClassName == 'Model' then x:Destroy() end end
 for _,x in ipairs(workspace:GetDescendants()) do if x.Name == 'print' then x:Destroy() end end
@@ -41,7 +43,7 @@ game.Lighting.GlobalShadows = false
 game.Lighting.FogEnd = 9e9
 settings().Rendering.QualityLevel = 1
 for i,v in pairs(game:GetDescendants()) do
-    if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+    if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("WedgePart") or v:IsA("TrussPart") then
         v.Material = "Plastic"
         v.Reflectance = 0
     elseif v:IsA("Decal") then
