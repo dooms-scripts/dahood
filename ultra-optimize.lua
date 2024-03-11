@@ -20,7 +20,7 @@ workspace.MAP.SPECIAL_BRIDGE:Destroy()
 workspace.MAP.BullCarnival:Destroy()
 
 for _,x in ipairs(game:GetDescendants()) do if x.Name == 'Meshes/mountain' then x:Destroy() end end
-for _,x in ipairs(game:GetDescendants()) do if x.ClassName == 'Part' and x.Color = '175, 148, 131' then x:Destroy() end end
+for _,x in ipairs(game:GetDescendants()) do if x.ClassName == 'Part' and x.Color == '175, 148, 131' then x:Destroy() end end
 for _,x in ipairs(workspace.Ignored:GetChildren()) do if x.Name == 'HouseOwn' or x.Name == 'Folder' or x.Name == 'HouseItemSale'or x.Name == 'ItemsDrop' then x:Destroy() end end
 for _,x in ipairs(workspace.MAP.Map:GetChildren()) do if x.ClassName == 'Model' then x:Destroy() end end
 for _,x in ipairs(workspace:GetDescendants()) do if x.Name == 'print' then x:Destroy() end end
