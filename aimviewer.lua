@@ -4,6 +4,7 @@
         VERSION: 1.0.0
         R to change target
 ]]--
+_G.AIMVIEWING_ENABLED = true
 
 local Aimview_GUI = Instance.new("ScreenGui")
 local Username = Instance.new("TextLabel")
@@ -205,7 +206,7 @@ function findNearestToCursor()
 end
 
 uis.InputBegan:Connect(function(key)
-    if key.KeyCode == Enum.KeyCode.R then
+    if key.KeyCode == Enum.KeyCode.R and _G.AIMVIEWING_ENABLED then
         aimviewing = not aimviewing
         if aimviewing then
             target = findNearestToCursor()
