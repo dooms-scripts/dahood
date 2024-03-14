@@ -191,6 +191,8 @@ coroutine.wrap(function()
 	end
 end)()
 
+warn('Loaded dooms autofarm')
+
 -- autofarm
 while _G.farming == true do
 	wait()
