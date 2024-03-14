@@ -32,7 +32,7 @@ end
 
 
 game.StarterGui:SetCore("SendNotification", {
-	Title = 'dooms autofarm',
+	Title = 'dooms autofarm v1.0.0',
 	Text = 'autofarm will start in 5 seconds',
 	Icon = 'rbxassetid://14067565428',
 	Duration = 5,
