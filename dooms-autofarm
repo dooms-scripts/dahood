@@ -4,6 +4,7 @@
 -- discord.gg/doomdhc
 
 loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/main/anti-idle.lua"))()
 settings().Rendering.QualityLevel = 1
 UserSettings().GameSettings.MasterVolume = 0
 
