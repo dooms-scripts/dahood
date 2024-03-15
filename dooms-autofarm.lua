@@ -68,24 +68,27 @@ _G.farmloaded = true
 
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
+local label1 = Instance.new("TextLabel")
+label1.Name = 'label1'
 local onground = Instance.new("TextLabel")
 local UIListLayout = Instance.new("UIListLayout")
 local amountfarmed = Instance.new("TextLabel")
+local onfloor = Instance.new("TextLabel")
 local timeelapsed = Instance.new("TextLabel")
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Frame.Parent = ScreenGui
-Frame.AnchorPoint = Vector2.new(0, 1)
+Frame.AnchorPoint = Vector2.new(1, 1)
 Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Frame.BackgroundTransparency = 1.000
 Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0, 0, 1, 0)
+Frame.Position = UDim2.new(1, 0, 1, 0)
 Frame.Size = UDim2.new(0, 494, 0, 56)
 onground.Name = "onground"
 onground.Parent = Frame
 onground.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-onground.BackgroundTransparency = 0
+onground.BackgroundTransparency = 1
 onground.BorderColor3 = Color3.fromRGB(0, 0, 0)
 onground.BorderSizePixel = 0
 onground.Size = UDim2.new(1, 0, 0.333, 0)
@@ -97,12 +100,14 @@ onground.TextStrokeTransparency = 1
 onground.TextTransparency = 0
 onground.TextWrapped = true
 onground.TextXAlignment = Enum.TextXAlignment.Left
+
 UIListLayout.Parent = Frame
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
 amountfarmed.Name = "amountfarmed"
 amountfarmed.Parent = Frame
 amountfarmed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-amountfarmed.BackgroundTransparency = 0
+amountfarmed.BackgroundTransparency = 0.5
 amountfarmed.BorderColor3 = Color3.fromRGB(0, 0, 0)
 amountfarmed.BorderSizePixel = 0
 amountfarmed.Size = UDim2.new(1, 0, 0.333, 0)
@@ -117,9 +122,9 @@ amountfarmed.TextXAlignment = Enum.TextXAlignment.Left
 timeelapsed.Name = "amountfarmed"
 timeelapsed.Parent = Frame
 timeelapsed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-timeelapsed.BackgroundTransparency = 0
+timeelapsed.BackgroundTransparency = 0.5
 timeelapsed.BorderColor3 = Color3.fromRGB(0, 0, 0)
-timeelapsed.BorderSizePixel = 0
+timeelapsed.BorderSizePixel = 1
 timeelapsed.Size = UDim2.new(1, 0, 0.333, 0)
 timeelapsed.Font = Enum.Font.RobotoMono
 timeelapsed.Text = " derp :p "
@@ -129,6 +134,36 @@ timeelapsed.TextStrokeTransparency = 1
 timeelapsed.TextWrapped = true
 timeelapsed.TextXAlignment = Enum.TextXAlignment.Left
 
+label1.Name = "label1"
+label1.Parent = Frame
+label1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+label1.BackgroundTransparency = 0.5
+label1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+label1.BorderSizePixel = 0
+label1.Size = UDim2.new(1, 0, 0.333, 0)
+label1.Font = Enum.Font.RobotoMono
+label1.Text = " doom's autofarm"
+label1.TextColor3 = Color3.fromRGB(0, 255, 0)
+label1.TextSize = 20.000
+label1.TextStrokeTransparency = 1
+label1.TextWrapped = true
+label1.TextXAlignment = Enum.TextXAlignment.Left
+
+onfloor.Name = "onfloor"
+onfloor.Parent = Frame
+onfloor.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+onfloor.BackgroundTransparency = 1
+onfloor.BorderColor3 = Color3.fromRGB(0, 0, 0)
+onfloor.BorderSizePixel = 0
+onfloor.Size = UDim2.new(1, 0, 0.333, 0)
+onfloor.Font = Enum.Font.RobotoMono
+onfloor.Text = " doom#1000"
+onfloor.TextColor3 = Color3.fromRGB(0, 255, 0)
+onfloor.TextSize = 20.000
+onfloor.TextStrokeTransparency = 1
+onfloor.TextTransparency = 0
+onfloor.TextWrapped = true
+onfloor.TextXAlignment = Enum.TextXAlignment.Left
 
 local plr = game.Players.LocalPlayer
 local char = plr.Character
@@ -225,12 +260,25 @@ function format_money(amount)
 	return formatted
 end
 
+function get_floor_money()
+	local floor_money = 0
+	
+	for _,money in ipairs(workspace.Ignored.Drop:GetChildren()) do
+		if money.Name == 'MoneyDrop' then
+			floor_money += tonumber(money.BillboardGui.TextLabel.Text:sub(2, 99)
+		end
+	end
+	
+	return floor_money
+end
+
 coroutine.wrap(function()
 	while task.wait(1) do
 		_G.time_elapsed += 1
 		timeelapsed.Text = ' time elapsed: '..tostring(format_time(_G.time_elapsed))
 		onground.Text = " wallet: "..tostring(format_money(game.Players.LocalPlayer.DataFolder.Currency.Value))
 		amountfarmed.Text = " amount farmed: "..tostring(format_money(_G.amtfarmed))
+		onfloor.Text = " money on floor: " ..tostring(get_floor_money())
 	end
 end)()
 
