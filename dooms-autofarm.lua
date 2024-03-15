@@ -91,7 +91,7 @@ onground.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 onground.BackgroundTransparency = 1
 onground.BorderColor3 = Color3.fromRGB(0, 0, 0)
 onground.BorderSizePixel = 0
-onground.Size = UDim2.new(1, 0, 0.333, 0)
+onground.Size = UDim2.new(1, 0, 0.2, 0)
 onground.Font = Enum.Font.RobotoMono
 onground.Text = " doom#1000"
 onground.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -110,7 +110,7 @@ amountfarmed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 amountfarmed.BackgroundTransparency = 0.5
 amountfarmed.BorderColor3 = Color3.fromRGB(0, 0, 0)
 amountfarmed.BorderSizePixel = 0
-amountfarmed.Size = UDim2.new(1, 0, 0.333, 0)
+amountfarmed.Size = UDim2.new(1, 0, 0.2, 0)
 amountfarmed.Font = Enum.Font.RobotoMono
 amountfarmed.Text = " derp :p "
 amountfarmed.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -125,7 +125,7 @@ timeelapsed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 timeelapsed.BackgroundTransparency = 0.5
 timeelapsed.BorderColor3 = Color3.fromRGB(0, 0, 0)
 timeelapsed.BorderSizePixel = 1
-timeelapsed.Size = UDim2.new(1, 0, 0.333, 0)
+timeelapsed.Size = UDim2.new(1, 0, 0.2, 0)
 timeelapsed.Font = Enum.Font.RobotoMono
 timeelapsed.Text = " derp :p "
 timeelapsed.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -140,7 +140,7 @@ label1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 label1.BackgroundTransparency = 0.5
 label1.BorderColor3 = Color3.fromRGB(0, 0, 0)
 label1.BorderSizePixel = 0
-label1.Size = UDim2.new(1, 0, 0.333, 0)
+label1.Size = UDim2.new(1, 0, 0.2, 0)
 label1.Font = Enum.Font.RobotoMono
 label1.Text = " doom's autofarm"
 label1.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -155,7 +155,7 @@ onfloor.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 onfloor.BackgroundTransparency = 1
 onfloor.BorderColor3 = Color3.fromRGB(0, 0, 0)
 onfloor.BorderSizePixel = 0
-onfloor.Size = UDim2.new(1, 0, 0.333, 0)
+onfloor.Size = UDim2.new(1, 0, 0.2, 0)
 onfloor.Font = Enum.Font.RobotoMono
 onfloor.Text = " doom#1000"
 onfloor.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -189,7 +189,7 @@ function spin()
 			v:Destroy()
 		end
 	end
-	
+
 	local Spin = Instance.new("BodyAngularVelocity")
 	Spin.Name = "Spinning"
 	Spin.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -211,11 +211,11 @@ function cashaura()
 	for _,cashdrop in ipairs(workspace.Ignored.Drop:GetChildren()) do
 		if cashdrop.Name == 'MoneyDrop' then
 			dist = (cashdrop.Position - root.Position).Magnitude
-			
+
 			if dist < 15 then
-				if _G.farm_settings ~= nil and _G.farm_settings.tp_to_money == true then 
+				--if _G.farm_settings ~= nil and _G.farm_settings.tp_to_money == true then 
 					root.CFrame = CFrame.new(cashdrop.Position)
-				end
+				--end
 				wait(.15)
 				amtfarmed = amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
 				_G.amtfarmed = _G.amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
@@ -230,11 +230,11 @@ end
 -- noclip
 _G.noclip = true
 run.Stepped:Connect(function()
-    for _,part in ipairs(char:GetDescendants()) do
-        if part:IsA('BasePart') and part.CanCollide and _G.farming and _G.noclip then part.CanCollide = false end
-        if part:IsA('MeshPart') and part.CanCollide and _G.farming and _G.noclip  then part.CanCollide = false end
-        if part:IsA('Part') and part.CanCollide and _G.farming and _G.noclip  then part.CanCollide = false end
-    end
+	for _,part in ipairs(char:GetDescendants()) do
+		if part:IsA('BasePart') and part.CanCollide and _G.farming and _G.noclip then part.CanCollide = false end
+		if part:IsA('MeshPart') and part.CanCollide and _G.farming and _G.noclip  then part.CanCollide = false end
+		if part:IsA('Part') and part.CanCollide and _G.farming and _G.noclip  then part.CanCollide = false end
+	end
 end)
 
 lastatm = nil
@@ -262,13 +262,13 @@ end
 
 function get_floor_money()
 	local floor_money = 0
-	
+
 	for _,money in ipairs(workspace.Ignored.Drop:GetChildren()) do
 		if money.Name == 'MoneyDrop' then
-			floor_money += tonumber(money.BillboardGui.TextLabel.Text:sub(2, 99)
+			floor_money += tonumber(money.BillboardGui.TextLabel.Text:sub(2, 99))
 		end
 	end
-	
+
 	return floor_money
 end
 
@@ -291,7 +291,7 @@ coroutine.wrap(function()
 			wait(.1)
 			root.Anchored = true
 		end
-		
+
 		if count > 7 then
 			root.Anchored = false
 			root.CFrame = CFrame.new(lastatm.Head.Position)
@@ -309,29 +309,29 @@ warn('Loaded dooms autofarm')
 while _G.farming == true do
 	wait()
 	combat.Parent = char
-	
-    for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
-        if atm.Humanoid.Health == 100 and _G.farming == true then
-        	lastatm = atm
-        	count=0
-           root.CFrame = CFrame.new(Vector3.new(
-            atm.Head.Position.X,
-            atm.Head.Position.Y-2,
-            atm.Head.Position.Z
-           ))
-           wait(.25) 
-           root.Anchored = true wait() 
-           root.Anchored = false 
-           spin()
-           
-           repeat 
-           char.Combat:Activate()
-           count=count+.55
-           wait(.55) 
-           until
-       	   atm.Humanoid.Health<1
-           wait(.5) root.Anchored = false
-           cashaura()
-        end
-    end
+
+	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
+		if atm.Humanoid.Health == 100 and _G.farming == true then
+			lastatm = atm
+			count=0
+			root.CFrame = CFrame.new(Vector3.new(
+				atm.Head.Position.X,
+				atm.Head.Position.Y-2,
+				atm.Head.Position.Z
+				))
+			wait(.25) 
+			root.Anchored = true wait() 
+			root.Anchored = false 
+			spin()
+
+			repeat 
+				char.Combat:Activate()
+				count=count+.55
+				wait(.55) 
+			until
+			atm.Humanoid.Health<1
+			wait(.5) root.Anchored = false
+			cashaura()
+		end
+	end
 end
