@@ -278,7 +278,7 @@ coroutine.wrap(function()
 		timeelapsed.Text = ' time elapsed: '..tostring(format_time(_G.time_elapsed))
 		onground.Text = " wallet: "..tostring(format_money(game.Players.LocalPlayer.DataFolder.Currency.Value))
 		amountfarmed.Text = " amount farmed: "..tostring(format_money(_G.amtfarmed))
-		onfloor.Text = " money on floor: " ..tostring(format_money(get_floor_money()))
+		-- onfloor.Text = " money on floor: " ..tostring(format_money(get_floor_money())) causes issues so i just commented it
 	end
 end)()
 
