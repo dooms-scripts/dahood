@@ -176,7 +176,9 @@ function cashaura()
 			dist = (cashdrop.Position - root.Position).Magnitude
 			
 			if dist < 15 then
-				root.CFrame = CFrame.new(cashdrop.Position)
+				if _G.farm_settings ~= nil and _G.farm_settings.tp_to_money == true then 
+					root.CFrame = CFrame.new(cashdrop.Position)
+				end
 				wait(.15)
 				amtfarmed = amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
 				_G.amtfarmed = _G.amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
