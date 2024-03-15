@@ -233,6 +233,7 @@ warn('Loaded dooms autofarm')
 coroutine.wrap(function()
 	while task.wait(1) do
 		_G.time_elapsed += 1
+		timeelapsed.text = ' time elapsed: '..tostring(_G.time_elapsed)
 	end
 end)()
 
