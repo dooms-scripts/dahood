@@ -1,12 +1,32 @@
--- DOOMS AUTOFARM
-
+------------------------
+--   DOOMS AUTOFARM
+------------------------
 -- doom#1000
 -- discord.gg/doomdhc
+------------------------
+-- VERSION: 1.0.1
+-- PATCH:
+-- >> Added time elapsed
+-- >> Added farm settings
+
+if _G.settings ~= nil then
+	settings = _G.settings
+	if settings.optimize == true then
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/ultra-optimize.lua'))()
+	end
+
+	if settings.acbypass = true then
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/anticheat-bypass.lua'))()
+	end
+
+	if settings.muteaudio == true then
+		UserSettings().GameSettings.MasterVolume = 0
+	end
+end
 
 loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/main/anti-idle.lua"))()
 settings().Rendering.QualityLevel = 1
-UserSettings().GameSettings.MasterVolume = 0
 
 warn('1.2.0')
 
@@ -32,7 +52,7 @@ end
 
 
 game.StarterGui:SetCore("SendNotification", {
-	Title = 'dooms autofarm v1.0.0',
+	Title = 'dooms autofarm v1.0.1',
 	Text = 'autofarm will start in 5 seconds',
 	Icon = 'rbxassetid://14067565428',
 	Duration = 5,
@@ -48,6 +68,7 @@ local Frame = Instance.new("Frame")
 local onground = Instance.new("TextLabel")
 local UIListLayout = Instance.new("UIListLayout")
 local amountfarmed = Instance.new("TextLabel")
+local timeelapsed = Instance.new("TextLabel")
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Frame.Parent = ScreenGui
@@ -64,7 +85,7 @@ onground.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 onground.BackgroundTransparency = 0
 onground.BorderColor3 = Color3.fromRGB(0, 0, 0)
 onground.BorderSizePixel = 0
-onground.Size = UDim2.new(1, 0, 0.5, 0)
+onground.Size = UDim2.new(1, 0, 0.333, 0)
 onground.Font = Enum.Font.RobotoMono
 onground.Text = " doom#1000"
 onground.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -81,7 +102,7 @@ amountfarmed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 amountfarmed.BackgroundTransparency = 0
 amountfarmed.BorderColor3 = Color3.fromRGB(0, 0, 0)
 amountfarmed.BorderSizePixel = 0
-amountfarmed.Size = UDim2.new(1, 0, 0.5, 0)
+amountfarmed.Size = UDim2.new(1, 0, 0.333, 0)
 amountfarmed.Font = Enum.Font.RobotoMono
 amountfarmed.Text = " derp :p "
 amountfarmed.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -89,6 +110,21 @@ amountfarmed.TextSize = 20.000
 amountfarmed.TextStrokeTransparency = 1
 amountfarmed.TextWrapped = true
 amountfarmed.TextXAlignment = Enum.TextXAlignment.Left
+
+timeelapsed.Name = "amountfarmed"
+timeelapsed.Parent = Frame
+timeelapsed.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+timeelapsed.BackgroundTransparency = 0
+timeelapsed.BorderColor3 = Color3.fromRGB(0, 0, 0)
+timeelapsed.BorderSizePixel = 0
+timeelapsed.Size = UDim2.new(1, 0, 0.333, 0)
+timeelapsed.Font = Enum.Font.RobotoMono
+timeelapsed.Text = " derp :p "
+timeelapsed.TextColor3 = Color3.fromRGB(0, 255, 0)
+timeelapsed.TextSize = 20.000
+timeelapsed.TextStrokeTransparency = 1
+timeelapsed.TextWrapped = true
+timeelapsed.TextXAlignment = Enum.TextXAlignment.Left
 
 
 local plr = game.Players.LocalPlayer
@@ -102,6 +138,7 @@ _G.farming = true
 
 amtfarmed = 0
 _G.amtfarmed = 0
+_G.time_elapsed = 0
 
 for _,seat in ipairs(workspace:GetDescendants()) do
 	if seat:IsA('Seat') then seat.Disabled = true end
@@ -192,6 +229,12 @@ coroutine.wrap(function()
 end)()
 
 warn('Loaded dooms autofarm')
+-- start clock
+coroutine.wrap(function()
+	while task.wait(1) do
+		_G.time_elapsed += 1
+	end
+end)()
 
 -- autofarm
 while _G.farming == true do
