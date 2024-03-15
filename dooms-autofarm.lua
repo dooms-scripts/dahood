@@ -4,10 +4,11 @@
 -- doom#1000
 -- discord.gg/doomdhc
 ------------------------
--- VERSION: 1.0.1
+-- VERSION: 1.2.2
 -- PATCH:
 -- >> Added time elapsed
 -- >> Added farm settings
+-- >> Added formatting to stats
 
 if _G.settings ~= nil then
 	settings = _G.settings
@@ -28,7 +29,7 @@ loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/main/anti-idle.lua"))()
 settings().Rendering.QualityLevel = 1
 
-warn('1.2.0')
+warn('1.2.2')
 
 if _G.farmloaded then
 	game.StarterGui:SetCore("SendNotification", {
@@ -200,10 +201,32 @@ end)
 lastatm = nil
 count = 0
 
+-- start clock
+function format_time(seconds)
+	local hours = math.floor(seconds / 3600)
+	local minutes = math.floor((seconds % 3600) / 60)
+	local remainingSeconds = seconds % 60
+	return string.format("%02dh, %02dm, %02ds", hours, minutes, remainingSeconds)
+end
+
+function format_money(amount)
+	local formatted = tostring(amount)
+	local k = 0
+	while true do  
+		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+		if k == 0 then
+			break
+		end
+	end
+	return formatted
+end
+
 coroutine.wrap(function()
-	while wait() do
-		onground.Text = " wallet: "..tostring(game.Players.LocalPlayer.DataFolder.Currency.Value)
-		amountfarmed.Text = " amount farmed: "..tostring(_G.amtfarmed)
+	while task.wait(1) do
+		_G.time_elapsed += 1
+		timeelapsed.Text = ' time elapsed: '..tostring(format_time(_G.time_elapsed)) .. ' seconds'
+		onground.Text = " wallet: "..tostring(format_money(game.Players.LocalPlayer.DataFolder.Currency.Value))
+		amountfarmed.Text = " amount farmed: "..tostring(format_money(_G.amtfarmed))
 	end
 end)()
 
@@ -229,13 +252,6 @@ coroutine.wrap(function()
 end)()
 
 warn('Loaded dooms autofarm')
--- start clock
-coroutine.wrap(function()
-	while task.wait(1) do
-		_G.time_elapsed += 1
-		timeelapsed.text = ' time elapsed: '..tostring(_G.time_elapsed)
-	end
-end)()
 
 -- autofarm
 while _G.farming == true do
