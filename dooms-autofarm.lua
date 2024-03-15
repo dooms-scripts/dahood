@@ -16,7 +16,7 @@ if _G.farm_settings ~= nil then
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/ultra-optimize.lua'))()
 	end
 
-	if farm_settings.acbypass = true then
+	if farm_settings.acbypass == true then
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/anticheat-bypass.lua'))()
 	end
 
