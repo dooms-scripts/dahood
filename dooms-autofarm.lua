@@ -10,17 +10,17 @@
 -- >> Added farm settings
 -- >> Added formatting to stats
 
-if _G.settings ~= nil then
-	settings = _G.settings
-	if settings.optimize == true then
+if _G.farm_settings ~= nil then
+	farm_settings = _G.farm_settings
+	if farm_settings.optimize == true then
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/ultra-optimize.lua'))()
 	end
 
-	if settings.acbypass = true then
+	if farm_settings.acbypass = true then
 		loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/anticheat-bypass.lua'))()
 	end
 
-	if settings.muteaudio == true then
+	if farm_settings.muteaudio == true then
 		UserSettings().GameSettings.MasterVolume = 0
 	end
 end
