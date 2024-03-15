@@ -1,8 +1,12 @@
 -- doom#1000
 -- dahood ultra optimization script
 -- not meant to be used for casual play
+
+--> checks if the game is already optimized, returns if true
+if _G.OPTIMIZED_GRAPHICS then return warn('ALREADY OPTIMIZED; RETURNING...') end
 warn('attempting to optimize')
 
+--> deletes unecessary assets in workspace
 workspace.Lights:Destroy()
 workspace.Vehicles:Destroy()
 workspace.VehicleSpawner:Destroy()
@@ -19,6 +23,7 @@ workspace.MAP.EVIL_SPECIALx:Destroy()
 workspace.MAP.SPECIAL_BRIDGE:Destroy()
 workspace.MAP.BullCarnival:Destroy()
 
+--
 for _,x in ipairs(game:GetDescendants()) do if x.Name == 'Meshes/mountain' then x:Destroy() end end
 for _,x in ipairs(workspace.Ignored:GetChildren()) do if x.Name == 'HouseOwn' or x.Name == 'Folder' or x.Name == 'HouseItemSale' or x.Name == 'ItemsDrop' then x:Destroy() end end
 for _,x in ipairs(workspace.MAP.Map:GetChildren()) do if x.ClassName == 'Model' then x:Destroy() end end
@@ -34,6 +39,7 @@ for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('Seat') then x:Destroy
 for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('VehicleSeat') then x:Destroy() end end
 for _,x in ipairs(workspace:GetDescendants()) do if x:IsA('SpecialMesh') then x:Destroy() end end
 
+--
 local Terrain = workspace:FindFirstChildOfClass('Terrain')
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -60,6 +66,8 @@ for i,v in pairs(game.Lighting:GetDescendants()) do
         v.Enabled = false
     end
 end
+
+--> removes all types of particles
 workspace.DescendantAdded:Connect(function(child)
     task.spawn(function()
         if child:IsA('ForceField') then
@@ -75,4 +83,6 @@ workspace.DescendantAdded:Connect(function(child)
     end)
 end)
 
+--> marks game as optimized
+_G.OPTIMIZED_GRAPHICS = true
 warn('> sucessfully optimized')
