@@ -4,11 +4,12 @@
 -- doom#1000
 -- discord.gg/doomdhc
 ------------------------
--- VERSION: 1.2.2
+-- VERSION: 1.2.3
 -- PATCH:
 -- >> Added time elapsed
 -- >> Added farm settings
 -- >> Added formatting to stats
+-- >> Added new settings
 
 if _G.farm_settings ~= nil then
 	farm_settings = _G.farm_settings
@@ -29,7 +30,6 @@ loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/main/anti-idle.lua"))()
 settings().Rendering.QualityLevel = 1
 
-warn('1.2.2')
 
 if _G.farmloaded then
 	game.StarterGui:SetCore("SendNotification", {
@@ -40,6 +40,8 @@ if _G.farmloaded then
 	})
 	return
 end
+
+warn('1.2.3')
 
 if game.Players.LocalPlayer.Backpack:FindFirstChild('Combat') then else
 	game.StarterGui:SetCore("SendNotification", {
@@ -226,7 +228,7 @@ end
 coroutine.wrap(function()
 	while task.wait(1) do
 		_G.time_elapsed += 1
-		timeelapsed.Text = ' time elapsed: '..tostring(format_time(_G.time_elapsed)) .. ' seconds'
+		timeelapsed.Text = ' time elapsed: '..tostring(format_time(_G.time_elapsed))
 		onground.Text = " wallet: "..tostring(format_money(game.Players.LocalPlayer.DataFolder.Currency.Value))
 		amountfarmed.Text = " amount farmed: "..tostring(format_money(_G.amtfarmed))
 	end
