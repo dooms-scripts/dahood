@@ -58,17 +58,19 @@ function createOutline(model)
 	box.Adornee = model
 	box.LineThickness = 0.01
 	box.SurfaceTransparency = 0.95
-	box.AlwaysOnTop = true
 
 	box.Color3 = Color3.fromRGB(158, 40, 208)
 	box.SurfaceColor3 = Color3.fromRGB(158, 40, 208)
 
 	if camlock.config.highlights == true then
 		local highlight = Instance.new('Highlight', model)
-		highlight.FillColor = Color3.fromRGB(158, 40, 208)
-		highlight.OutlineColor = Color3.fromRGB(158, 40, 208)
+		highlight.Name = 'doom#1000'
+		highlight.Adornee = model
 		highlight.FillTransparency = 0.95
 		highlight.OutlineTransparency = 0
+
+		highlight.FillColor = Color3.fromRGB(158, 40, 208)
+		highlight.OutlineColor = Color3.fromRGB(158, 40, 208)
 	end
 end
 
