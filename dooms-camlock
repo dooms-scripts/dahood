@@ -8,7 +8,8 @@ camlock.config = {
 	notifications=true,
 	predictions=true,
 	borders=true,
-  vis_check=false,
+	highlights=true,
+	vis_check=false,
 }
 
 -- Services
@@ -57,14 +58,23 @@ function createOutline(model)
 	box.Adornee = model
 	box.LineThickness = 0.01
 	box.SurfaceTransparency = 0.95
+	box.AlwaysOnTop = true
 
 	box.Color3 = Color3.fromRGB(158, 40, 208)
 	box.SurfaceColor3 = Color3.fromRGB(158, 40, 208)
+
+	if camlock.config.highlights == true then
+		local highlight = Instance.new('Highlight', model)
+		highlight.FillColor = Color3.fromRGB(158, 40, 208)
+		highlight.OutlineColor = Color3.fromRGB(158, 40, 208)
+		highlight.FillTransparency = 0.95
+		highlight.OutlineTransparency = 0
+	end
 end
 
 -- Input Handler
 uis.InputBegan:Connect(function(keyPressed)
-	if keyPressed.KeyCode == Enum.KeyCode[string.upper(CONFIG.KEYBIND)] then
+	if keyPressed.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] then
 		locking = not locking
 
 		if locking == true then 
@@ -90,9 +100,8 @@ uis.InputBegan:Connect(function(keyPressed)
 						local root = target.HumanoidRootPart
 						local human = target.Humanoid
 						local move_direction = human.MoveDirection
-						cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position,
-                        Vector3.new(root.Position.X + move_direction.X * camlock.config.prediction, root.Position.Y + move_direction.Y * camlock.config.prediction, root.Position.Z + move_direction.Z * camlock.config.prediction))
-					  else
+						cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position, Vector3.new(root.Position.X + move_direction.X * camlock.config.prediction, root.Position.Y + move_direction.Y * camlock.config.prediction, root.Position.Z + move_direction.Z * camlock.config.prediction))
+					else
 						cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position, target.HumanoidRootPart.Position)
 					end
 				end 
@@ -101,4 +110,5 @@ uis.InputBegan:Connect(function(keyPressed)
 	end	
 end)
 
+warn('camlock loaded')
 return camlock
