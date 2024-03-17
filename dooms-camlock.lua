@@ -1,6 +1,7 @@
 -- doom#1000
 camlock = {}
 
+camlock.enabled = true
 camlock.config = {
 	keybind='q',
 	range=250,
@@ -76,7 +77,7 @@ end
 
 -- Input Handler
 uis.InputBegan:Connect(function(keyPressed)
-	if keyPressed.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] then
+	if keyPressed.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] and camlock.enabled then
 		locking = not locking
 
 		if locking == true then 
