@@ -2,9 +2,9 @@ aimbot = {}
 
 aimbot.enabled = true
 aimbot.config = {
-	keybind = 'q',
-	range = 250,
-	prediction = 1.678,
+	keybind		= 'q',
+	range		= 250,
+	prediction	= 1.678,
 	notifications   = false,
 	predictions     = false,
 	highlights      = false,
@@ -121,6 +121,36 @@ uis.InputBegan:Connect(function(keyPressed)
 				if aimbot.config.borders == true then createOutline(target) end
 				if aimbot.config.highlights == true then createHighlight(target) end
 				if aimbot.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Locked on",Text = "Target: ".. target.Name,Duration = "1",}) end
+			
+				local root = target.HumanoidRootPart
+				local human = target.Humanoid
+				local move_direction = human.MoveDirection
+				
+				if aimbot.config.predictions == true then
+					setreadonly(mt, false)
+					mt.__namecall = newcclosure(function(...)
+						local args = {...}
+						if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
+							args[3] = Vector3.new(
+								root.Position.X + move_direction.X * aimbot.config.prediction, 
+								root.Position.Y + move_direction.Y * aimbot.config.prediction, 
+								root.Position.Z + move_direction.Z * aimbot.config.prediction)
+							return old(unpack(args))
+						end
+						return old(...)
+					end)
+				else
+					setreadonly(mt, false)
+					mt.__namecall = newcclosure(function(...)
+						local args = {...}
+						if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
+							args[3] = root.Position
+							return old(unpack(args))
+						end
+						return old(...)
+					end)
+				end
+
 			end
 		end
 
@@ -132,47 +162,9 @@ uis.InputBegan:Connect(function(keyPressed)
 			if aimbot.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Unlocked",Text = "Unlocked aim",Duration = "1",}) end
 			target = nil	
 		end
-
-		coroutine.wrap(function()
-
-			while task.wait() do
-				if locking == true and target ~= nil then
-					local root = target.HumanoidRootPart
-					local human = target.Humanoid
-					local move_direction = human.MoveDirection
-					
-					if aimbot.config.predictions == true then
-						setreadonly(mt, false)
-						mt.__namecall = newcclosure(function(...)
-							local args = {...}
-							if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
-								args[3] = Vector3.new(
-									root.Position.X + move_direction.X * aimbot.config.prediction, 
-									root.Position.Y + move_direction.Y * aimbot.config.prediction, 
-									root.Position.Z + move_direction.Z * aimbot.config.prediction)
-								return old(unpack(args))
-							end
-							return old(...)
-						end)
-					else
-						setreadonly(mt, false)
-						mt.__namecall = newcclosure(function(...)
-							local args = {...}
-							if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
-								args[3] = root.Position
-								return old(unpack(args))
-							end
-							return old(...)
-						end)
-					end
-				elseif aimbot.enabled == false then
-					mt = old
-				end
-			end
-		end)()
 	end	
 end)
 
-warn("doom's aimbot loaded v1.2.0")
+warn("doom's aimbot loaded v1.2.1")
 
 return aimbot
