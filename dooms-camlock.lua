@@ -1,16 +1,16 @@
--- doom#1000
 camlock = {}
 
 camlock.enabled = true
 camlock.config = {
-	keybind='q',
-	range=250,
-	prediction=0.168,
-	notifications=true,
-	predictions=true,
-	borders=true,
-	highlights=true,
-	vis_check=false,
+	keybind = 'q'
+	range = 250
+	prediction = 1.368
+	notifications   = false
+	predictions     = false
+	highlights      = false
+	borders         = false
+	labels          = false
+	vis_check       = false
 }
 
 -- Services
@@ -32,7 +32,7 @@ function findNearestCursor()
 	local closestTarget = nil
 	local closestDistance = 999
 
-	local range = 250
+	local range = camlock.config.range
 
 	local root = char:WaitForChild('HumanoidRootPart')
 
@@ -51,28 +51,57 @@ function findNearestCursor()
 	return closestTarget
 end
 
+function createLabel(model)
+	for _,box in ipairs(workspace:GetDescendants()) do if box.Name == 'doom#1000_bb' then box:Destroy() end end
+
+	local BillboardGui = Instance.new("BillboardGui", model)
+	local TextLabel = Instance.new("TextLabel")
+
+	BillboardGui.Name = 'doom#1000_bb'
+	BillboardGui.Adornee = model
+	BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	BillboardGui.Active = true
+	BillboardGui.AlwaysOnTop = true
+	BillboardGui.LightInfluence = 1.000
+	BillboardGui.Size = UDim2.new(75, 0, 15, 0)
+
+	TextLabel.Parent = BillboardGui
+	TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextLabel.BackgroundTransparency = 1.000
+	TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextLabel.BorderSizePixel = 0
+	TextLabel.Size = UDim2.new(1, 0, 1, 0)
+	TextLabel.Font = Enum.Font.Code
+	TextLabel.TextColor3 = Color3.fromRGB(158, 40, 208)
+	TextLabel.TextSize = 16.000
+	TextLabel.TextStrokeTransparency = 0.000
+	TextLabel.Text = game.Players[model.Name].DisplayName
+end
+
 function createOutline(model)
-	for _,box in ipairs(workspace:GetDescendants()) do if box.Name == 'doom#1000' then box:Destroy() end end
+	for _,box in ipairs(workspace:GetDescendants()) do if box.Name == 'doom#1000_sb' then box:Destroy() end end
 	local box = Instance.new('SelectionBox', model)
 
-	box.Name = 'doom#1000'
+	box.Name = 'doom#1000_sb'
 	box.Adornee = model
 	box.LineThickness = 0.01
 	box.SurfaceTransparency = 0.95
 
 	box.Color3 = Color3.fromRGB(158, 40, 208)
 	box.SurfaceColor3 = Color3.fromRGB(158, 40, 208)
+end
 
-	if camlock.config.highlights == true then
-		local highlight = Instance.new('Highlight', model)
-		highlight.Name = 'doom#1000'
-		highlight.Adornee = model
-		highlight.FillTransparency = 0.95
-		highlight.OutlineTransparency = 0
+function createHighlight(model)
+	for _,hl in ipairs(workspace:GetDescendants()) do if hl.Name == 'doom#1000_hl' then hl:Destroy() end end
 
-		highlight.FillColor = Color3.fromRGB(158, 40, 208)
-		highlight.OutlineColor = Color3.fromRGB(158, 40, 208)
-	end
+	local highlight = Instance.new('Highlight', model)
+	highlight.Name = 'doom#1000_hl'
+	highlight.Adornee = model
+	highlight.FillTransparency = 1
+	highlight.OutlineTransparency = 0
+
+	highlight.FillColor = Color3.fromRGB(193, 49, 255)
+	highlight.OutlineColor = Color3.fromRGB(193, 49, 255)
 end
 
 -- Input Handler
@@ -84,22 +113,27 @@ uis.InputBegan:Connect(function(keyPressed)
 			target = findNearestCursor()
 			if target == nil and camlock.config.notifications == true then
 				game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Cannot find target",Text = "Target couldn't be found.",Duration = "1",})
-			elseif target ~= nil and camlock.config.notifications == true then
-				game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Locked on",Text = "Target: ".. target.Name,Duration = "1",})
+				locking = false
+			elseif target ~= nil then 				
+				if camlock.config.labels == true then createLabel(target) end
 				if camlock.config.borders == true then createOutline(target) end
+				if camlock.config.highlights == true then createHighlight(target) end
+				if camlock.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Locked on",Text = "Target: ".. target.Name,Duration = "1",}) end
 			end
 		end
 
-		if locking == false then 
-			for _,box in ipairs(workspace:GetDescendants()) do if box.Name == 'doom#1000' then box:Destroy() end end
-			game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Unlocked",Text = "Unlocked camera",Duration = "1",}) 
+		if locking == false then 	
+			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_bb' then v:Destroy() end end
+			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_hl' then v:Destroy() end end
+			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_sb' then v:Destroy() end end
+			if camlock.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Unlocked",Text = "Unlocked camera",Duration = "1",}) end
 			target = nil	
 		end
 
 		coroutine.wrap(function()
 			while wait() do 
 				if locking == true and target ~= nil then
-					if camlock.config.predictions then 
+					if camlock.config.predictions == true then 
 						local root = target.HumanoidRootPart
 						local human = target.Humanoid
 						local move_direction = human.MoveDirection
@@ -113,5 +147,6 @@ uis.InputBegan:Connect(function(keyPressed)
 	end	
 end)
 
-warn('camlock loaded')
+warn("doom's camlock loaded")
+
 return camlock
