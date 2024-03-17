@@ -25,16 +25,16 @@ local autobuy2 = {
 }
 
 -- loading UI library
-local encrypt_lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt'))()
+local encrypt_lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt.lua'))()
 --local camlock = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-camlock.lua'))()
 --local camlock_config = camlock.config
 
 -- toggle ui
 input_service.InputBegan:Connect(function(k)
 	if k.KeyCode == Enum.KeyCode[string.upper(toggle_keybind)] then	
-		encrypt_lib:toggle() 	
+		encrypt_lib:toggle()
 	end
-end
+end)
 
 encrypt_lib.color = Color3.fromRGB(30, 146, 254)
 encrypt_lib.color = Color3.fromRGB(255, 45, 45)
