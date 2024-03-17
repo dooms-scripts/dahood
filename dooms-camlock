@@ -2,15 +2,15 @@ camlock = {}
 
 camlock.enabled = true
 camlock.config = {
-	keybind = 'q'
-	range = 250
-	prediction = 1.368
-	notifications   = false
-	predictions     = false
-	highlights      = false
-	borders         = false
-	labels          = false
-	vis_check       = false
+	keybind = 'q',
+	range = 250,
+	prediction = 1.368,
+	notifications   = false,
+	predictions     = false,
+	highlights      = false,
+	borders         = false,
+	labels          = false,
+	vis_check       = false,
 }
 
 -- Services
@@ -147,6 +147,6 @@ uis.InputBegan:Connect(function(keyPressed)
 	end	
 end)
 
-warn("doom's camlock loaded")
+warn("doom's camlock loaded v1.2.0")
 
 return camlock
