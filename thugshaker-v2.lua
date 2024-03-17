@@ -79,23 +79,22 @@ for _, category_data in ipairs(autobuy) do
 				local gun_name = '['..filtered_name:gsub(' Ammo','')..']'
 				table_category.new_button(string.lower(filtered_name), function()
 					warn('Buying ammo for: '..gun_name)
-					if owns_gun(gun_name) == true then
-						local plr = game.Players.LocalPlayer
-						local char = plr.Character
-						local root = char.HumanoidRootPart
-						local oldpos = root.Position
-						local oldmoney = money.Value
-						root.CFrame = CFrame.new(shop.Head.Position)
-						task.wait(0.25)
-						repeat task.wait(0.01)
-						fireclickdetector(shop.ClickDetector)
-						until money.Value < oldmoney
-						
-						task.wait(.45)
-						root.CFrame = CFrame.new(oldpos)
-					else
-						warn('You do not own the gun you are attempting to buy ammo for.')
+					if owns_gun(gun_name) == false then 
+						return warn('You do not own the gun you are attempting to buy ammo for.') 
 					end
+					local plr = game.Players.LocalPlayer
+					local char = plr.Character
+					local root = char.HumanoidRootPart
+					local oldpos = root.Position
+					local oldmoney = money.Value
+					root.CFrame = CFrame.new(shop.Head.Position)
+					task.wait(0.25)
+					repeat task.wait(0.01)
+					fireclickdetector(shop.ClickDetector)
+					until money.Value < oldmoney
+					
+					task.wait(.45)
+					root.CFrame = CFrame.new(oldpos)
 				end)
 			end
 		end
