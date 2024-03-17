@@ -108,6 +108,8 @@ end
 uis.InputBegan:Connect(function(keyPressed)
 	if keyPressed.KeyCode == Enum.KeyCode[string.upper(aimbot.config.keybind)] and aimbot.enabled then
 		locking = not locking
+		local mt = getrawmetatable(game)
+		local old = mt.__namecall
 
 		if locking == true then 
 			target = findNearestCursor()
@@ -123,16 +125,15 @@ uis.InputBegan:Connect(function(keyPressed)
 		end
 
 		if locking == false then 	
+			mt = old
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_bb' then v:Destroy() end end
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_hl' then v:Destroy() end end
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_sb' then v:Destroy() end end
-			if aimbot.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Unlocked",Text = "Unlocked camera",Duration = "1",}) end
+			if aimbot.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Unlocked",Text = "Unlocked aim",Duration = "1",}) end
 			target = nil	
 		end
 
 		coroutine.wrap(function()
-			local mt = getrawmetatable(game)
-			local old = mt.__namecall
 
 			while task.wait() do
 				if locking == true and target ~= nil then
