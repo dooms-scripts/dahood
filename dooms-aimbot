@@ -154,7 +154,8 @@ uis.InputBegan:Connect(function(keyPressed)
 			end
 		end
 
-		if locking == false then 	
+		if locking == false then 
+			setreadonly(mt, true)	
 			mt = old
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_bb' then v:Destroy() end end
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_hl' then v:Destroy() end end
@@ -165,6 +166,6 @@ uis.InputBegan:Connect(function(keyPressed)
 	end	
 end)
 
-warn("doom's aimbot loaded v1.2.1")
+warn("doom's aimbot loaded v1.2.2")
 
 return aimbot
