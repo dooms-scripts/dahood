@@ -158,13 +158,14 @@ uis.InputBegan:Connect(function(keyPressed)
 		end
 
 		if locking == false then 
+			local mouse = plr:GetMouse()
 			local mt = getrawmetatable(game)
 			local old = mt.__namecall
 			setreadonly(mt, false)
 			mt.__namecall = newcclosure(function(...)
 				local args = {...}
 				if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
-					args[3] = Vector3.new(plr:GetMouse().Hit.p)
+					args[3] = Vector3.new(mouse.Hit.p)
 					return old(unpack(args))
 				end
 				return old(...)
@@ -180,6 +181,6 @@ uis.InputBegan:Connect(function(keyPressed)
 	end	
 end)
 
-warn("doom's aimbot loaded v1.2.3")
+warn("doom's aimbot loaded v1.2.4")
 
 return aimbot
