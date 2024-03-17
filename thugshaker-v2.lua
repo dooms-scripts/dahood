@@ -4,6 +4,11 @@ local char = plr.Character
 local root = char.HumanoidRootPart
 local money = plr.DataFolder.Currency
 
+local toggle_keybind = 'x'
+
+-- Services
+local input_service = game:GetService('UserInputService')
+
 -- Tables
 local autobuy = {
     { category = "guns", items = { 'Revolver', 'Double-Barrel SG', 'Drum-Shotgun', 'TacticalShotgun', 'Shotgun', 'DrumGun', 'SilencerAR', 'Silencer', 'Glock', 'Rifle', 'AK47', 'AUG', 'SMG', 'LMG', 'P90', 'AR' } },
@@ -24,6 +29,13 @@ local encrypt_lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/d
 --local camlock = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-camlock.lua'))()
 --local camlock_config = camlock.config
 
+-- toggle ui
+input_service.InputBegan:Connect(function(k)
+	if k.KeyCode == Enum.KeyCode[string.upper(toggle_keybind)] then	
+		encrypt_lib:toggle() 	
+	end
+end
+
 encrypt_lib.color = Color3.fromRGB(30, 146, 254)
 encrypt_lib.color = Color3.fromRGB(255, 45, 45)
 encrypt_lib.color = Color3.fromRGB(255, 146, 146)
@@ -39,6 +51,8 @@ local esp_tab = window.new_tab('esp')
 -- main tab
 group1 = main_tab.new_group('group1')
 gui = group1.new_category('GUI')
+
+toggle_bind = gui.new_textbox('toggle gui', toggle_keybind, function() toggle_keybind = toggle_bind.text end)
 gui.new_button('exit', function() encrypt_lib:exit() end)
 
 -- autobuy tab
