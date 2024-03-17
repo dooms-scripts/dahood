@@ -34,6 +34,8 @@ function findNearestCursor()
 
 	local range = aimbot.config.range
 
+	local plr = game.Players.LocalPlayer
+	local char = plr.Character
 	local root = char:WaitForChild('HumanoidRootPart')
 
 	for _,human in ipairs(workspace:GetDescendants()) do
@@ -108,10 +110,11 @@ end
 uis.InputBegan:Connect(function(keyPressed)
 	if keyPressed.KeyCode == Enum.KeyCode[string.upper(aimbot.config.keybind)] and aimbot.enabled then
 		locking = not locking
-		local mt = getrawmetatable(game)
-		local old = mt.__namecall
 
 		if locking == true then 
+			local mt = getrawmetatable(game)
+			local old = mt.__namecall
+
 			target = findNearestCursor()
 			if target == nil and aimbot.config.notifications == true then
 				game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Cannot find target",Text = "Target couldn't be found.",Duration = "1",})
@@ -132,9 +135,9 @@ uis.InputBegan:Connect(function(keyPressed)
 						local args = {...}
 						if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
 							args[3] = Vector3.new(
-								root.Position.X + move_direction.X * aimbot.config.prediction, 
-								root.Position.Y + move_direction.Y * aimbot.config.prediction, 
-								root.Position.Z + move_direction.Z * aimbot.config.prediction)
+								target.HumanoidRootPart.Position.X + move_direction.X * aimbot.config.prediction, 
+								target.HumanoidRootPart.Position.Y + move_direction.Y * aimbot.config.prediction, 
+								target.HumanoidRootPart.Position.Z + move_direction.Z * aimbot.config.prediction)
 							return old(unpack(args))
 						end
 						return old(...)
@@ -155,8 +158,19 @@ uis.InputBegan:Connect(function(keyPressed)
 		end
 
 		if locking == false then 
-			setreadonly(mt, true)	
-			mt = old
+			local mt = getrawmetatable(game)
+			local old = mt.__namecall
+			setreadonly(mt, false)
+			mt.__namecall = newcclosure(function(...)
+				local args = {...}
+				if aimbot.enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
+					args[3] = Vector3.new(plr:GetMouse().Hit.p)
+					return old(unpack(args))
+				end
+				return old(...)
+			end)
+			--mt = old
+			--setreadonly(mt, true)	
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_bb' then v:Destroy() end end
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_hl' then v:Destroy() end end
 			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_sb' then v:Destroy() end end
@@ -166,6 +180,6 @@ uis.InputBegan:Connect(function(keyPressed)
 	end	
 end)
 
-warn("doom's aimbot loaded v1.2.2")
+warn("doom's aimbot loaded v1.2.3")
 
 return aimbot
