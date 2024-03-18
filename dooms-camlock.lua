@@ -1,10 +1,23 @@
-camlock = {}
+--[[
+		
+	████   ███   ███  █   █ █████    ████  ███  █   █ █      ███   ████ █  █  
+	█   █ █   █ █   █ ██ ██ █       █     █   █ ██ ██ █     █   █ █     █ █   
+	█   █ █   █ █   █ █ █ █ █████   █     █████ █ █ █ █     █   █ █     ██ █  
+	█   █ █   █ █   █ █   █     █   █     █   █ █   █ █     █   █ █     █  █  
+	████   ███   ███  █   █ █████    ████ █   █ █   █ █████  ███   ████ █   █ 
 
-camlock.enabled = true
+]]--
+
+camlock = {
+	enabled = true
+}
+
 camlock.config = {
-	keybind = 'q',
-	range = 250,
-	prediction = 1.368,
+	keybind		= 'q',
+
+	range 		= 250,
+	prediction 	= 1.368,
+
 	notifications   = false,
 	predictions     = false,
 	highlights      = false,
@@ -13,14 +26,15 @@ camlock.config = {
 	vis_check       = false,
 }
 
--- Services
-local uis = game:GetService('UserInputService')
+-->> Services
+local input_service = game:GetService('UserInputService')
+local run_service = game:GetService('RunService')
+local starter_gui = game:GetService('StarterGui')
 local players = game:GetService('Players')
-local sgui = game:GetService('StarterGui')
 
--- Variables
+-->> Variables
 local plr = players.LocalPlayer
-local char = plr['Character']
+local char = plr.Character
 local root = char:WaitForChild('HumanoidRootPart')
 local cam = workspace.CurrentCamera
 local cursor = plr:GetMouse()
@@ -28,14 +42,9 @@ local cursor = plr:GetMouse()
 local locking = false
 local target = nil
 
--- Functions
+-->> Functions
 function get_distance(obj)
-	local distance = 0
-	local s,err = pcall(function()
-		local distance = (root.Position - obj.Position).Magnitude
-	end)
-
-	if err then warn('Error finding distance: '..err) end
+	local distance = (root.Position - obj.Position).Magnitude
 	return distance
 end
 
@@ -51,9 +60,9 @@ function find_nearest()
 		if human:IsA('Humanoid') and human.Parent:FindFirstChild('HumanoidRootPart') and human.Parent.Name ~= plr.Name and human.Health ~= 0 then
 			if get_distance(human.Parent.HumanoidRootPart) < range then
 				local cursorPos = Vector2.new(cursor.X, cursor.Y)
-				local vector, onScreen = cam:WorldToScreenPoint(human.Parent.HumanoidRootPart.Position)
+				local vector, on_screen = cam:WorldToScreenPoint(human.Parent.HumanoidRootPart.Position)
 
-				if onScreen then 
+				if on_screen then 
 					local dist = (cursorPos - Vector2.new(vector.X, vector.Y)).Magnitude
 					if dist < closestDistance then closestDistance = dist closestTarget = human.Parent end
 				end
@@ -64,9 +73,7 @@ function find_nearest()
 	return closestTarget
 end
 
-function createLabel(model)
-	for _,box in ipairs(workspace:GetDescendants()) do if box.Name == 'doom#1000_bb' then box:Destroy() end end
-
+function create_label(model)
 	local BillboardGui = Instance.new("BillboardGui", model)
 	local TextLabel = Instance.new("TextLabel")
 
@@ -91,8 +98,7 @@ function createLabel(model)
 	TextLabel.Text = game.Players[model.Name].DisplayName
 end
 
-function createOutline(model)
-	for _,box in ipairs(workspace:GetDescendants()) do if box.Name == 'doom#1000_sb' then box:Destroy() end end
+function create_outline(model)
 	local box = Instance.new('SelectionBox', model)
 
 	box.Name = 'doom#1000_sb'
@@ -104,9 +110,7 @@ function createOutline(model)
 	box.SurfaceColor3 = Color3.fromRGB(158, 40, 208)
 end
 
-function createHighlight(model)
-	for _,hl in ipairs(workspace:GetDescendants()) do if hl.Name == 'doom#1000_hl' then hl:Destroy() end end
-
+function create_highlight(model)
 	local highlight = Instance.new('Highlight', model)
 	highlight.Name = 'doom#1000_hl'
 	highlight.Adornee = model
@@ -132,51 +136,55 @@ function notify(title, description, duration)
 	})
 end
 
--- Input Handler
-uis.InputBegan:Connect(function(keyPressed)
-	if keyPressed.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] and camlock.enabled then
+-->> Input Handler
+input_service.InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] and camlock.enabled then
 		locking = not locking
 
 		if locking == true then 
 			target = find_nearest()
-			if target == nil and camlock.config.notifications == true then
-				notify('Cannot find target', "Target couldn't be found.", 1)
+			if target == nil then
 				locking = false
-			elseif target ~= nil then 				
-				if camlock.config.labels == true then createLabel(target) end
-				if camlock.config.borders == true then createOutline(target) end
-				if camlock.config.highlights == true then createHighlight(target) end
-				if camlock.config.notifications == true then 
-					notify('Locked on', 'Target: '.. target.Name, 1)
-				end
+				if camlock.config.notifications == true then notify('Cannot find target', "Target couldn't be found.", 1) end
+			elseif target ~= nil then
+				clear_assets()		
+				if camlock.config.labels == true then create_label(target) end
+				if camlock.config.borders == true then create_outline(target) end
+				if camlock.config.highlights == true then create_highlight(target) end
+				if camlock.config.notifications == true then notify('Locked on', 'Target: '.. target.Name, 1) end
 			end
 		end
 
 		if locking == false then
+			target = nil
 			clear_assets()
 			if camlock.config.notifications == true then 
 				notify('Unlocked', 'Unlocked camera', 1)
 			end
-			target = nil	
 		end
-
-		coroutine.wrap(function()
-			while wait() do 
-				if locking == true and target ~= nil then
-					if camlock.config.predictions == true then 
-						local root = target.HumanoidRootPart
-						local human = target.Humanoid
-						local move_direction = human.MoveDirection
-						cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position, Vector3.new(root.Position.X + move_direction.X * camlock.config.prediction, root.Position.Y + move_direction.Y * camlock.config.prediction, root.Position.Z + move_direction.Z * camlock.config.prediction))
-					else
-						cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position, target.HumanoidRootPart.Position)
-					end
-				end 
-			end
-		end)()
 	end	
 end)
 
-warn("doom's camlock loaded v1.2.0")
+-->> Camera Handler
+coroutine.wrap(function()
+	run_service.Stepped:Connect(function()
+		if locking == true and target ~= nil then
+			if camlock.config.predictions == true then 
+				local root = target.HumanoidRootPart
+				local human = target.Humanoid
+				local move_direction = human.MoveDirection
+				cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position, 
+				Vector3.new(root.Position.X + move_direction.X * camlock.config.prediction, 
+					root.Position.Y + move_direction.Y * camlock.config.prediction, 
+					root.Position.Z + move_direction.Z * camlock.config.prediction
+				))
+			else
+				cam.CFrame = CFrame.lookAt(workspace.Camera.CFrame.Position, target.HumanoidRootPart.Position)
+			end
+		end 
+	end)
+end)()
+
+warn("doom's camlock loaded v1.3.0")
 
 return camlock
