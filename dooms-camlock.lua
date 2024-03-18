@@ -30,12 +30,13 @@ local target = nil
 
 -- Functions
 function get_distance(obj)
+	local distance = 0
 	local s,err = pcall(function()
 		local distance = (root.Position - obj.Position).Magnitude
-		return distance
 	end)
 
 	if err then warn('Error finding distance: '..err) end
+	return distance
 end
 
 function find_nearest()
