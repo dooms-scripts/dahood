@@ -19,8 +19,9 @@ local players = game:GetService('Players')
 local sgui = game:GetService('StarterGui')
 
 -- Variables
-local plr = game.Players.LocalPlayer
-local char = plr.Character
+local plr = players.LocalPlayer
+local char = plr:WaitForChild('Character')
+local root = char:WaitForChild('HumanoidRootPart')
 local cam = workspace.CurrentCamera
 local cursor = plr:GetMouse()
 
@@ -28,7 +29,16 @@ local locking = false
 local target = nil
 
 -- Functions
-function findNearestCursor()
+function get_distance(obj)
+	local s,err = pcall(function()
+		local distance = (root.Position - obj.Position).Magnitude
+		return distance
+	end)
+
+	if err then warn('Error finding distance: '..err) end
+end
+
+function find_nearest()
 	local closestTarget = nil
 	local closestDistance = 999
 
@@ -38,12 +48,14 @@ function findNearestCursor()
 
 	for _,human in ipairs(workspace:GetDescendants()) do
 		if human:IsA('Humanoid') and human.Parent:FindFirstChild('HumanoidRootPart') and human.Parent.Name ~= plr.Name and human.Health ~= 0 then
-			local cursorPos = Vector2.new(cursor.X, cursor.Y)
-			local vector, onScreen = cam:WorldToScreenPoint(human.Parent.HumanoidRootPart.Position)
+			if get_distance(human.Parent.HumanoidRootPart) < range then
+				local cursorPos = Vector2.new(cursor.X, cursor.Y)
+				local vector, onScreen = cam:WorldToScreenPoint(human.Parent.HumanoidRootPart.Position)
 
-			if onScreen then 
-				local dist = (cursorPos - Vector2.new(vector.X, vector.Y)).Magnitude
-				if dist < closestDistance and (human.Parent.HumanoidRootPart.Position - players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < range then closestDistance = dist closestTarget = human.Parent end
+				if onScreen then 
+					local dist = (cursorPos - Vector2.new(vector.X, vector.Y)).Magnitude
+					if dist < closestDistance then closestDistance = dist closestTarget = human.Parent end
+				end
 			end
 		end
 	end
@@ -104,29 +116,46 @@ function createHighlight(model)
 	highlight.OutlineColor = Color3.fromRGB(193, 49, 255)
 end
 
+function clear_assets()
+	for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_bb' then v:Destroy() end end
+	for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_hl' then v:Destroy() end end
+	for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_sb' then v:Destroy() end end
+end
+
+function notify(title, description, duration)
+	game:GetService('StarterGui'):SetCore('SendNotification', 
+	{
+		Title = title,
+		Text = description,
+		Duration = duration,
+	})
+end
+
 -- Input Handler
 uis.InputBegan:Connect(function(keyPressed)
 	if keyPressed.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] and camlock.enabled then
 		locking = not locking
 
 		if locking == true then 
-			target = findNearestCursor()
+			target = find_nearest()
 			if target == nil and camlock.config.notifications == true then
-				game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Cannot find target",Text = "Target couldn't be found.",Duration = "1",})
+				notify('Cannot find target', "Target couldn't be found.", 1)
 				locking = false
 			elseif target ~= nil then 				
 				if camlock.config.labels == true then createLabel(target) end
 				if camlock.config.borders == true then createOutline(target) end
 				if camlock.config.highlights == true then createHighlight(target) end
-				if camlock.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Locked on",Text = "Target: ".. target.Name,Duration = "1",}) end
+				if camlock.config.notifications == true then 
+					notify('Locked on', 'Target: '.. target.Name, 1)
+				end
 			end
 		end
 
-		if locking == false then 	
-			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_bb' then v:Destroy() end end
-			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_hl' then v:Destroy() end end
-			for _,v in ipairs(workspace:GetDescendants()) do if v.Name == 'doom#1000_sb' then v:Destroy() end end
-			if camlock.config.notifications == true then game:GetService('StarterGui'):SetCore('SendNotification', {Title ="Unlocked",Text = "Unlocked camera",Duration = "1",}) end
+		if locking == false then
+			clear_assets()
+			if camlock.config.notifications == true then 
+				notify('Unlocked', 'Unlocked camera', 1)
+			end
 			target = nil	
 		end
 
