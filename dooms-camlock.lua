@@ -20,7 +20,7 @@ local sgui = game:GetService('StarterGui')
 
 -- Variables
 local plr = players.LocalPlayer
-local char = plr:WaitForChild('Character')
+local char = plr['Character']
 local root = char:WaitForChild('HumanoidRootPart')
 local cam = workspace.CurrentCamera
 local cursor = plr:GetMouse()
