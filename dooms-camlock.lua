@@ -56,12 +56,13 @@ function find_nearest()
 
 	local root = char:WaitForChild('HumanoidRootPart')
 
-	for _,human in ipairs(workspace:GetDescendants()) do
-		if human:IsA('Humanoid') and human.Parent:FindFirstChild('HumanoidRootPart') and human.Parent.Name ~= plr.Name and human.Health ~= 0 then
+	for _,player in ipairs(game.Players:GetPlayers()) do
+		if player.Character and player.Character:FindFirstCihld('HumanoidRootPart') and player ~= plr and player.Character.Humanoid.Health ~= 0 then
+			local human = player.Character.Humanoid
 			if get_distance(human.Parent.HumanoidRootPart) < range then
 				local cursorPos = Vector2.new(cursor.X, cursor.Y)
 				local vector, on_screen = cam:WorldToScreenPoint(human.Parent.HumanoidRootPart.Position)
-
+	
 				if on_screen then 
 					local dist = (cursorPos - Vector2.new(vector.X, vector.Y)).Magnitude
 					if dist < closestDistance then closestDistance = dist closestTarget = human.Parent end
