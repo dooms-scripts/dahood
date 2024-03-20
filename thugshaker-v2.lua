@@ -1,13 +1,14 @@
 -- Local
 local plr = game.Players.LocalPlayer
 local char = plr.Character
-local root = char.HumanoidRootPart
+local root = char:WaitForChild('HumanoidRootPart')
 local money = plr:WaitForChild('DataFolder').Currency
 
 local toggle_keybind = 'x'
 
 -- Services
 local input_service = game:GetService('UserInputService')
+local run_service = game:GetService('RunService')
 
 -- Tables
 local autobuy = {
@@ -25,9 +26,9 @@ local autobuy2 = {
 }
 
 -- loading UI library
-local encrypt_lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt.lua'))()
-local camlock = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-camlock'))()
-local aimbot = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-aimbot'))()
+local encrypt_lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt'))()
+local camlock = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-camlock.lua'))()
+local aimbot = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-aimbot.lua'))()
 
 -- toggle ui
 input_service.InputBegan:Connect(function(k)
@@ -41,6 +42,7 @@ encrypt_lib.color = Color3.fromRGB(255, 45, 45)
 encrypt_lib.color = Color3.fromRGB(255, 146, 146)
 encrypt_lib.color = Color3.fromRGB(161, 99, 255)
 encrypt_lib.color = Color3.fromRGB(158, 40, 208)
+encrypt_lib.color = Color3.fromRGB(255, 255, 255)
 
 local window = encrypt_lib.new_window('thugshaker v2')
 local main_tab = window.new_tab('main')
@@ -56,13 +58,44 @@ gui = group1.new_category('GUI')
 toggle_bind = gui.new_textbox('toggle gui', toggle_keybind, function() toggle_keybind = toggle_bind.text end)
 gui.new_button('exit', function() encrypt_lib:exit() end)
 
+player_category = group1.new_category('local player')
+
+--> Cframe Walk
+local cframe_key = 'y'
+local cframe_speed = 2
+local cframe_walk = false
+local cframe_enabled = false
+
+coroutine.wrap(function()
+	run_service.Stepped:Connect(function()
+		task.wait()
+		if cframe_walk then
+			local char = plr.Character
+			local root = char:WaitForChild('HumanoidRootPart')
+			root.CFrame = root.CFrame + char.Humanoid.MoveDirection * cframe_speed
+		end
+	end)
+end)()
+
+cframe_walk_toggle = player_category.new_toggle('cframe walk', function()
+	cframe_enabled = not cframe_enabled
+end)
+
+cframe_walk_keybind = player_category.new_keybind('cframe keybind', 'e', function()
+	if cframe_enabled then cframe_walk = not cframe_walk end
+end)
+
+cframe_walk_speed = player_category.new_textbox('cframe speed', '2', function()
+	cframe_speed = tonumber(cframe_walk_speed.text)
+end)
+
 -- autobuy tab
 group1 = autobuy_tab.new_group('group1')
 group2 = autobuy_tab.new_group('group2')
 
 -- functions
 function get_shop(filter)
-	shop = nil
+	local shop = nil
 	for _,s in ipairs(workspace.Ignored.Shop:GetChildren()) do
 		if string.match(s.Name, 'Ammo') ==  'Ammo' then
 		else
@@ -117,7 +150,7 @@ for _, category_data in ipairs(autobuy) do
 
 	for _, item in ipairs(category_data.items) do
 		table_category.new_button(string.lower(item), function()
-			shop = get_shop(item)
+			local shop = get_shop(item)
 			local gun_name = '[' ..shop.Name:match("%[(.-)%]").. ']'
 			local plr = game.Players.LocalPlayer
 			local char = plr.Character
@@ -139,8 +172,8 @@ for _, category_data in ipairs(autobuy2) do
 	local table_category = group2.new_category(category_data.category)
 	for _, item in ipairs(category_data.items) do
 		table_category.new_button(string.lower(item), function()
-			shop = get_shop(item)
-			gun_name = '[' ..shop.Name:match("%[(.-)%]").. ']'
+			local shop = get_shop(item)
+			local  gun_name = '[' ..shop.Name:match("%[(.-)%]").. ']'
 			local plr = game.Players.LocalPlayer
 			local char = plr.Character
 			local root = char.HumanoidRootPart
@@ -181,7 +214,7 @@ coroutine.wrap(function()
 		print(pred)
 		return pred
 	end
-	
+
 	while camlock.config.auto_predict == true do task.wait(.01)
 		local ping = plr:GetNetworkPing() * 2000
 		camlock.config.prediction = autopred(ping)
@@ -193,19 +226,19 @@ toggle_camlock = camlock_category.new_toggle('camlock', function()
 	camlock.enabled = not camlock.enabled
 end)
 
-predictions = camlock_category.new_toggle('borders', function()
+borders = camlock_category.new_toggle('borders', function()
 	camlock.config.borders = not camlock.config.borders
 end)
 
-predictions = camlock_category.new_toggle('labels', function()
+labels = camlock_category.new_toggle('labels', function()
 	camlock.config.labels = not camlock.config.labels
 end)
 
-predictions = camlock_category.new_toggle('highlights', function()
+higlights = camlock_category.new_toggle('highlights', function()
 	camlock.config.highlights = not camlock.config.highlights
 end)
 
-predictions = camlock_category.new_toggle('notifications', function()
+notifications = camlock_category.new_toggle('notifications', function()
 	camlock.config.notifications = not camlock.config.notifications
 end)
 
@@ -225,7 +258,7 @@ range = camlock_category.new_textbox('range', '250', function()
 	camlock.config.range = tonumber(range.text)
 end)
 
-keybind = camlock_category.new_textbox('keybind', 'q', function()
+keybind = camlock_category.new_keybind('keybind', 'q', function()
 	camlock.config.keybind = keybind.text
 end)
 
@@ -264,7 +297,7 @@ camlock.config = {
 	setclipboard(formatted)
 end)
 
--->> CAMLOCK CATEGORY
+-->> AIMLOCK CATEGORY
 aimbot_auto_predict = false
 aimbot.enabled = false
 
@@ -319,7 +352,7 @@ aimbot_range = aimbot_category.new_textbox('range', '250', function()
 end)
 
 aimbot_keybind = aimbot_category.new_textbox('keybind', 'q', function()
-	aimbot.config.keybind = aimbot_keybind.text
+	aimbot.config.keybind = aimbot_keybind.key
 end)
 
 importc = aimbot_category.new_textbox('custom config', 'code here', function() 
@@ -352,7 +385,7 @@ aimbot.config = {
 		tostring(aimbot.config.borders), 
 		tostring(aimbot.config.labels), 
 		tostring(aimbot.config.vis_check)
-	))
+		))
 
 	setclipboard(formatted)
 end)
