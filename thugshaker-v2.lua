@@ -27,15 +27,18 @@ local autobuy2 = {
 
 -- loading UI library
 local encrypt_lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt'))()
+local encrypt_notifications = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt-notifications.lua'))()
 local camlock = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-camlock.lua'))()
 local aimbot = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/dahood/main/dooms-aimbot.lua'))()
 
+camlock.config.custom_text = 'thugshaker v2'
+
 -- toggle ui
-input_service.InputBegan:Connect(function(k)
-	if k.KeyCode == Enum.KeyCode[string.upper(toggle_keybind)] then	
-		encrypt_lib:toggle()
-	end
-end)
+-- input_service.InputBegan:Connect(function(k)
+-- 	if k.KeyCode == Enum.KeyCode[string.upper(toggle_keybind)] then	
+-- 		encrypt_lib:toggle()
+-- 	end
+-- end)
 
 encrypt_lib.color = Color3.fromRGB(30, 146, 254)
 encrypt_lib.color = Color3.fromRGB(255, 45, 45)
@@ -55,10 +58,58 @@ local esp_tab = window.new_tab('esp')
 group1 = main_tab.new_group('group1')
 gui = group1.new_category('GUI')
 
-toggle_bind = gui.new_textbox('toggle gui', toggle_keybind, function() toggle_keybind = toggle_bind.text end)
+--toggle_bind = gui.new_textbox('toggle gui', toggle_keybind, function() toggle_keybind = toggle_bind.text end)
+gui.new_keybind('toggle gui', 'x', function()
+	encrypt_lib:toggle()
+end)
 gui.new_button('exit', function() encrypt_lib:exit() end)
 
 player_category = group1.new_category('local player')
+game_category = group1.new_category('game')
+
+tasers_muted = false
+chat_spy = false
+
+game_category.new_toggle('chat spy', function()
+	local chat = plr.PlayerGui:WaitForChild('Chat')
+	local chat_box = chat.Frame.ChatChannelParentFrame
+	local chat_bar = chat.Frame.ChatBarParentFrame
+
+	chat_spy = not chat_spy
+	if chat_spy then
+		game.StarterGui:SetCore("ChatMakeSystemMessage", {
+			Text = 'thugshaker v2 > chat spy enabled';
+			Font = Enum.Font.GothamBold;
+			Color = Color3.fromRGB(158, 40, 208);
+			FontSize = Enum.FontSize.Size96;
+			RichText = true;	
+		})
+		chat_box.Visible = true
+		chat_bar.AnchorPoint = Vector2.new(0, 1)
+		chat_bar.Position = UDim2.new(0, 0, 1, 0)
+	elseif not chat_spy then
+		chat_box.Visible = false
+		chat_bar.AnchorPoint = Vector2.new(0, 0)
+		chat_bar.Position = UDim2.new(0, 0, 0, 0)
+	end
+end)
+
+game_category.new_toggle('mute tasers', function()
+	tasers_muted = not tasers_muted
+	if tasers_muted then 
+		for _,v in ipairs(game:GetDescendants()) do
+			if v.Name == '[Taser]' then
+				v.Handle.Sound.Volume = 0
+			end
+		end
+	elseif not tasers_muted then
+		for _,v in ipairs(game:GetDescendants()) do
+			if v.Name == '[Taser]' then
+				v.Handle.Sound.Volume = 1
+			end
+		end
+	end
+end)
 
 --> Cframe Walk
 local cframe_key = 'y'
@@ -82,7 +133,10 @@ cframe_walk_toggle = player_category.new_toggle('cframe walk', function()
 end)
 
 cframe_walk_keybind = player_category.new_keybind('cframe keybind', 'e', function()
-	if cframe_enabled then cframe_walk = not cframe_walk end
+	if cframe_enabled then 	
+		cframe_walk = not cframe_walk 
+		encrypt_notifications.notify('<font face="Gotham"><font color="rgb(255,12,243)">thugshaker v2</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > toggled cframe speed</font></font>', 3)
+	end
 end)
 
 cframe_walk_speed = player_category.new_textbox('cframe speed', '2', function()
@@ -250,16 +304,16 @@ auto_predictions = camlock_category.new_toggle('auto prediction', function()
 	camlock_auto_predict = not camlock_auto_predict
 end)
 
+keybind = camlock_category.new_keybind('keybind', 'q', function()
+	camlock.config.keybind = keybind.key
+end)
+
 prediction = camlock_category.new_textbox('prediction', '1.368', function()
 	camlock.config.prediction = tonumber(prediction.text)
 end)
 
 range = camlock_category.new_textbox('range', '250', function()
 	camlock.config.range = tonumber(range.text)
-end)
-
-keybind = camlock_category.new_keybind('keybind', 'q', function()
-	camlock.config.keybind = keybind.text
 end)
 
 importc = camlock_category.new_textbox('custom config', 'code here', function() 
@@ -296,6 +350,8 @@ camlock.config = {
 
 	setclipboard(formatted)
 end)
+
+-->> Antilock Category
 
 -->> AIMLOCK CATEGORY
 aimbot_auto_predict = false
@@ -352,7 +408,7 @@ aimbot_range = aimbot_category.new_textbox('range', '250', function()
 end)
 
 aimbot_keybind = aimbot_category.new_textbox('keybind', 'q', function()
-	aimbot.config.keybind = aimbot_keybind.key
+	aimbot.config.keybind = aimbot_keybind.text
 end)
 
 importc = aimbot_category.new_textbox('custom config', 'code here', function() 
