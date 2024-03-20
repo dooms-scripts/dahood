@@ -64,8 +64,9 @@ function find_nearest()
 
 	local root = char:WaitForChild('HumanoidRootPart')
 
+	local s,error = pcall(function()
 	for _,player in ipairs(game.Players:GetPlayers()) do
-		if player.Character and player.Character:FindFirstChild('HumanoidRootPart') and player ~= plr and player.Character.Humanoid.Health ~= 0 then
+		if player.Character and player.Character:FindFirstChild('HumanoidRootPart') and player.Name ~= game.Players.LocalPlayer.Name and player.Character.Humanoid.Health > 0 then
 			local human = player.Character.Humanoid
 			if get_distance(human.Parent.HumanoidRootPart) < range then
 				local cursorPos = Vector2.new(cursor.X, cursor.Y)
@@ -78,6 +79,9 @@ function find_nearest()
 			end
 		end
 	end
+	end)
+
+	if error warn(error) end
 
 	return closestTarget
 end
