@@ -170,7 +170,7 @@ input_service.InputBegan:Connect(function(input)
 			target = nil
 			clear_assets()
 			if camlock.config.notifications == true then
-				encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..camlock.config.custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > unlocked camera.'</font></font>', 1)
+				encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..camlock.config.custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > unlocked camera.</font></font>', 1)
 			end
 		end
 	end	
@@ -196,6 +196,6 @@ coroutine.wrap(function()
 	end)
 end)()
 
-warn("doom's camlock loaded v1.3.4")
+warn("doom's camlock loaded v1.3.5")
 
 return camlock
