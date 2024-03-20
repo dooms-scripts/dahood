@@ -186,6 +186,6 @@ coroutine.wrap(function()
 	end)
 end)()
 
-warn("doom's camlock loaded v1.3.0")
+warn("doom's camlock loaded v1.3.2")
 
 return camlock
