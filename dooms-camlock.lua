@@ -10,6 +10,8 @@
 	> lot more customizeable
 ]]--
 
+local encrypt = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt-notifications'))()
+
 camlock = {
 	enabled = true
 }
@@ -26,6 +28,8 @@ camlock.config = {
 	borders         = false,
 	labels          = false,
 	vis_check       = false,
+
+	custom_text	= "doom's camlock",
 }
 
 -->> Services
@@ -148,21 +152,25 @@ input_service.InputBegan:Connect(function(input)
 			target = find_nearest()
 			if target == nil then
 				locking = false
-				if camlock.config.notifications == true then notify('Cannot find target', "Target couldn't be found.", 1) end
+				if camlock.config.notifications == true then 
+					encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > Target could not be found</font></font>', 1) 
+				end
 			elseif target ~= nil then
 				clear_assets()		
 				if camlock.config.labels == true then create_label(target) end
 				if camlock.config.borders == true then create_outline(target) end
 				if camlock.config.highlights == true then create_highlight(target) end
-				if camlock.config.notifications == true then notify('Locked on', 'Target: '.. target.Name, 1) end
+				if camlock.config.notifications == true then 
+					encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > target:'..target.Name..'</font></font>', 1) 
+				end
 			end
 		end
 
 		if locking == false then
 			target = nil
 			clear_assets()
-			if camlock.config.notifications == true then 
-				notify('Unlocked', 'Unlocked camera', 1)
+			if camlock.config.notifications == true then
+				encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > unlocked camera.'</font></font>', 1)
 			end
 		end
 	end	
