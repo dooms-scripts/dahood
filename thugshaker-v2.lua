@@ -1,3 +1,15 @@
+--[[
+		   __  __                        ___ 
+		  / /_/ /_  __  ______ _   _   _|__ \
+		 / __/ __ \/ / / / __ `/  | | / /_/ /
+		/ /_/ / / / /_/ / /_/ /   | |/ / __/ 
+		\__/_/ /_/\__,_/\__, /    |___/____/ 
+		               /____/                
+		-------------------------------------
+		> added chat spy
+		> added taser mute
+]]--
+
 -- Local
 local plr = game.Players.LocalPlayer
 local char = plr.Character
@@ -447,4 +459,4 @@ aimbot.config = {
 end)
 
 
-warn('thugshaker v2; beta release loaded')
+warn('thugshaker beta v1.0.1')
