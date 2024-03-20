@@ -10,6 +10,8 @@
 	> lot more customizeable
 ]]--
 
+warn("doom's camlock loaded v1.3.6")
+
 local encrypt = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt-notifications'))()
 
 camlock = {
