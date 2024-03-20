@@ -1,11 +1,13 @@
 --[[
-		
 	████   ███   ███  █   █ █████    ████  ███  █   █ █      ███   ████ █  █  
 	█   █ █   █ █   █ ██ ██ █       █     █   █ ██ ██ █     █   █ █     █ █   
 	█   █ █   █ █   █ █ █ █ █████   █     █████ █ █ █ █     █   █ █     ██ █  
 	█   █ █   █ █   █ █   █     █   █     █   █ █   █ █     █   █ █     █  █  
 	████   ███   ███  █   █ █████    ████ █   █ █   █ █████  ███   ████ █   █ 
 
+	-------------------------------------------------------------------------
+	> now a lot faster (thx polar baby:3)
+	> lot more customizeable
 ]]--
 
 camlock = {
@@ -57,7 +59,7 @@ function find_nearest()
 	local root = char:WaitForChild('HumanoidRootPart')
 
 	for _,player in ipairs(game.Players:GetPlayers()) do
-		if player.Character and player.Character:FindFirstCihld('HumanoidRootPart') and player ~= plr and player.Character.Humanoid.Health ~= 0 then
+		if player.Character and player.Character:FindFirstChild('HumanoidRootPart') and player ~= plr and player.Character.Humanoid.Health ~= 0 then
 			local human = player.Character.Humanoid
 			if get_distance(human.Parent.HumanoidRootPart) < range then
 				local cursorPos = Vector2.new(cursor.X, cursor.Y)
@@ -186,6 +188,6 @@ coroutine.wrap(function()
 	end)
 end)()
 
-warn("doom's camlock loaded v1.3.2")
+warn("doom's camlock loaded v1.3.3")
 
 return camlock
