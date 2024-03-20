@@ -10,8 +10,6 @@
 	> lot more customizeable
 --]]
 
-warn("loading: v1.3.7")
-
 local encrypt = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-scripts/ui-libraries/main/encrypt-notifications.lua'))()
 
 camlock = {
@@ -167,12 +165,10 @@ input_service.InputBegan:Connect(function(input)
 				if camlock.config.borders == true then create_outline(target) end
 				if camlock.config.highlights == true then create_highlight(target) end
 				if camlock.config.notifications == true then 
-					encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..camlock.config.custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > target:'..target.Name..'</font></font>', 1) 
+					encrypt.notify('<font face="Gotham"><font color="rgb(255,12,243)">'..camlock.config.custom_text..'</font></font><font face="SourceSans"><font color="rgb(255,255,255)"> > target: '..target.Name..'</font></font>', 1) 
 				end
 			end
-		end
-
-		if locking == false then
+		elseif locking == false then
 			target = nil
 			clear_assets()
 			if camlock.config.notifications == true then
@@ -202,6 +198,6 @@ coroutine.wrap(function()
 	end)
 end)()
 
-warn("doom's camlock loaded v1.3.5")
+warn("doom's camlock loaded v1.3.8")
 
 return camlock
