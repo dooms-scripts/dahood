@@ -150,6 +150,9 @@ end
 
 -->> Input Handler
 input_service.InputBegan:Connect(function(input)
+	local focused = input_service:GetFocusedTextBox()
+	if focused then return end
+		
 	if input.KeyCode == Enum.KeyCode[string.upper(camlock.config.keybind)] and camlock.enabled then
 		locking = not locking
 
