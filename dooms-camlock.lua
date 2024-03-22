@@ -59,6 +59,8 @@ function find_nearest()
 
 	local range = camlock.config.range
 
+	local plr = players.LocalPlayer
+	local char = plr.Character
 	local root = char:WaitForChild('HumanoidRootPart')
 
 	local s,error = pcall(function()
@@ -197,6 +199,6 @@ coroutine.wrap(function()
 	end)
 end)()
 
-warn("doom's camlock loaded v1.3.8")
+warn("doom's camlock loaded v1.3.9")
 
 return camlock
