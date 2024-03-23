@@ -846,7 +846,6 @@ while _G.farming == true do
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 		if atm.Humanoid.Health == 100 and _G.farming == true then
 			local char = plr.Character or plr.CharacterAdded:Wait()
-			local combat = plr.Backpack['Combat'] or char:WaitForChild('Combat')
 			local root = char:WaitForChild('HumanoidRootPart')
 
 			_G.atms_farmed += 1
