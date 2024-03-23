@@ -252,7 +252,7 @@ Modal.Size = UDim2.new(0, 275, 0, 250)
 
 local Outline = Instance.new('UIStroke', Modal)
 Outline.Color = Color3.fromRGB(125,125,125)
-Outline.Thickness = 1
+Outline.Thickness = 1.25
 Outline.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 
 UICorner.Parent = Modal
@@ -348,7 +348,7 @@ StatsFrame.Size = UDim2.new(0, 228, 0, 120)
 
 local Outline = Instance.new('UIStroke', StatsFrame)
 Outline.Color = Color3.fromRGB(75, 75, 75)
-Outline.Thickness = 1
+Outline.Thickness = 1.25
 Outline.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 
 UICorner_2.CornerRadius = UDim.new(0, 4)
