@@ -15,7 +15,7 @@
 
 local autofarm = {
 	enabled = true,
-	version = '1.3.0',
+	version = '1.3.1',
 }
 
 setclipboard = setclipboard or function() warn("Your executor isn't supported. Script may malfunction") end
@@ -59,7 +59,7 @@ if _G.farmloaded then
 	return
 end
 
-warn('1.2.3')
+warn(autofarm.version)
 
 if game.Players.LocalPlayer.Backpack:FindFirstChild('Combat') then else
 	game.StarterGui:SetCore("SendNotification", {
@@ -690,7 +690,6 @@ CopyButton.MouseButton1Click:Connect(function()
 end)
 
 
-local combat = plr.Backpack['Combat']
 local run = game:GetService('RunService')
 
 _G.farming = true
@@ -703,7 +702,10 @@ for _,seat in ipairs(workspace:GetDescendants()) do
 end
 
 function spin()
-	for i,v in pairs(game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local root = char:WaitForChild('HumanoidRootPart')
+
+	for i,v in pairs(root:GetChildren()) do
 		if v.Name == "Spinning" then
 			v:Destroy()
 		end
@@ -711,13 +713,16 @@ function spin()
 
 	local Spin = Instance.new("BodyAngularVelocity")
 	Spin.Name = "Spinning"
-	Spin.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+	Spin.Parent = root
 	Spin.MaxTorque = Vector3.new(0, math.huge, 0)
 	Spin.AngularVelocity = Vector3.new(0,50,0)
 end
 
 function stopspin()
-	for i,v in pairs(game.Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+	local char = plr.Character or plr.CharacterAdded:Wait()
+	local root = char:WaitForChild('HumanoidRootPart')
+
+	for i,v in pairs(root:GetChildren()) do
 		if v.Name == "Spinning" then
 			v:Destroy()
 		end
@@ -834,13 +839,16 @@ warn('Loaded dooms autofarm')
 -- autofarm
 while _G.farming == true do
 	local char = plr.Character or plr.CharacterAdded:Wait()
+	local combat = plr.Backpack['Combat'] or char:WaitForChild('Combat')
 	local root = char:WaitForChild('HumanoidRootPart')
-	
-	task.wait()
 	combat.Parent = char
 
 	for _,atm in ipairs(workspace.Cashiers:GetChildren()) do
 		if atm.Humanoid.Health == 100 and _G.farming == true then
+			local char = plr.Character or plr.CharacterAdded:Wait()
+			local combat = plr.Backpack['Combat'] or char:WaitForChild('Combat')
+			local root = char:WaitForChild('HumanoidRootPart')
+
 			_G.atms_farmed += 1
 			lastatm = atm
 			count=0
@@ -855,9 +863,13 @@ while _G.farming == true do
 			spin()
 
 			repeat 
+				if char:FindFirstChild('Combat') then 
+					else combat.Parent = char
+				end
+
 				char.Combat:Activate()
 				count=count+.55
-				wait(.55) 
+				task.wait(.55) 
 			until atm.Humanoid.Health<1
 			task.wait(.5) root.Anchored = false
 			cashaura()
