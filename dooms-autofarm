@@ -15,8 +15,12 @@
 -- >> Added new settings
 local autofarm = {
 	enabled = true,
-	version = '1.2.4',
+	version = '1.2.5',
 }
+
+_G.amtfarmed = 0
+_G.atms_farmed = 0
+_G.time_elapsed = 0
 
 if _G.farm_settings ~= nil then
 	farm_settings = _G.farm_settings
@@ -244,7 +248,7 @@ Modal.Size = UDim2.new(0, 275, 0, 250)
 
 local Outline = Instance.new('UIStroke', Modal)
 Outline.Color = Color3.fromRGB(125,125,125)
-Outline.Thickness = 0.65
+Outline.Thickness = 1
 Outline.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 
 UICorner.Parent = Modal
@@ -340,7 +344,7 @@ StatsFrame.Size = UDim2.new(0, 228, 0, 120)
 
 local Outline = Instance.new('UIStroke', StatsFrame)
 Outline.Color = Color3.fromRGB(75, 75, 75)
-Outline.Thickness = 0.65
+Outline.Thickness = 1
 Outline.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
 
 UICorner_2.CornerRadius = UDim.new(0, 4)
@@ -675,9 +679,6 @@ local run = game:GetService('RunService')
 _G.farming = true
 
 amtfarmed = 0
-_G.amtfarmed = 0
-_G.atms_farmed = 0
-_G.time_elapsed = 0
 
 for _,seat in ipairs(workspace:GetDescendants()) do
 	if seat:IsA('Seat') then seat.Disabled = true end
@@ -777,7 +778,7 @@ coroutine.wrap(function()
 	while task.wait(1) do
 		_G.time_elapsed += 1
 		ValueLabel.Text   = tostring(format_money(_G.amtfarmed))
-		ValueLabel_2.Text = tostring(format_time(_G.atms_farmed))
+		ValueLabel_2.Text = tostring(_G.atms_farmed)
 		ValueLabel_3.Text = tostring(format_time(_G.time_elapsed))
 		ValueLabel_4.Text = tostring(format_money(game.Players.LocalPlayer.DataFolder.Currency.Value))
 		-- onfloor.Text = " money on floor: " ..tostring(format_money(get_floor_money())) causes issues so i just commented it
