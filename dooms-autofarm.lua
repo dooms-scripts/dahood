@@ -5,7 +5,7 @@
 -- discord.gg/doomdhc
 ------------------------
 -- VERSION: 1.2.4
--- PATCH: 1.2.4
+-- PATCH: 1.2.6
 -- >> Added new modern interface
 
 -- PATCH: 1.2.3
@@ -15,8 +15,12 @@
 -- >> Added new settings
 local autofarm = {
 	enabled = true,
-	version = '1.2.5',
+	version = '1.2.6',
 }
+
+local plr = game.Players.LocalPlayer
+local char = plr.Character or plr.CharacterAdded:Wait()
+local root = char:WaitForChild('HumanoidRootPart')
 
 _G.amtfarmed = 0
 _G.atms_farmed = 0
@@ -665,13 +669,9 @@ CopyButton.MouseButton1Click:Connect(function()
 💸 wallet:        %d
 	]]
 	
-	str = str:format()
-	setclipboard(str)
+	setclipboard(str:format(tostring(_G.amtfarmed), tostring(_G.atms_farmed), tostring(_G.time_elapsed), tostring(plr.DataFolder.Currency.Value)))
 end)
 
-local plr = game.Players.LocalPlayer
-local char = plr.Character
-local root = char:WaitForChild('HumanoidRootPart')
 
 local combat = plr.Backpack['Combat']
 local run = game:GetService('RunService')
