@@ -15,7 +15,7 @@
 -- >> Added new settings
 local autofarm = {
 	enabled = true,
-	version = '1.2.7',
+	version = '1.2.8',
 }
 
 local plr = game.Players.LocalPlayer
@@ -661,6 +661,10 @@ VersionLabel.TextSize = 14.000
 VersionLabel.TextWrapped = true
 
 CopyButton.MouseButton1Click:Connect(function()
+	local formatted_wallet = format_money(plr.DataFolder.Currency.Value)
+	local formatted_time = format_time(_G.time_elapsed)
+	local formatted_profit = format_money(_G.amtfarmed)
+
 	local str = [[
 💰 amount farmed: %d
 💰 atms farmed:   %d
@@ -668,8 +672,14 @@ CopyButton.MouseButton1Click:Connect(function()
 
 💸 wallet:        %d
 	]]
-	
-	setclipboard(str:format(tostring(format_money(_G.amtfarmed)), tostring(_G.atms_farmed), tostring(format_time(_G.time_elapsed)), tostring(format_money(plr.DataFolder.Currency.Value))))
+
+	setclipboard(str:format(
+		tostring(formatted_profit), 
+		tostring(_G.atms_farmed), 
+		tostring(formatted_time), 
+		tostring(formatted_wallet)
+	))
+
 	CopyButton.Text = 'copied'
 	task.wait(3)
 	CopyButton.Text = 'copy'
@@ -719,7 +729,7 @@ function cashaura()
 
 			if dist < 15 then
 				--if _G.farm_settings ~= nil and _G.farm_settings.tp_to_money == true then 
-					root.CFrame = CFrame.new(cashdrop.Position)
+				root.CFrame = CFrame.new(cashdrop.Position)
 				--end
 				wait(.15)
 				amtfarmed = amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
