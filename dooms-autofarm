@@ -5,7 +5,7 @@
 -- discord.gg/doomdhc
 ------------------------
 -- VERSION: 1.2.4
--- PATCH: 1.2.6
+-- PATCH: 1.2.7
 -- >> Added new modern interface
 
 -- PATCH: 1.2.3
@@ -670,6 +670,9 @@ CopyButton.MouseButton1Click:Connect(function()
 	]]
 	
 	setclipboard(str:format(tostring(format_money(_G.amtfarmed)), tostring(_G.atms_farmed), tostring(format_time(_G.time_elapsed)), tostring(format_money(plr.DataFolder.Currency.Value))))
+	CopyButton.Text = 'copied'
+	task.wait(3)
+	CopyButton.Text = 'copy'
 end)
 
 
