@@ -15,7 +15,7 @@
 -- >> Added new settings
 local autofarm = {
 	enabled = true,
-	version = '1.2.8',
+	version = '1.2.9',
 }
 
 local plr = game.Players.LocalPlayer
@@ -664,6 +664,7 @@ CopyButton.MouseButton1Click:Connect(function()
 	local formatted_wallet = format_money(plr.DataFolder.Currency.Value)
 	local formatted_time = format_time(_G.time_elapsed)
 	local formatted_profit = format_money(_G.amtfarmed)
+	local atms_farmed = tostring(_G.atms_farmed)
 
 	local str = [[
 💰 amount farmed: %d
@@ -674,10 +675,10 @@ CopyButton.MouseButton1Click:Connect(function()
 	]]
 
 	setclipboard(str:format(
-		tostring(formatted_profit), 
-		tostring(_G.atms_farmed), 
-		tostring(formatted_time), 
-		tostring(formatted_wallet)
+		formatted_profit, 
+		atms_farmed, 
+		formatted_time, 
+		formatted_wallet
 	))
 
 	CopyButton.Text = 'copied'
