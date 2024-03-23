@@ -667,11 +667,11 @@ CopyButton.MouseButton1Click:Connect(function()
 	local atms_farmed = tostring(_G.atms_farmed)
 
 	local str = [[
-💰 amount farmed: %d
-💰 atms farmed:   %d
-🕒 time elapsed:  %d
+💰 amount farmed: %s
+💰 atms farmed:   %s
+🕒 time elapsed:  %s
 
-💸 wallet:        %d
+💸 wallet:        %s
 	]]
 
 	setclipboard(str:format(
