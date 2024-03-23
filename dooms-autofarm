@@ -15,7 +15,7 @@
 -- >> Added new settings
 local autofarm = {
 	enabled = true,
-	version = '1.2.6',
+	version = '1.2.7',
 }
 
 local plr = game.Players.LocalPlayer
@@ -669,7 +669,7 @@ CopyButton.MouseButton1Click:Connect(function()
 💸 wallet:        %d
 	]]
 	
-	setclipboard(str:format(tostring(_G.amtfarmed), tostring(_G.atms_farmed), tostring(_G.time_elapsed), tostring(plr.DataFolder.Currency.Value)))
+	setclipboard(str:format(tostring(format_money(_G.amtfarmed)), tostring(_G.atms_farmed), tostring(format_time(_G.time_elapsed)), tostring(format_money(plr.DataFolder.Currency.Value))))
 end)
 
 
