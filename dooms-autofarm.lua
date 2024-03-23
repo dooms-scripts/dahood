@@ -15,7 +15,7 @@
 -- >> Added new settings
 local autofarm = {
 	enabled = true,
-	version = '1.2.9',
+	version = '1.3.0',
 }
 
 local plr = game.Players.LocalPlayer
