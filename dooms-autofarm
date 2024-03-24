@@ -841,7 +841,13 @@ warn('Loaded dooms autofarm')
 -- autofarm
 while _G.farming == true do
 	local char = plr.Character or plr.CharacterAdded:Wait()
-	local combat = plr.Backpack['Combat'] or char:WaitForChild('Combat')
+	local combat = nil
+	if plr.Backpack['Combat'] then 
+		combat = plr.Backpack['Combat']
+	elseif char:FindFirstChild('Combat') then
+		combat = char:WaitForChild('Combat')
+	end
+	
 	local root = char:WaitForChild('HumanoidRootPart')
 	combat.Parent = char
 
@@ -849,7 +855,13 @@ while _G.farming == true do
 		if atm.Humanoid.Health == 100 and _G.farming == true then
 			local char = plr.Character or plr.CharacterAdded:Wait()
 			local root = char:WaitForChild('HumanoidRootPart')
-
+			
+			if plr.Backpack['Combat'] then 
+				combat = plr.Backpack['Combat']
+			elseif char:FindFirstChild('Combat') then
+				combat = char:WaitForChild('Combat')
+			end
+			
 			_G.atms_farmed += 1
 			lastatm = atm
 			count=0
