@@ -15,7 +15,7 @@
 
 local autofarm = {
 	enabled = true,
-	version = '1.3.2',
+	version = '1.3.3',
 }
 
 setclipboard = setclipboard or function() warn("Your executor isn't supported. Script may malfunction") end
@@ -842,7 +842,7 @@ warn('Loaded dooms autofarm')
 while _G.farming == true do
 	local char = plr.Character or plr.CharacterAdded:Wait()
 	local combat = nil
-	if plr.Backpack['Combat'] then 
+	if plr.Backpack:FindFirstChild('Combat') then 
 		combat = plr.Backpack['Combat']
 	elseif char:FindFirstChild('Combat') then
 		combat = char:WaitForChild('Combat')
@@ -856,7 +856,7 @@ while _G.farming == true do
 			local char = plr.Character or plr.CharacterAdded:Wait()
 			local root = char:WaitForChild('HumanoidRootPart')
 			
-			if plr.Backpack['Combat'] then 
+			if plr.Backpack:FindFirstChild('Combat') then 
 				combat = plr.Backpack['Combat']
 			elseif char:FindFirstChild('Combat') then
 				combat = char:WaitForChild('Combat')
