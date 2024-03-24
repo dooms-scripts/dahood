@@ -15,7 +15,7 @@
 
 local autofarm = {
 	enabled = true,
-	version = '1.3.1',
+	version = '1.3.2',
 }
 
 setclipboard = setclipboard or function() warn("Your executor isn't supported. Script may malfunction") end
@@ -669,13 +669,15 @@ CopyButton.MouseButton1Click:Connect(function()
 	local formatted_profit = format_money(_G.amtfarmed)
 	local atms_farmed = tostring(_G.atms_farmed)
 
-	local str = [[
+	local str = [[```
+dooms autofarm stats
+---------------------
 💰 amount farmed: %s
 💰 atms farmed:   %s
 🕒 time elapsed:  %s
-
+---------------------
 💸 wallet:        %s
-	]]
+```]]
 
 	setclipboard(str:format(
 		formatted_profit, 
