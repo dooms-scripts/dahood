@@ -6,7 +6,7 @@ _G.EGG_FARMING = true -- just turn this off to disable the farm
 repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild('FULLY_LOADED_CHAR')
 
 game.StarterGui:SetCore('SendNotification', {
-	Title = string.format('dooms egg farm', encrypt.version),
+	Title = 'dooms egg farm',
 	Text = 'running',
 	Duration = 2,
 	Icon = 'rbxassetid://12495383436',
@@ -38,6 +38,6 @@ while _G.EGG_FARMING do
     if found_egg == false then
         _G.EGG_FARMING = false
         tp:Teleport(game.PlaceId, plr)
-        queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/dahood/main/egg-farm"))()')
+        queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/dahood/main/egg-farm.lua"))()')
     end
 end
