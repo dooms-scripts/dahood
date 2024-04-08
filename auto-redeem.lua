@@ -1,20 +1,27 @@
 -- doom#1000
-warn('Auto Redeemer Made By doom#1000')
+if getgenv().codes == nil then return warn('No codes found, Cannot redeem.')
 
-game.Players.LocalPlayer:WaitForChild('DataFolder')
+local data = game.Players.LocalPlayer:WaitForChild('DataFolder')
+local money = data.Currency
+local storage = game:GetService('ReplicatedStorage')
 
 function redeemCode(code)
 	local args = {
-    	[1] = "EnterPromoCode",
+    		[1] = "EnterPromoCode",
    		[2] = tostring(code)
 	}
 
-	game:GetService("ReplicatedStorage"):WaitForChild("MainEvent"):FireServer(unpack(args))
+	storage:WaitForChild("MainEvent"):FireServer(unpack(args))
 end
 
 for _,code in pairs(getgenv().codes) do
-	redeemCode(code)
-	--game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Redeemed Code: "..tostring(code),"All")
+	local old_money = money.Value
 
-	wait(3.99)
+	repeat task.wait() redeemCode(code) 
+	until old_money < money.Value
+
+	storage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Redeemed Code: "..tostring(code), "All")
+	task.wait()
 end
+
+warn('Auto Redeemer Made By doom#1000 > Redeemed all codes.')
