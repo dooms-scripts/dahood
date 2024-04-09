@@ -15,7 +15,7 @@
 
 local autofarm = {
 	enabled = true,
-	version = '1.3.3',
+	version = '1.3.4',
 }
 
 setclipboard = setclipboard or function() warn("Your executor isn't supported. Script may malfunction") end
@@ -28,6 +28,7 @@ local root = char:WaitForChild('HumanoidRootPart')
 _G.amtfarmed = 0
 _G.atms_farmed = 0
 _G.time_elapsed = 0
+_G.useclickdetector = true
 
 if _G.farm_settings ~= nil then
 	farm_settings = _G.farm_settings
@@ -42,6 +43,8 @@ if _G.farm_settings ~= nil then
 	if farm_settings.muteaudio == true then
 		UserSettings().GameSettings.MasterVolume = 0
 	end
+
+	_G.useclickdetector = farm_settings.useclickdetector or true
 end
 
 loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
@@ -748,7 +751,35 @@ function cashaura()
 				wait(.15)
 				amtfarmed = amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
 				_G.amtfarmed = _G.amtfarmed + tonumber(cashdrop.BillboardGui.TextLabel.Text:sub(2, 99))
+
+				if _G.useclickdetector then
 				fireclickdetector(cashdrop.ClickDetector)
+				elseif not _G.useclickdetector then
+					local mouse = plr:GetMouse()
+					
+					local camera = workspace.CurrentCamera
+					local money = game.Players.DataFolder.Currency
+					
+					local old_cam_pos = camera.CFrame
+					local old_money = money.Value
+					
+					local old_pos = Vector2.new(mouse.X, mouse.Y)
+
+					repeat task.wait()
+						camera.CFrame = CFrame.lookAt(camera.CFrame.Position, cashdrop.Position)
+	
+						warn('buying with NEW FIRE CLICKDETECT METHOD!!! 🔥🔥🔥🚒🏯🏯')
+						task.wait(0.1) 
+						local vector2, _ = camera:WorldToViewportPoint(cashdrop.Position)
+			
+						mousemoveabs(vector2.X, vector2.Y)
+						mouse1click()
+					until old_money > money.Value
+					
+					task.wait()
+					camera.CFrame = old_cam_pos
+					mousemoveabs(old_pos.X, old_pos.Y)
+				end
 				wait(.75)
 			end
 		end
