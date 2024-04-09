@@ -10,14 +10,24 @@
 local meta = getrawmetatable(game)
 local namecall = meta.__namecall
 
+local methods = {
+      'FireServer',
+      'FireClient',
+}
+
+local flags = {
+      'CHECKER_1',
+}
+
 setreadonly(meta, false)
 meta.__namecall = newcclosure(function(...)
-    local method_flag = {...}
+    local method = getnamecallmethod()
+    local method_flags = {...}
 
-    if getnamecallmethod() == 'FireServer' and method_flag[2] == 'CHECKER_1' then
+    if method == 'FireServer' and method_flags[2] == 'CHECKER_1' then
         warn('doom.lol has SAVED you from being PERM BANNED!!! 🤑🤑🤑🤑')
         
-        for _,flag in pairs(method_flag) do
+        for _,  flag in pairs(method_flags) do
             print(flag)
         end
 
