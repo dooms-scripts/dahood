@@ -36,3 +36,5 @@ meta.__namecall = newcclosure(function(...)
 
     return namecall(...)
 end)
+
+warn('> dooms anticheat bypass loaded')
