@@ -22,12 +22,12 @@ local flags = {
 setreadonly(meta, false)
 meta.__namecall = newcclosure(function(...)
     local method = getnamecallmethod()
-    local method_flags = {...}
+    local nc_flags = {...}
 
-    if method == 'FireServer' and method_flags[2] == 'CHECKER_1' then
+    if table.find(methods, method) and table.find(flags, nc_flags[2]) then
         warn('doom.lol has SAVED you from being PERM BANNED!!! 🤑🤑🤑🤑')
         
-        for _,  flag in pairs(method_flags) do
+        for _,  flag in pairs(nc_flags) do
             print(flag)
         end
 
