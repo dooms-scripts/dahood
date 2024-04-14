@@ -16,8 +16,20 @@ local methods = {
 }
 
 local flags = {
-      'CHECKER_1',
-      'TeleportDetect',
+      "CHECKER_1",
+      "TeleportDetect",
+      "TeleportDetect",
+      "OneMoreTime",
+      "CHECKER_1",
+      "Kick",
+      "BreathingHAMON",
+      "BR_KICKPC",
+      "KICKREMOTE",
+      "CHECKER",
+      "PERMAIDBAN",
+      "checkingSPEED",
+      "GUI_CHECK",
+      "BANREMOTE",
 }
 
 setreadonly(meta, false)
