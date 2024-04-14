@@ -17,6 +17,7 @@ local methods = {
 
 local flags = {
       'CHECKER_1',
+      'TeleportDetect',
 }
 
 setreadonly(meta, false)
