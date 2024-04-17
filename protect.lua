@@ -33,7 +33,6 @@ local flags = {
       "BANREMOTE",
 }
 
--- disable adonis antihook
 for k,v in pairs(getgc(true)) do 
       if pcall(function() return rawget(v,"indexInstance") end) 
       and type(rawget(v,"indexInstance")) == "table" 
@@ -44,7 +43,6 @@ for k,v in pairs(getgc(true)) do
       end 
 end
 
--- deflect all dh ban methods
 setreadonly(meta, false)
 meta.__namecall = newcclosure(function(...)
     local method = getnamecallmethod()
