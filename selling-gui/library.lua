@@ -70,7 +70,7 @@ end
 
 -- >> INSTANCES << ----------------------------------------------------------------
 local ScreenGui = add("ScreenGui", { Parent = game.CoreGui, ZIndexBehavior = Enum.ZIndexBehavior.Sibling,})
-local Window = add("Frame", { Parent = ScreenGui, Name = [[Window]], AnchorPoint = Vector2.new(1,1), Draggable = true, Active = true, BorderSizePixel = 0, Size = UDim2.new(0, 420, 0, 330), ClipsDescendants = true, BorderColor3 = Color3.fromRGB(0, 0, 0), Position = UDim2.new(1, -20, 1, -20), BackgroundColor3 = Color3.fromRGB(25, 25, 25),})
+local Window = add("Frame", { Parent = ScreenGui, Name = [[Window]], AnchorPoint = Vector2.new(1,1), Active = true, BorderSizePixel = 0, Size = UDim2.new(0, 420, 0, 330), ClipsDescendants = true, BorderColor3 = Color3.fromRGB(0, 0, 0), Position = UDim2.new(1, -20, 1, -20), BackgroundColor3 = Color3.fromRGB(25, 25, 25),})
 local Topbar = add("Frame", { Parent = Window, Name = [[Topbar]], Size = UDim2.new(1, 0, 0, 25), BorderColor3 = Color3.fromRGB(40, 40, 40), BackgroundColor3 = Color3.fromRGB(35, 35, 35),})
 local Title = add("TextLabel", { Parent = Topbar, Name = [[Title]], BorderSizePixel = 0, BackgroundColor3 = Color3.fromRGB(255, 255, 255), TextSize = 14, Size = UDim2.new(1, 0, 1, 0), TextXAlignment = Enum.TextXAlignment.Left, BorderColor3 = Color3.fromRGB(0, 0, 0), Text = [[dooms selling gui]], FontFace = Font.new('rbxasset://fonts/families/GothamSSm.json', Enum.FontWeight.SemiBold, Enum.FontStyle.Normal), TextColor3 = Color3.fromRGB(175, 175, 175), BackgroundTransparency = 1,})
 local Padding = add("UIPadding", { Parent = Topbar, Name = [[Padding]], PaddingTop = UDim.new(0, 6), PaddingRight = UDim.new(0, 6), PaddingLeft = UDim.new(0, 8), PaddingBottom = UDim.new(0, 6),})
