@@ -47,7 +47,7 @@ if _G.farm_settings ~= nil then
 	_G.useclickdetector = farm_settings.useclickdetector or true
 end
 
-loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
+--loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/refs/heads/main/anti-idle.lua"))()
 settings().Rendering.QualityLevel = 1
 
