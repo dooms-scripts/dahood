@@ -49,7 +49,7 @@ end
 
 --loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/refs/heads/main/anti-idle.lua"))()
-settings().Rendering.QualityLevel = 1
+--settings().Rendering.QualityLevel = 1
 
 
 if _G.farmloaded then
