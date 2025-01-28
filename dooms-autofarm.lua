@@ -48,7 +48,7 @@ if _G.farm_settings ~= nil then
 end
 
 loadstring(game:HttpGet("https://pastebin.com/raw/2MqFBmsU", true))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/main/anti-idle.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dooms-scripts/roblox/refs/heads/main/anti-idle.lua"))()
 settings().Rendering.QualityLevel = 1
 
 
