@@ -6,26 +6,26 @@ local Player = game.Players.LocalPlayer
 local GunName = '[AUG]'
 local TargetShop = "[AUG] - $2131"
 local AmmoShop = "90 [AUG Ammo] - $87"
-local TargetPlayer = 'OBVSAMX0'
+local TargetPlayer = 'ladinko908'
 local Locked = false
 
 --$ Hooks
-local Meta = getrawmetatable(game)
-local Old = Meta.__namecall
-setreadonly(Meta, false)
-Meta.__namecall = newcclosure(function(...)
-    local Args = {...}
+-- local Meta = getrawmetatable(game)
+-- local Old = Meta.__namecall
+-- setreadonly(Meta, false)
+-- Meta.__namecall = newcclosure(function(...)
+--     local Args = {...}
 
-    if Locked and getnamecallmethod() == 'FireServer' and Args[1] == 'UpdateMousePosI2' then
-        local TargetChar = Target.Character
-        local TargetRoot = TargetChar:WaitForChild('HumanoidRootPart')
-        Args[2] = TargetRoot.Position
+--     if Locked and getnamecallmethod() == 'FireServer' and Args[1] == 'UpdateMousePosI2' then
+--         local TargetChar = Target.Character
+--         local TargetRoot = TargetChar:WaitForChild('HumanoidRootPart')
+--         Args[2] = TargetRoot.Position
             
-        return Old(unpack(Args))
-    end
+--         return Old(unpack(Args))
+--     end
 
-    return Old(...)
-end)
+--     return Old(...)
+-- end)
 
 --$ Functions
 function GetShop(TargetShop)
