@@ -16,10 +16,10 @@ setreadonly(Meta, false)
 Meta.__namecall = newcclosure(function(...)
     local Args = {...}
 
-    if Locked and getnamecallmethod() == 'FireServer' and Args[1] == 'UpdateMousePosI2' then
+    if Locked and getnamecallmethod() == 'FireServer' and Args[2] == 'UpdateMousePosI2' then
         local TargetChar = Target.Character
         local TargetRoot = TargetChar:WaitForChild('HumanoidRootPart')
-        Args[2] = TargetRoot.Position
+        Args[3] = TargetRoot.Position
             
         return Old(unpack(Args))
     end
