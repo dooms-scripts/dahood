@@ -11,7 +11,7 @@ local Locked = false
 local Meta = getrawmetatable(game)
 local Old = Meta.__namecall
 SetReadOnly(Meta, false)
-Meta.__namecall == newcclosure(function(...)
+Meta.__namecall = newcclosure(function(...)
     local Args = {...}
 
     if Locked and getnamecallmethod() == 'FireServer' and Args[1] == 'UpdateMousePosI2' then
