@@ -18,9 +18,11 @@ Meta.__namecall == newcclosure(function(...)
         local TargetChar = Target.Character
         local TargetRoot = TargetChar:WaitForChild('HumanoidRootPart')
         Args[2] = TargetRoot.Position
+            
+        return Old(unpack(Args))
     end
-        
-    return Old(unpack(Args))
+
+    return Old(...)
 end)
 
 --$ Functions
