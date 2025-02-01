@@ -1,3 +1,5 @@
+local s, e = pcall(function()
+
 --$$$ SETUP $$$--
 --$ Variables
 local Player = game.Players.LocalPlayer
@@ -205,3 +207,7 @@ KillTarget()
 
 -- task.wait(5)
 -- ReloadGuns()
+
+end)
+
+if e then warn(e) end
