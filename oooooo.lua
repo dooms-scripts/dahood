@@ -6,7 +6,7 @@ local Player = game.Players.LocalPlayer
 local GunName = '[AUG]'
 local TargetShop = "[AUG] - $2131"
 local AmmoShop = "90 [AUG Ammo] - $87"
-local TargetPlayer = 'SSuper_SSavage'
+local TargetPlayer = 'OBVSAMX0'
 local Locked = false
 
 --$ Hooks
@@ -197,7 +197,7 @@ function KillTarget(Target)
 end
 
 DupeWeapons()
-KillTarget()
+KillTarget(game.Players[TargetPlayer])
 --     task.wait(1)
 --     FireAllTools()
 --     FireAllTools()
