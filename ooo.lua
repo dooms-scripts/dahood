@@ -10,7 +10,7 @@ local Locked = false
 --$ Hooks
 local Meta = getrawmetatable(game)
 local Old = Meta.__namecall
-SetReadOnly(Meta, false)
+setreadonly(Meta, false)
 Meta.__namecall = newcclosure(function(...)
     local Args = {...}
 
