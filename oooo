@@ -101,7 +101,9 @@ function ReloadGuns()
             game:GetService("ReplicatedStorage"):WaitForChild("MainEvent"):FireServer(unpack(args))
 
             Tool.Parent = Backpack
-            task.wait(1)
+
+            print('Reloaded 1 AUG')
+            task.wait(3)
         end
     end
 end
