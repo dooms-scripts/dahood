@@ -1,8 +1,27 @@
+--$$$ SETUP $$$--
 --$ Variables
 local Player = game.Players.LocalPlayer
 local GunName = '[AUG]'
 local TargetShop = "[AUG] - $2131"
 local AmmoShop = "90 [AUG Ammo] - $87"
+local TargetPlayer = 'SSuper_SSavage'
+local Locked = false
+
+--$ Hooks
+local Meta = getrawmetatable(game)
+local Old = Meta.__namecall
+SetReadOnly(Meta, false)
+Meta.__namecall == newcclosure(function(...)
+    local Args = {...}
+
+    if Locked and getnamecallmethod() == 'FireServer' and Args[1] == 'UpdateMousePosI2' then
+        local TargetChar = Target.Character
+        local TargetRoot = TargetChar:WaitForChild('HumanoidRootPart')
+        Args[2] = TargetRoot.Position
+    end
+        
+    return Old(unpack(Args))
+end)
 
 --$ Functions
 function GetShop(TargetShop)
@@ -103,59 +122,84 @@ function ReloadGuns()
             Tool.Parent = Backpack
 
             print('Reloaded 1 AUG')
-            task.wait(3)
+            task.wait(2.2)
         end
     end
 end
 
---$ Script
-local Shop = GetShop(TargetShop)
-local AmmoShop = GetShop(AmmoShop)
-print(Shop.Name)
+--$ Dupe Function
+function DupeWeapons()
+    print('Duping...')
+    
+    local Shop = GetShop(TargetShop)
+    local AmmoShop = GetShop(AmmoShop)
+    print(Shop.Name)
+    
+    GoTo(Shop.Head.Position)
+    
+    task.wait(.2)
+    fireclickdetector(Shop.ClickDetector)
+    
+    task.wait(.2)
+    EquipTool('[AUG]')
+    
+    task.wait(.2)
+    ResetCharacter()
+    
+    task.wait(2)
+    GoTo(Shop.Head.Position)
+    EquipTool('[AUG]')
+    
+    task.wait(.2)
+    keypress(0x11)
+    
+    task.wait(.2)
+    fireclickdetector(Shop.ClickDetector)
+    
+    task.wait(.2)
+    keyrelease(0x11)
+    
+    task.wait(2)
+    UnequipTool('[AUG]')
+    GoTo(AmmoShop.Head.Position)
+    
+    task.wait(.2)
+    fireclickdetector(AmmoShop.ClickDetector) task.wait(.2)
+    fireclickdetector(AmmoShop.ClickDetector) task.wait(.2)
+    fireclickdetector(AmmoShop.ClickDetector) task.wait(.2)
+    
+    ReloadGuns()
+    
+    print('Duped!')
+end
 
-GoTo(Shop.Head.Position)
+function KillTarget(Target)
+    print('Attempting to kill target...')
+    local Char = Player.Character
+    local Root = Char:WaitForChild('HumanoidRootPart')
+    local TargetChar = Target.Character
+    local TargetRoot = TargetChar:WaitForChild('HumanoidRootPart')
 
-task.wait(.2)
-fireclickdetector(Shop.ClickDetector)
+    if TargetRoot then
+        GoTo(TargetRoot.Position)
+        EquipDupedGuns()
+        task.wait()
+        Locked = true
 
-task.wait(.2)
-EquipTool('[AUG]')
+        repeat task.wait(.5) FireAllTools()
+        until TargetChar.Humanoid.Health <= 0
+        print('Killed Target!')
+    end
+end
 
-task.wait(.2)
-ResetCharacter()
+DupeWeapons()
+KillTarget()
+--     task.wait(1)
+--     FireAllTools()
+--     FireAllTools()
+--     FireAllTools()
+--     FireAllTools()
+--     FireAllTools()
 
-task.wait(2)
-GoTo(Shop.Head.Position)
-EquipTool('[AUG]')
-
-task.wait(.2)
-keypress(0x11)
-
-task.wait(.2)
-fireclickdetector(Shop.ClickDetector)
-
-task.wait(.2)
-keyrelease(0x11)
-
-task.wait(2)
-UnequipTool('[AUG]')
-GoTo(AmmoShop.Head.Position)
-
-task.wait(.2)
-fireclickdetector(AmmoShop.ClickDetector) task.wait(.2)
-fireclickdetector(AmmoShop.ClickDetector) task.wait(.2)
-fireclickdetector(AmmoShop.ClickDetector) task.wait(.2)
-
-ReloadGuns()
-task.wait(5)
-EquipDupedGuns()
-
-task.wait(1)
-FireAllTools()
-FireAllTools()
-FireAllTools()
-FireAllTools()
-FireAllTools()
-
-task.wait(5)
-ReloadGuns()
+-- task.wait(5)
+-- ReloadGuns()
