@@ -199,7 +199,7 @@ local repo = 'https://raw.githubusercontent.com/dooms-scripts/ui-libraries/refs/
 
 local encrypt       = loadstring(game:HttpGet('https://www.doom-is-a-skid.lol/cranberry-sprite/sprite2.lua'))()
 local notifications = loadstring(game:HttpGet(repo .. 'encrypt-notifications.lua'))()
-local esp			= loadstring(game:HttpGet(repo .. 'encrypt-esp.lua'))()
+local esp			= {} --loadstring(game:HttpGet(repo .. 'encrypt-esp.lua'))()
 
 local camlock = loadstring(game:HttpGet('https://raw.githubusercontent.com/dooms-private/dahood/refs/heads/main/camlock'))()
 --/qvlyll/drwoolin/seekmyaffection
